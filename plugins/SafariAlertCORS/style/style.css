@@ -1,0 +1,38 @@
+
+@font-face
+{
+    font-family: pfdintextprolight;
+    src: url("../assets/fonts/pfdintextpro-light.otf") format("opentype");
+}
+
+@font-face
+{
+    font-family: pfdintextpromedium;
+    src: url("../assets/fonts/pfdintextpro-medium.otf") format("opentype");
+}
+
+@font-face
+{
+    font-family: pfdintextprobold;
+    src: url("../assets/fonts/pfdintextpro-bold.otf") format("opentype");
+}
+
+#forge-plugins-safari-alert-cors
+{
+    font-family: pfdintextprolight;
+}
+
+#forge-plugins-safari-alert-cors h1
+{
+    margin: 0px 0px 10px 0px;
+    padding: 0;
+    color: #00a3da;
+    font-family: pfdintextprobold;
+}
+
+#forge-plugins-safari-alert-cors a
+{
+    color: #00a3da;
+    font-weight: bold;
+    text-decoration: none;
+}
