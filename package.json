@@ -1,0 +1,19 @@
+{
+  "name": "forgejs-plugins",
+  "version": "0.9.1",
+  "description": "ForgeJS JavaScript library",
+  "author": "GoPro, Inc. | Kolor SAS",
+  "license": "Apache 2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gopro/forgejs-plugins.git"
+  },
+  "keywords": [
+    "forge",
+    "forgejs",
+    "webvr",
+    "vr",
+    "gopro",
+    "kolor"
+  ]
+}
