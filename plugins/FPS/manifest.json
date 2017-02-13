@@ -1,0 +1,39 @@
+{
+    "uid": "org.forgejs.fps",
+    "name": "FPS Stats",
+    "version": "1.0.0",
+    "versionName": "FPS stats 1.0.0",
+    "description": "Displays a FPS stat counter based on Stats.js (@mrdoob).",
+    "licence": "Apache 2",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "viewer":
+    {
+        "min": "0.9.0",
+        "max": "0.9.0"
+    },
+
+    "options":
+    {
+        "icon": "assets/play.png"
+    },
+
+    "actions":
+    [
+        "show",
+        "hide"
+    ],
+
+    "sources":
+    [
+        "lib/stats.min.js",
+        "src/FPS.js"
+    ],
+
+    "constructor": "ForgePlugins.FPS"
+}
