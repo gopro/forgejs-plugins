@@ -1,10 +1,5 @@
 var ForgePlugins = ForgePlugins || {};
 
-/**
- * This plugin is a wrapper around FORGE.TextField, allowing someone to create a
- * text field from a tour.json, without having to access the javascript code and
- * instantiate itself a FORGE.TextField.
- */
 ForgePlugins.SafariCORS = function()
 {
     this._frame = null;
@@ -12,14 +7,10 @@ ForgePlugins.SafariCORS = function()
     this._icon = null;
 };
 
-ForgePlugins.SafariCORS.prototype = {
-
-    /**
-     * The boot function
-     */
+ForgePlugins.SafariCORS.prototype =
+{
     boot: function()
     {
-
         this._frame = this.plugin.create.displayObjectContainer();
         this._frame.id = "forge-plugins-safari-alert-cors";
         this._frame.background = this.plugin.options.background;
@@ -42,39 +33,26 @@ ForgePlugins.SafariCORS.prototype = {
         this._icon.left = 10;
         this._frame.addChild(this._icon);
 
-        // Add the text field to the main container
         this.plugin.container.addChild(this._frame);
 
         this._check();
     },
 
-    /**
-     * Reload the configuration of the text field
-     */
     reset: function()
     {
         this._check();
     },
 
-    /**
-     * Show the text field
-     */
     show: function()
     {
         this._frame.show();
     },
 
-    /**
-     * Hide the text field
-     */
     hide: function()
     {
         this._frame.hide();
     },
 
-    /**
-     * Destroy the text field
-     */
     destroy: function()
     {
         this._frame = null;

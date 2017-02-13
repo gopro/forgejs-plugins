@@ -1,21 +1,13 @@
 var ForgePlugins = ForgePlugins || {};
 
-/**
- * This plugin is a wrapper around FORGE.TextField, allowing someone to create a
- * text field from a tour.json, without having to access the javascript code and
- * instantiate itself a FORGE.TextField.
- */
 ForgePlugins.MobileVideoPlay = function()
 {
     this._icon = null;
     this._video = null;
 };
 
-ForgePlugins.MobileVideoPlay.prototype = {
-
-    /**
-     * The boot function
-     */
+ForgePlugins.MobileVideoPlay.prototype =
+{
     boot: function()
     {
         this._icon = this.plugin.create.image(this.plugin.options.icon);
@@ -30,9 +22,6 @@ ForgePlugins.MobileVideoPlay.prototype = {
         this._setVideo();
     },
 
-    /**
-     * Reset
-     */
     reset: function()
     {
         this.viewer.renderer.onMediaReady.remove(this._setVideo, this);
@@ -40,25 +29,16 @@ ForgePlugins.MobileVideoPlay.prototype = {
         this._setVideo();
     },
 
-    /**
-     * Show the button
-     */
     show: function()
     {
         this._icon.show();
     },
 
-    /**
-     * Hide the button
-     */
     hide: function()
     {
         this._icon.hide();
     },
 
-    /**
-     * Destroy the plugin
-     */
     destroy: function()
     {
         this.viewer.renderer.onMediaReady.remove(this._setVideo, this);
@@ -70,9 +50,6 @@ ForgePlugins.MobileVideoPlay.prototype = {
         this._video = null;
     },
 
-    /**
-     * Get the video media
-     */
     _setVideo: function()
     {
         if(this.viewer.story.scene.config.media.type === "video")
