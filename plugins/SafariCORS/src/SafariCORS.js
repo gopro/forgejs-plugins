@@ -84,7 +84,7 @@ ForgePlugins.SafariCORS.prototype = {
 
     _check: function()
     {
-        if(FORGE.Device.safari === true && this.viewer.story.scene.config.media.type === "video")
+        if(typeof this.viewer.story.scene.config.media !== "undefined" && this.viewer.story.scene.config.media.type === "video")
         {
             var mediaConfig = this.viewer.story.scene.config.media;
             var mediaOptions = mediaConfig.options || {};
