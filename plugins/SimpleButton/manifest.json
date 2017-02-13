@@ -1,0 +1,60 @@
+{
+    "uid": "org.forgejs.simplebutton",
+    "name": "Simple Button",
+    "slug": "simplebutton",
+    "version": "1.0.0",
+    "versionName": "Simple Button 1.0.0",
+    "description": "Add a simple button",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "options":
+    {
+        "top": null,
+        "right": null,
+        "bottom": null,
+        "left": null,
+        "horizontalCenter": false,
+        "verticalCenter": false,
+
+        "width": null,
+        "height": null,
+
+        "defaultSkin": true,
+        "value": null,
+
+        "skin": {
+            "out": null,
+            "over": null,
+            "down": null
+        }
+    },
+
+    "events":
+    {
+        "onClick": null,
+        "onOver": null,
+        "onOut": null,
+        "onDown": null
+    },
+
+    "actions":
+    [
+        "show",
+        "hide"
+    ],
+
+
+    "sources":
+    [
+        "src/SimpleButton.js"
+    ],
+
+    "constructor": "ForgePlugins.SimpleButton"
+}

@@ -5,16 +5,14 @@ var ForgePlugins = ForgePlugins || {};
  * text field from a tour.json, without having to access the javascript code and
  * instantiate itself a FORGE.TextField.
  */
-ForgePlugins.SafariAlertCORS = function()
+ForgePlugins.SafariCORS = function()
 {
     this._frame = null;
     this._textField = null;
     this._icon = null;
-    this._button = null;
-    this._video = null;
 };
 
-ForgePlugins.SafariAlertCORS.prototype = {
+ForgePlugins.SafariCORS.prototype = {
 
     /**
      * The boot function
@@ -51,11 +49,6 @@ ForgePlugins.SafariAlertCORS.prototype = {
     },
 
     /**
-     * Placeholder, do nothing
-     */
-    update: function() {},
-
-    /**
      * Reload the configuration of the text field
      */
     reset: function()
@@ -87,7 +80,6 @@ ForgePlugins.SafariAlertCORS.prototype = {
         this._frame = null;
         this._textField = null;
         this._icon = null;
-        this._button = null;
     },
 
     _check: function()
