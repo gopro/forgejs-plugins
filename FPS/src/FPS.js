@@ -1,6 +1,5 @@
 var ForgePlugins = ForgePlugins || {};
 
-
 ForgePlugins.FPS = function()
 {
     this._stats = null;

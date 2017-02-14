@@ -292,7 +292,6 @@ ForgePlugins.VideoControls.prototype =
 
     reset: function()
     {
-        console.log("GoPro video UI reset");
         this._clearVideo();
         this._setupVideo();
     },
@@ -683,7 +682,6 @@ ForgePlugins.VideoControls.prototype =
 
     _bottomContainerTweenComplete: function()
     {
-        // console.log("_bottomContainerTweening");
         this._bottomContainerTweening = false;
     },
 

@@ -119,16 +119,6 @@ ForgePlugins.SimpleButton.prototype = {
     },
 
     /**
-     * Placeholder, do nothing
-     */
-    update: function() {},
-
-    /**
-     * Placeholder, do nothing
-     */
-    reset: function() {},
-
-    /**
      * Show the button
      */
     show: function()

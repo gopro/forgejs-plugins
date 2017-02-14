@@ -165,7 +165,6 @@ ForgePlugins.WebVRButton.prototype =
 
     destroy: function()
     {
-        this._btn.destroy();
         this._btn = null;
     }
 };

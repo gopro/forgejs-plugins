@@ -34,11 +34,6 @@ ForgePlugins.SimpleText.prototype = {
     },
 
     /**
-     * Placeholder, do nothing
-     */
-    update: function() {},
-
-    /**
      * Reload the configuration of the text field
      */
     reset: function()

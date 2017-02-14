@@ -84,16 +84,6 @@ ForgePlugins.SimpleImage.prototype = {
     },
 
     /**
-     * Placeholder, do nothing
-     */
-    update: function() {},
-
-    /**
-     * Placeholder, do nothing
-     */
-    reset: function() {},
-
-    /**
      * Show the image
      */
     show: function()

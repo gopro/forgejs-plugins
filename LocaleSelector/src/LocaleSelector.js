@@ -7,7 +7,6 @@ var ForgePlugins = ForgePlugins || {};
  */
 ForgePlugins.LocaleSelector = function()
 {
-    //
     this._container = null;
 
     // The list of flags
@@ -127,12 +126,6 @@ ForgePlugins.LocaleSelector.prototype =
         var locale = event.emitter.data.locale;
         this.viewer.i18n.locale = locale;
     },
-
-    /**
-     * Placeholder, do nothing
-     */
-    update: function()
-    {},
 
     /**
      * Show the flags

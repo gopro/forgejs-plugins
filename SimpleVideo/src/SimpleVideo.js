@@ -87,16 +87,6 @@ ForgePlugins.SimpleVideo.prototype = {
     },
 
     /**
-     * Placeholder, do nothing
-     */
-    update: function() {},
-
-    /**
-     * Placeholder, do nothing
-     */
-    reset: function() {},
-
-    /**
      * Play the video
      */
     play: function()
