@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="25px" height="26px" viewBox="0 0 25 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>FullScreen Enter</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="V1-&quot;Export-Raf&quot;" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="View-Title-Copy" sketch:type="MSLayerGroup" transform="translate(-814.000000, -437.000000)" fill="#FFFFFF">
+            <g id="Options-Right" transform="translate(672.080208, 373.334375)" sketch:type="MSShapeGroup">
+                <g id="full-screen-+-FullScreen-Enter" transform="translate(144.000000, 65.000000)">
+                    <g id="full-screen" transform="translate(0.002083, 0.454167)">
+                        <g id="Fill-1-+-Fill-2" transform="translate(1.000000, 2.000000)">
+                            <path d="M16.6556099,0.269899053 L10.5925061,0.269899053 C10.2425784,0.269899053 9.92643087,0.480375371 9.79217643,0.804318345 C9.65792199,1.12826132 9.73241155,1.50070912 9.98013265,1.74843022 L12.0926912,3.86185498 L9.24043398,6.71324608 L11.0775544,8.55123268 L13.9298117,5.69897543 L16.0432364,7.81153402 C16.2086726,7.97697014 16.4304089,8.06531822 16.6556099,8.06531822 C16.7673443,8.06531822 16.8799448,8.04453044 16.9873483,7.99949024 C17.3104251,7.86610196 17.5217676,7.54908824 17.5217676,7.19916054 L17.5217676,1.13605674 C17.5217676,0.657071539 17.133729,0.269899053 16.6556099,0.269899053" id="Fill-1"></path>
+                            <path d="M6.64196093,9.31171913 L3.78970367,12.1639764 L1.67714507,10.0514178 C1.42942397,9.80283054 1.05697617,9.72747482 0.733033194,9.86346158 C0.409956378,9.99771602 0.198613902,10.3138636 0.198613902,10.6637913 L0.198613902,16.7268951 C0.198613902,17.2058803 0.586652545,17.5930528 1.06477159,17.5930528 L7.12787539,17.5930528 C7.47780309,17.5930528 7.79395065,17.3825764 7.92820509,17.0586335 C8.06245953,16.7346905 7.98796997,16.3622427 7.74024887,16.1145216 L5.62769028,14.001963 L8.47908138,11.1488396 L6.64196093,9.31171913" id="Fill-2"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

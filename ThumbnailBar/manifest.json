@@ -1,0 +1,83 @@
+{
+    "uid": "org.forgejs.thumbnailbar",
+    "name": "Thumbnail Bar",
+    "slug": "thumbnailbar",
+    "version": "1.0.0",
+    "versionName": "Thumbnail Bar 1.0.0",
+    "description": "Add a Thumbnail bar to your story.",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "options":
+    {
+        "container":
+        {
+            "position": "bottom",
+            "alignment": "center",
+            "orientation": "horizontal",
+            "size": "20%",
+
+            "background": "rgba(240, 240, 240, 0.5)",
+            "borderRadius": 0,
+
+            "animation": false,
+            "tweenFunctionIn": "easeOutBounce",
+            "tweenFunctionOut": "easeInQuad"
+        },
+
+        "thumbnail":
+        {
+            "height": 120,
+            "width": 120,
+            "margin": 5,
+
+            "borderWidth": 5,
+            "borderRadius": 5,
+            "borderColor": "rgb(240, 240, 240)",
+            "borderColorOver": "rgb(220, 220, 220)"
+        },
+
+        "navigation":
+        {
+            "enabled": true,
+            "type": "click",
+            "step": 125,
+
+            "width": 30,
+            "height": 120,
+            "background": "url('{{plugin_url}}assets/arrow.png') center no-repeat rgba(240, 240, 240, 0.5)",
+            "borderRadius": 0,
+
+            "tweenFunction": "easeInOutQuad"
+        },
+
+        "tooltip":
+        {
+            "enabled": true,
+            "position": "bottom",
+
+            "padding": 3,
+            "borderRadius": "0 0 5px 5px",
+            "color": "rgb(30, 30, 30)",
+            "background": "rgb(220, 220, 220)",
+            "font": "12px sans-serif",
+
+            "animation": true,
+            "tweenFunctionIn": "easeInQuad",
+            "tweenFunctionOut": "easeInQuad"
+        }
+    },
+
+    "sources":
+    [
+        "src/ThumbnailBar.js"
+    ],
+
+    "constructor": "ForgePlugins.ThumbnailBar"
+}

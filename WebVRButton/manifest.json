@@ -1,0 +1,32 @@
+{
+    "uid": "org.forgejs.webvrbutton",
+    "name": "WebVR Button",
+    "slug": "webvr-button",
+    "version": "1.0.0",
+    "versionName": "WebVR Button 1.0.0",
+    "description": "Add a simple button, allowing to switch to the WebVR view.",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "options":
+    {
+        "position": "bottomRight",
+        "offset": 20,
+
+        "on": "assets/hmd360on.png",
+        "off": "assets/hmd360off.png"
+    },
+
+    "sources":
+    [
+        "src/WebVRButton.js"
+    ],
+
+    "constructor": "ForgePlugins.WebVRButton"
+}

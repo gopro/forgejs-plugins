@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="14px" height="19px" viewBox="0 0 14 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>Pause Button</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="V1-&quot;Export-Raf&quot;" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Real" sketch:type="MSLayerGroup" transform="translate(-75.000000, -992.000000)" fill="#F9FAFA">
+            <g id="Options-Left" transform="translate(24.000000, 967.000000)" sketch:type="MSShapeGroup">
+                <g id="icon-Sound">
+                    <g id="Pause-V2">
+                        <g id="Fill-1-+-Fill-2" transform="translate(51.000000, 25.000000)">
+                            <path d="M12.2692377,0.492826705 L10.4342377,0.492826705 C9.9277777,0.492826705 9.51673769,0.903866714 9.51673769,1.41032672 L9.51673769,17.9253271 C9.51673769,18.4317871 9.9277777,18.8428271 10.4342377,18.8428271 L12.2692377,18.8428271 C12.7756978,18.8428271 13.1867378,18.4317871 13.1867378,17.9253271 L13.1867378,1.41032672 C13.1867378,0.903866714 12.7756978,0.492826705 12.2692377,0.492826705" id="Fill-1"></path>
+                            <path d="M3.27401994,0.492826705 L1.4390199,0.492826705 C0.932559894,0.492826705 0.521519885,0.903866714 0.521519885,1.41032672 L0.521519885,17.9253271 C0.521519885,18.4317871 0.932559894,18.8428271 1.4390199,18.8428271 L3.27401994,18.8428271 C3.78047995,18.8428271 4.19151996,18.4317871 4.19151996,17.9253271 L4.19151996,1.41032672 C4.19151996,0.903866714 3.78047995,0.492826705 3.27401994,0.492826705" id="Fill-2"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,59 @@
+{
+    "uid": "org.forgejs.simplevideo",
+    "name": "Simple Video",
+    "shortName": "simplevideo",
+    "version": "1.0.0",
+    "versionName": "Simple Video 1.0.0",
+    "description": "Add a simple video (not 360)",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "data":
+    {
+        "streaming": "HTML5"
+    },
+
+    "options":
+    {
+        "top": null,
+        "left": null,
+        "right": null,
+        "bottom": null,
+        "horizontalCenter": false,
+        "verticalCenter": false,
+
+        "width": null,
+        "height": null,
+
+        "autoPlay": false,
+        "loop": false,
+        "volume": 1
+    },
+
+    "events":
+    {
+        "onPlay": null,
+        "onPause": null,
+        "onSeeked": null,
+        "onEnded": null
+    },
+
+    "actions":
+    [
+        "play",
+        "pause"
+    ],
+
+    "sources":
+    [
+        "src/SimpleVideo.js"
+    ],
+
+    "constructor": "ForgePlugins.SimpleVideo"
+}

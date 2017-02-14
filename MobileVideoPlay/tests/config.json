@@ -1,0 +1,148 @@
+{
+    "story":
+    {
+        "uid": "mobile-video-play",
+        "name": "Mobile video play",
+        "slug": "mobile-video-play",
+        "description": "This is a test project for the MobileVideoPlay plugin",
+
+        "scenes":
+        [
+            {
+                "uid": "scene-0",
+                "name": "Video equi scene",
+                "slug": "video-equi-scene",
+                "description": "This scene has an eqirectangular video media",
+
+                "media":
+                {
+                    "uid": "media-0",
+                    "type": "video",
+
+                    "source":
+                    {
+                        "format": "equi",
+                        "levels":
+                        [
+                            { "url": "https://cdn.forgejs.org/samples/common/videos/omni-highlights/source.02-720p_HD.mp4" },
+                            { "url": "https://cdn.forgejs.org/samples/common/videos/omni-highlights/source.03-1080p_HD.mp4" },
+                            { "url": "https://cdn.forgejs.org/samples/common/videos/omni-highlights/source.04-1440p_HD.mp4" },
+                            { "url": "https://cdn.forgejs.org/samples/common/videos/omni-highlights/source.07-2160p_4K_H264_12M.mp4" }
+                        ]
+                    },
+
+                    "options":
+                    {
+                        "autoPlay": true,
+                        "loop": true,
+                        "volume": 0
+                    }
+                }
+            },
+
+            {
+                "uid": "scene-1",
+                "name": "Image cubemap scene",
+                "slug": "image-cubemap-scene",
+                "description": "This scene has a cubemap image media",
+
+                "media":
+                {
+                    "uid": "media-1",
+                    "type": "image",
+
+                    "source":
+                    {
+                        "format": "cube",
+                        "order": "RLUDFB",
+                        "tile": 960,
+                        "url": "https://cdn.forgejs.org/samples/common/panos/02-sand-cube.jpg"
+                    }
+                }
+            }
+        ]
+    },
+
+    "actions":
+    [
+        {
+            "uid": "action-prev",
+            "target": "viewer.story",
+
+            "method":
+            {
+                "name": "previousScene"
+            }
+        },
+
+        {
+            "uid": "action-next",
+            "target": "viewer.story",
+
+            "method":
+            {
+                "name": "nextScene"
+            }
+        }
+    ],
+
+    "plugins":
+    {
+        "prefix": "../../plugins/",
+
+        "engines":
+        [
+            {
+                "uid": "org.forgejs.mobilevideoplay",
+                "url": "MobileVideoPlay/"
+            },
+
+            {
+                "uid": "org.forgejs.simplebutton",
+                "url": "SimpleButton/"
+            }
+        ],
+
+        "instances":
+        [
+            {
+                "uid": "mobilevideoplay",
+                "engine": "org.forgejs.mobilevideoplay"
+            },
+
+            {
+                "uid": "simplebutton-previous",
+                "engine": "org.forgejs.simplebutton",
+
+                "options":
+                {
+                    "left": 5,
+                    "verticalCenter": true,
+                    "value": "Previous"
+                },
+
+                "events":
+                {
+                    "onClick": ["action-prev"]
+                }
+            },
+
+            {
+                "uid": "simplebutton-next",
+                "engine": "org.forgejs.simplebutton",
+
+                "options":
+                {
+                    "right": 5,
+                    "verticalCenter": true,
+                    "value": "Next"
+                },
+
+                "events":
+                {
+                    "onClick": ["action-next"]
+                }
+            }
+        ]
+    }
+}

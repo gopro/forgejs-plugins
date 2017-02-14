@@ -1,0 +1,47 @@
+{
+    "uid": "org.forgejs.localeselector",
+    "name": "Locale Selector",
+    "slug": "localeselector",
+    "version": "1.0.0",
+    "versionName": "Locale Selector 1.0.0",
+    "description": "Add a locale selector, using flags, to the project.",
+    "tags": ["i18n", "locale", "multilingual"],
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "options":
+    {
+        "top": null,
+        "right": null,
+        "bottom": null,
+        "left": null,
+        "horizontalCenter": false,
+        "verticalCenter": false,
+
+        "flagWidth": 62,
+        "flagHeight": 46,
+        "flagMargin": 5,
+
+        "baseURL": "{{plugin_url}}assets/",
+        "fileName": "flag_{{locale}}.png"
+    },
+
+    "actions":
+    [
+        "show",
+        "hide"
+    ],
+
+    "sources":
+    [
+        "src/LocaleSelector.js"
+    ],
+
+    "constructor": "ForgePlugins.LocaleSelector"
+}
