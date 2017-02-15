@@ -1,6 +1,6 @@
 var ForgePlugins = ForgePlugins || {};
 
-ForgePlugins.FPS = function()
+ForgePlugins.PerformanceMonitor = function()
 {
     this._container = null;
     this._stats = null;
@@ -9,7 +9,7 @@ ForgePlugins.FPS = function()
     this._modes = ["fps", "ms", "mb"];
 };
 
-ForgePlugins.FPS.prototype =
+ForgePlugins.PerformanceMonitor.prototype =
 {
     boot: function()
     {
@@ -19,8 +19,14 @@ ForgePlugins.FPS.prototype =
         this._container.width = 80 * pixelRatio;
         this._container.height = 48 * pixelRatio;
         this._container.pointer.cursor = "pointer";
-        this._container.drag.enabled = true;
+        this._container.drag.enabled = this.plugin.options.draggable;
         this._container.pointer.onClick.add(this._clickHandler, this);
+        this._container.top = this.plugin.options.top;
+        this._container.right = this.plugin.options.right;
+        this._container.bottom = this.plugin.options.bottom;
+        this._container.left = this.plugin.options.left;
+        this._container.horizontalCenter = this.plugin.options.horizontalCenter;
+        this._container.verticalCenter = this.plugin.options.verticalCenter;
         this.plugin.container.addChild(this._container);
 
         this._stats = new Stats();
