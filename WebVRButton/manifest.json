@@ -14,10 +14,15 @@
 
     "licence": "Apache 2",
 
+    "device":
+    {
+        "webVR": true
+    },
+
     "options":
     {
-        "position": "bottomRight",
-        "offset": 20,
+        "bottom": 20,
+        "right": 20,
 
         "on": "assets/hmd360on.png",
         "off": "assets/hmd360off.png"

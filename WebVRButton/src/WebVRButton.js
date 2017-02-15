@@ -1,7 +1,7 @@
 var ForgePlugins = ForgePlugins || {};
 
 /**
- * The plugin provides a button
+ * The plugin provides a button for WebVR toggle
  */
 ForgePlugins.WebVRButton = function()
 {
@@ -12,6 +12,22 @@ ForgePlugins.WebVRButton = function()
      * @private
      */
     this._btn = null;
+
+    /**
+     * The skin state for off button
+     * @name ForgePlugins.WebVRButton#_btnSkinOff
+     * @type {ButtonSkinStateConfig}
+     * @private
+     */
+    this._btnSkinOff = null;
+
+    /**
+     * The skin state for off button
+     * @name ForgePlugins.WebVRButton#_btnSkinOn
+     * @type {ButtonSkinStateConfig}
+     * @private
+     */
+    this._btnSkinOn = null;
 
     /**
      * Is the VR activated?
@@ -31,79 +47,34 @@ ForgePlugins.WebVRButton.prototype =
     {
         // Create the button
         this._btn = this.plugin.create.button();
+        this._btn.top = this.plugin.options.top;
+        this._btn.right = this.plugin.options.right;
+        this._btn.bottom = this.plugin.options.bottom;
+        this._btn.left = this.plugin.options.left;
+        this._btn.horizontalCenter = this.plugin.options.horizontalCenter;
+        this._btn.verticalCenter = this.plugin.options.verticalCenter;
 
-        // Parse the value of the position
-        var vPos, hPos;
+        var off =
+        {
+            autoWidth: false,
+            autoHeight: false,
+            image: { url: this.plugin.fullUrl + this.plugin.options.off },
+            label: { value: "" }
+        };
+        this._btnSkinOff = FORGE.Utils.extendMultipleObjects(this._btn.skin.out, off);
 
-        switch(this.plugin.options.position)
+        var on =
         {
-            case "topLeft":
-                vPos = "top";
-                hPos = "left";
-                break;
-            case "top":
-                vPos = "top";
-                hPos = "center";
-                break;
-            case "topRight":
-                vPos = "top";
-                hPos = "right";
-                break;
-            case "left":
-                vPos = "center";
-                hPos = "left";
-                break;
-            case "right":
-                vPos = "center";
-                hPos = "right";
-                break;
-            case "bottomLeft":
-                vPos = "bottom";
-                hPos = "left";
-                break;
-            case "bottom":
-                vPos = "bottom";
-                hPos = "center";
-                break;
-            default:
-                vPos = "bottom";
-                hPos = "right";
-                break;
-        }
-
-        if (vPos === "center")
-        {
-            this._btn.verticalCenter = true;
-        }
-        else if (vPos === "top" || vPos === "bottom")
-        {
-            this._btn[vPos] = this.plugin.options.offset;
-        }
-
-        if (hPos === "center")
-        {
-            this._btn.horizontalCenter = true;
-        }
-        else if (hPos === "left" || hPos === "right")
-        {
-            this._btn[hPos] = this.plugin.options.offset;
-        }
+            autoWidth: false,
+            autoHeight: false,
+            image: { url: this.plugin.fullUrl + this.plugin.options.on },
+            label: { value: "" }
+        };
+        this._btnSkinOn = FORGE.Utils.extendMultipleObjects(this._btn.skin.out, on);
 
         // Add the skin
-        this._btn.skin.out = FORGE.Utils.extendMultipleObjects(this._btn.skin.out,
-            {
-                autoWidth: false,
-                autoHeight: false,
-                image: { url: this.plugin.fullUrl + this.plugin.options.off },
-                label: { value: "" }
-            });
-        this._btn.skin.over = FORGE.Utils.extendMultipleObjects(this._btn.skin.out,
-            {
-                autoWidth: false,
-                autoHeight: false,
-                image: { url: this.plugin.fullUrl + this.plugin.options.on },
-                label: { value: "" }
-            });
+        this._btn.skin.out = this._btnSkinOff;
+        this._btn.skin.over = this._btnSkinOn;
         this._btn.skin.down = this._btn.skin.over;
 
         // Apply the skin
@@ -127,38 +98,14 @@ ForgePlugins.WebVRButton.prototype =
 
         if (this._vrActivated === true)
         {
-            this._btn.skin.out = FORGE.Utils.extendMultipleObjects(this._btn.skin.out,
-                {
-                    autoWidth: false,
-                    autoHeight: false,
-                    image: { url: this.plugin.fullUrl + this.plugin.options.on },
-                    label: { value: "" }
-                });
-            this._btn.skin.over = FORGE.Utils.extendMultipleObjects(this._btn.skin.out,
-                {
-                    autoWidth: false,
-                    autoHeight: false,
-                    image: { url: this.plugin.fullUrl + this.plugin.options.off },
-                    label: { value: "" }
-                });
+            this._btn.skin.out = this._btnSkinOn;
+            this._btn.skin.over = this._btnSkinOff;
             this._btn.skin.down = this._btn.skin.over;
         }
         else
         {
-            this._btn.skin.out = FORGE.Utils.extendMultipleObjects(this._btn.skin.out,
-                {
-                    autoWidth: false,
-                    autoHeight: false,
-                    image: { url: this.plugin.fullUrl + this.plugin.options.off },
-                    label: { value: "" }
-                });
-            this._btn.skin.over = FORGE.Utils.extendMultipleObjects(this._btn.skin.out,
-                {
-                    autoWidth: false,
-                    autoHeight: false,
-                    image: { url: this.plugin.fullUrl + this.plugin.options.on },
-                    label: { value: "" }
-                });
+            this._btn.skin.out = this._btnSkinOff;
+            this._btn.skin.over = this._btnSkinOn;
             this._btn.skin.down = this._btn.skin.over;
         }
     },
