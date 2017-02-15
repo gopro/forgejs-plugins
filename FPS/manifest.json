@@ -20,7 +20,7 @@
 
     "options":
     {
-        "icon": "assets/play.png"
+        "mode": 0
     },
 
     "actions":
