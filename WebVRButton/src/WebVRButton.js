@@ -58,6 +58,7 @@ ForgePlugins.WebVRButton.prototype =
         {
             autoWidth: false,
             autoHeight: false,
+            background: this.plugin.options.background,
             image: { url: this.plugin.fullUrl + this.plugin.options.off },
             label: { value: "" }
         };
@@ -67,6 +68,7 @@ ForgePlugins.WebVRButton.prototype =
         {
             autoWidth: false,
             autoHeight: false,
+            background: this.plugin.options.background,
             image: { url: this.plugin.fullUrl + this.plugin.options.on },
             label: { value: "" }
         };

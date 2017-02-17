@@ -21,11 +21,16 @@
 
     "options":
     {
-        "bottom": 20,
-        "right": 20,
+        "top": null,
+        "right": null,
+        "bottom": null,
+        "left": null,
+        "horizontalCenter": false,
+        "verticalCenter": false,
 
-        "on": "assets/hmd360on.png",
-        "off": "assets/hmd360off.png"
+        "on": "assets/WebVR-on.png",
+        "off": "assets/WebVR-off.png",
+        "background": ""
     },
 
     "sources":
