@@ -23,6 +23,9 @@
         "horizontalCenter": false,
         "verticalCenter": false,
 
+        "maximized": false,
+        "keepRatio": true,
+
         "width": null,
         "height": null,
 

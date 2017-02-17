@@ -54,6 +54,30 @@ ForgePlugins.VideoControls.prototype =
         this.viewer.container.pointer.onMove.add(this._onMouseMove, this);
         this.viewer.container.pointer.onLeave.add(this._onMouseLeave, this);
 
+        this._splash = this.plugin.create.displayObjectContainer();
+        this._splash.maximize(true);
+        this._splash.background = this.plugin.options.splashColor;
+        this._splash.alpha = 1.0;
+        this._splash.pointer.enabled = true;
+        this._splash.pointer.onClick.add(this._splashClickHandler, this);
+        this.plugin.container.addChild(this._splash);
+
+        if(this.plugin.options.poster !== null)
+        {
+            this._poster = this.plugin.create.image(this.plugin.options.poster, false);
+            this._poster.verticalCenter = true;
+            this._poster.horizontalCenter = true;
+            if (window.innerWidth > window.innerHeight || this._poster.width > this._poster.height)
+            {
+                this._poster.width = window.innerWidth;
+            }
+            else
+            {
+                this._poster.height = window.innerHeight;
+            }
+            this._splash.addChild(this._poster);
+        }
+
         this._bottomContainer = this.plugin.create.displayObjectContainer();
         this._bottomContainer.width = "100%";
         this._bottomContainer.height = "128px";
@@ -262,30 +286,6 @@ ForgePlugins.VideoControls.prototype =
         //Add the spinner then the quality button
         this._buttonBar.addChild(this._spinner);
         this._buttonBar.addChild(this._qualityMenuButton);
-
-        this._splash = this.plugin.create.displayObjectContainer();
-        this._splash.maximize(true);
-        this._splash.background = "black";
-        this._splash.alpha = 0.7;
-        this._splash.pointer.enabled = true;
-        this._splash.pointer.onClick.add(this._splashClickHandler, this);
-        this.plugin.container.addChild(this._splash);
-
-        if(this.plugin.options.poster !== null)
-        {
-            this._poster = this.plugin.create.image(this.plugin.options.poster, false);
-            this._poster.verticalCenter = true;
-            this._poster.horizontalCenter = true;
-            if (window.innerWidth > window.innerHeight || this._poster.width > this._poster.height)
-            {
-                this._poster.width = window.innerWidth;
-            }
-            else
-            {
-                this._poster.height = window.innerHeight;
-            }
-            this._splash.addChild(this._poster);
-        }
 
         this._setupVideo();
     },

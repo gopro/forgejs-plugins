@@ -15,7 +15,8 @@
 
     "options":
     {
-        "poster": null
+        "poster": null,
+        "splashColor": "black"
     },
 
     "sources":
