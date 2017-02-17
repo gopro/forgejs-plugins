@@ -16,3 +16,15 @@
     font-family: pfdintextprobold;
     src: url("../assets/fonts/pfdintextpro-bold.otf") format("opentype");
 }
+
+@font-face
+{
+    font-family: frutigerlight;
+    src: url('../assets/fonts/Frutiger47-CondensedLight.ttf');
+}
+
+@font-face
+{
+    font-family: frutigerbold;
+    src: url('../assets/fonts/Frutiger67-Condensed-Bold.ttf');
+}
