@@ -1,0 +1,39 @@
+{
+    "uid": "org.forgejs.previousnextbuttons",
+    "name": "Previous Next Buttons",
+    "slug": "previousnextbuttons",
+    "version": "1.0.0",
+    "versionName": "Previous Next Buttons 1.0.0",
+    "description": "Add two buttons for previous and next scenes navigation",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "options":
+    {
+        "previous": "assets/previous-button.png",
+        "next": "assets/next-button.png",
+
+        "offset": 10,
+        "width": 50,
+        "height": 50
+    },
+
+    "actions":
+    [
+        "show",
+        "hide"
+    ],
+
+    "sources":
+    [
+        "src/PreviousNextButtons.js"
+    ],
+
+    "constructor": "ForgePlugins.PreviousNextButtons"
+}
