@@ -15,12 +15,12 @@
     "viewer":
     {
         "min": "0.9.0",
-        "max": "0.9.0"
+        "max": "0.9.1"
     },
 
     "device":
     {
-        "mobile": true
+        "desktop": true
     },
 
     "options":
