@@ -20,7 +20,7 @@
 
     "device":
     {
-        "desktop": true
+        "mobile": true
     },
 
     "options":
