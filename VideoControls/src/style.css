@@ -1,30 +1,12 @@
 
 @font-face
 {
-    font-family: pfdintextprolight;
-    src: url("../assets/fonts/pfdintextpro-light.otf") format("opentype");
+    font-family: dosislight;
+    src: url("../assets/fonts/Dosis-Light.ttf");
 }
 
 @font-face
 {
-    font-family: pfdintextpromedium;
-    src: url("../assets/fonts/pfdintextpro-medium.otf") format("opentype");
-}
-
-@font-face
-{
-    font-family: pfdintextprobold;
-    src: url("../assets/fonts/pfdintextpro-bold.otf") format("opentype");
-}
-
-@font-face
-{
-    font-family: frutigerlight;
-    src: url('../assets/fonts/Frutiger47-CondensedLight.ttf');
-}
-
-@font-face
-{
-    font-family: frutigerbold;
-    src: url('../assets/fonts/Frutiger67-Condensed-Bold.ttf');
+    font-family: dosisbold;
+    src: url("../assets/fonts/Dosis-Bold.ttf");
 }

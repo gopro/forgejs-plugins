@@ -199,7 +199,7 @@ ForgePlugins.VideoControls.prototype =
         this._totalTime.lineHeight = "60px";
         this._totalTime.right = 0;
         this._totalTime.color = "white";
-        this._totalTime.fontFamily = "pfdintextprobold,frutigerbold";
+        this._totalTime.fontFamily = "dosisbold, sans-serif";
         this._timeContainer.addChild(this._totalTime);
 
         this._timeSeparator = this.plugin.create.textField();
@@ -219,7 +219,7 @@ ForgePlugins.VideoControls.prototype =
         this._currentTime.height = "100%";
         this._currentTime.lineHeight = "60px";
         this._currentTime.color = "white";
-        this._currentTime.fontFamily = "pfdintextprolight,frutigerlight";
+        this._currentTime.fontFamily = "dosislight, sans-serif";
         this._currentTime.right = (this._timeContainer.width - this._timeSeparator.x);
 
         //Seek bar ================================
@@ -263,7 +263,7 @@ ForgePlugins.VideoControls.prototype =
         //Button showing the current quality in the bottom main button bar ================
 
         var qualityMenuButtonSkin = new FORGE.ButtonSkin("qualityMenu");
-        qualityMenuButtonSkin.out.label = {value: "QUALITY", color: "white", fontFamily: "pfdintextprobold,frutigerbold", fontSize: 18};
+        qualityMenuButtonSkin.out.label = {value: "QUALITY", color: "white", fontFamily: "dosisbold, sans-serif", fontSize: 18};
         qualityMenuButtonSkin.out.autoWidth = false;
         qualityMenuButtonSkin.out.autoHeight = false;
 
@@ -348,14 +348,14 @@ ForgePlugins.VideoControls.prototype =
             qualities[i].name = this._qualityNames[i];
 
             skin = new FORGE.ButtonSkin("light");
-            skin.out.label = {value: this._qualityNames[i], color: "white", fontFamily: "pfdintextprolight,frutigerlight", fontSize: 28};
+            skin.out.label = {value: this._qualityNames[i], color: "white", fontFamily: "dosislight, sans-serif", fontSize: 28};
             skin.out.autoWidth = false;
             skin.out.autoHeight = false;
             skin.out.align = "center";
             qualitySkins.push(skin);
 
             skin = new FORGE.ButtonSkin("bold");
-            skin.out.label = {value: this._qualityNames[i], color: "white", fontFamily: "pfdintextprobold,frutigerbold"};
+            skin.out.label = {value: this._qualityNames[i], color: "white", fontFamily: "dosisbold, sans-serif"};
             skin.out.autoWidth = false;
             skin.out.autoHeight = false;
             skin.out.align = "center";
@@ -391,13 +391,13 @@ ForgePlugins.VideoControls.prototype =
 
         //Skin for the AUTO button
         var skinAuto = new FORGE.ButtonSkin("light");
-        skinAuto.out.label = {value: "AUTO", color: "white", fontFamily: "pfdintextprolight,frutigerlight", fontSize: 28};
+        skinAuto.out.label = {value: "AUTO", color: "white", fontFamily: "dosislight, sans-serif", fontSize: 28};
         skinAuto.out.autoWidth = false;
         skinAuto.out.autoHeight = false;
         skinAuto.out.align = "center";
 
         var skinAutoSelected = new FORGE.ButtonSkin("bold");
-        skinAutoSelected.out.label = {value: "AUTO", color: "white", fontFamily: "pfdintextprobold,frutigerbold", fontSize: 28};
+        skinAutoSelected.out.label = {value: "AUTO", color: "white", fontFamily: "dosisbold, sans-serif", fontSize: 28};
         skinAutoSelected.out.autoWidth = false;
         skinAutoSelected.out.autoHeight = false;
         skinAutoSelected.out.align = "center";
