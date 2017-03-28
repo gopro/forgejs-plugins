@@ -52,7 +52,7 @@ ForgePlugins.Debug.prototype =
     _addView: function()
     {
         this._view = this._gui.addFolder("View");
-        this._view.add(this.viewer.renderer.view, "type", ["rectilinear", "gopro"]);
+        this._view.add(this.viewer.renderer.view, "type", ["rectilinear", "gopro", "flat"]).listen();
     },
 
     _addStory: function()
