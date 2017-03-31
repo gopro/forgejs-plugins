@@ -6,36 +6,12 @@ var ForgePlugins = ForgePlugins || {};
 ForgePlugins.GyroscopeButton = function()
 {
     /**
-     * The real button.
-     * @name ForgePlugins.GyroscopeButton#_btn
-     * @type {FORGE.Button}
+     * The image that is the button. It is made of a single sprite that got two frames.
+     * @name ForgePlugins.GyroscopeButton#_image
+     * @type {FORGE.Image}
      * @private
      */
-    this._btn = null;
-
-    /**
-     * The skin state for off button
-     * @name ForgePlugins.GyroscopeButton#_btnSkinOff
-     * @type {ButtonSkinStateConfig}
-     * @private
-     */
-    this._btnSkinOff = null;
-
-    /**
-     * The skin state for off button
-     * @name ForgePlugins.GyroscopeButton#_btnSkinOn
-     * @type {ButtonSkinStateConfig}
-     * @private
-     */
-    this._btnSkinOn = null;
-
-    /**
-     * Is the VR activated?
-     * @name ForgePlugins.GyroscopeButton#_gyroActivated
-     * @type {boolean}
-     * @private
-     */
-    this._gyroActivated = false;
+    this._image = null;
 };
 
 ForgePlugins.GyroscopeButton.prototype =
@@ -45,78 +21,61 @@ ForgePlugins.GyroscopeButton.prototype =
      */
     boot: function()
     {
-        // Create the button
-        this._btn = this.plugin.create.button();
-        this._btn.top = this.plugin.options.top;
-        this._btn.right = this.plugin.options.right;
-        this._btn.bottom = this.plugin.options.bottom;
-        this._btn.left = this.plugin.options.left;
-        this._btn.horizontalCenter = this.plugin.options.horizontalCenter;
-        this._btn.verticalCenter = this.plugin.options.verticalCenter;
-
-        var off =
-        {
-            autoWidth: false,
-            autoHeight: false,
-            background: this.plugin.options.background,
-            image: { url: this.plugin.fullUrl + this.plugin.options.off },
-            label: { value: "" }
+        var config = {
+            url: this.plugin.fullUrl + this.plugin.options.image,
         };
-        this._btnSkinOff = FORGE.Utils.extendMultipleObjects(this._btn.skin.out, off);
 
-        var on =
-        {
-            autoWidth: false,
-            autoHeight: false,
-            background: this.plugin.options.background,
-            image: { url: this.plugin.fullUrl + this.plugin.options.on },
-            label: { value: "" }
-        };
-        this._btnSkinOn = FORGE.Utils.extendMultipleObjects(this._btn.skin.out, on);
+        this._image = this.plugin.create.image(config);
+        this._image.top = this.plugin.options.top;
+        this._image.right = this.plugin.options.right;
+        this._image.bottom = this.plugin.options.bottom;
+        this._image.left = this.plugin.options.left;
+        this._image.horizontalCenter = this.plugin.options.horizontalCenter;
+        this._image.verticalCenter = this.plugin.options.verticalCenter;
+        this._image.width = 64;
+        this._image.height = 64;
 
-        // Add the skin
-        this._skinChange();
+        this.plugin.container.addChild(this._image);
 
-        this._btn.width = 40;
-        this._btn.height = 40;
+        this._image.pointer.enabled = true;
+        this._image.pointer.cursor = FORGE.Pointer.cursors.POINTER;
+        this._image.pointer.onClick.add(this._imageClickHandler, this);
+        this._image.pointer.onOver.add(this._imageOverHandler, this);
+        this._image.pointer.onOut.add(this._imageOutHandler, this);
 
-        // Add the button
-        this.plugin.container.addChild(this._btn);
-
-        // Add on click event
-        this._btn.pointer.onClick.add(this._btnClickHandler, this);
+        this._imageChange(this.viewer.controllers.gyroscope);
     },
 
-    _btnClickHandler: function()
+    _imageClickHandler: function()
     {
         this.viewer.controllers.gyroscope = !this.viewer.controllers.gyroscope;
-
-        this._skinChange();
+        this._imageChange(this.viewer.controllers.gyroscope);
     },
 
-    _skinChange: function()
+    _imageOverHandler: function()
     {
-        this._gyroActivated = this.viewer.controllers.gyroscope;
+        this._imageChange(!this.viewer.controllers.gyroscope);
+    },
 
-        if (this._gyroActivated === true)
+    _imageOutHandler: function()
+    {
+        this._imageChange(this.viewer.controllers.gyroscope);
+    },
+
+    _imageChange: function(on)
+    {
+        var frame = { x: 0, y: 64, w: 64, h: 64 };
+
+        if (on === true)
         {
-            this._btn.skin.out = this._btnSkinOn;
-            this._btn.skin.over = this._btnSkinOff;
-            this._btn.skin.down = this._btn.skin.over;
-        }
-        else
-        {
-            this._btn.skin.out = this._btnSkinOff;
-            this._btn.skin.over = this._btnSkinOn;
-            this._btn.skin.down = this._btn.skin.over;
+            frame.y = 0;
         }
 
-        // Apply the skin
-        this._btn.updateSkin();
+        this._image.frame = frame;
     },
 
     destroy: function()
     {
-        this._btn = null;
+        this._image = null;
     }
 };

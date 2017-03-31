@@ -34,9 +34,7 @@
         "horizontalCenter": false,
         "verticalCenter": false,
 
-        "on": "assets/WebVR-on.png",
-        "off": "assets/WebVR-off.png",
-        "background": ""
+        "image": "assets/webvr.png"
     },
 
     "sources":
