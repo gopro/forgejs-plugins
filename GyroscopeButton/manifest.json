@@ -20,6 +20,10 @@
         "max": "0.9.2"
     },
 
+    "device":
+    {
+        "gyroscope": true
+    },
 
     "options":
     {
