@@ -11,6 +11,8 @@ ForgePlugins.Debug = function()
 
     this._story = null;
 
+    this._scene = null;
+
     this._canvas = null;
 
     this._options =
@@ -32,11 +34,14 @@ ForgePlugins.Debug.prototype =
 
         this._gui = new dat.GUI();
 
+        this._gui.add(FORGE, "VERSION");
+
         this._addCamera();
         this._addView();
         this._addStory();
+        this._addScene();
 
-        this.viewer.view.onChange.add(this._onViewChange, this);
+        this.viewer.story.onSceneLoadComplete.add(this._onSceneLoadCompleteHandler, this);
     },
 
     _addCamera: function()
@@ -69,6 +74,28 @@ ForgePlugins.Debug.prototype =
             this._story.add(this.viewer.story, "groupUid", this.viewer.story.groupUids).name("group").listen();
         }
 
+    },
+
+    _addScene: function()
+    {
+        this._scene = this._gui.addFolder("Scene");
+        this._scene.add(this.viewer.story.scene, "uid");
+        this._scene.add(this.viewer.story.scene, "name");
+        this._scene.add(this.viewer.story.scene, "slug");
+        this._scene.add(this.viewer.story.scene, "viewCount");
+    },
+
+    _onSceneLoadCompleteHandler: function()
+    {
+        var controller;
+
+        for(var i = 0, ii = this._scene.__controllers.length; i < ii; i++)
+        {
+            controller = this._scene.__controllers[i];
+            controller.object = this.viewer.story.scene;
+        }
+
+        this._scene.updateDisplay();
     },
 
     update: function()
