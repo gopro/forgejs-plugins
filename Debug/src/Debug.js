@@ -35,15 +35,19 @@ ForgePlugins.Debug.prototype =
         this._addCamera();
         this._addView();
         this._addStory();
+
+        this.viewer.view.onChange.add(this._onViewChange, this);
     },
 
     _addCamera: function()
     {
         this._camera = this._gui.addFolder("Camera");
-        this._camera.add(this.viewer.camera, "yaw", -180, 180).listen();
-        this._camera.add(this.viewer.camera, "pitch", -90, 90).listen();
-        this._camera.add(this.viewer.camera, "roll", -180, 180).listen();
-        this._camera.add(this.viewer.camera, "fov", this.viewer.camera.fovMin, this.viewer.camera.fovMax).listen();
+
+        var camera = viewer.camera;
+        this._camera.add(this.viewer.camera, "yaw").listen();
+        this._camera.add(this.viewer.camera, "pitch").listen();
+        this._camera.add(this.viewer.camera, "roll").listen();
+        this._camera.add(this.viewer.camera, "fov").listen();
         this._camera.add(this.viewer.camera, "parallax", 0, 1).listen();
 
         this._camera.add(this._options, "cross").name("cross");
@@ -58,8 +62,13 @@ ForgePlugins.Debug.prototype =
     _addStory: function()
     {
         this._story = this._gui.addFolder("Story");
-        this._story.add(this.viewer.story, "sceneUid", this.viewer.story.sceneUids).name("scene");
-        //this._story.add(this.viewer.story, "groupUid", this.viewer.story.groupUids).name("group");
+        this._story.add(this.viewer.story, "sceneUid", this.viewer.story.sceneUids).name("scene").listen();
+
+        if(this.viewer.story.hasGroups() === true)
+        {
+            this._story.add(this.viewer.story, "groupUid", this.viewer.story.groupUids).name("group").listen();
+        }
+
     },
 
     update: function()
