@@ -298,26 +298,16 @@ ForgePlugins.VideoControls.prototype =
 
     _setupVideo: function()
     {
-        if(this.viewer.renderer.media !== null)
-        {
-            this._video = this.viewer.renderer.media.displayObject;
+        this._video = this.viewer.story.scene.media.displayObject;
 
-            this._video.onQualitiesLoaded.add(this._onQualitiesLoadedHandler, this);
-            this._video.onLoadedMetaData.add(this._onLoadedMetaDataHandler, this);
-            this._video.onPlay.add(this._onPlayHandler, this);
-            this._video.onPause.add(this._onPauseHandler, this);
-            this._video.onVolumeChange.add(this._onVolumeChangeHandler, this);
-            this._video.onQualityRequest.add(this._onQualityRequestHandler, this);
-            this._video.onQualityChange.add(this._onQualityChangeHandler, this);
-            this._video.onQualityModeChange.add(this._onQualityModeChangeHandler, this);
-        }
-        else
-        {
-            if(this.viewer.renderer.onMediaReady.has(this._setupVideo, this) === false)
-            {
-                this.viewer.renderer.onMediaReady.addOnce(this._setupVideo, this);
-            }
-        }
+        this._video.onQualitiesLoaded.add(this._onQualitiesLoadedHandler, this);
+        this._video.onLoadedMetaData.add(this._onLoadedMetaDataHandler, this);
+        this._video.onPlay.add(this._onPlayHandler, this);
+        this._video.onPause.add(this._onPauseHandler, this);
+        this._video.onVolumeChange.add(this._onVolumeChangeHandler, this);
+        this._video.onQualityRequest.add(this._onQualityRequestHandler, this);
+        this._video.onQualityChange.add(this._onQualityChangeHandler, this);
+        this._video.onQualityModeChange.add(this._onQualityModeChangeHandler, this);
     },
 
     _clearVideo: function()
