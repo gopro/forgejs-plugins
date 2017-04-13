@@ -24,8 +24,6 @@ ForgePlugins.MobileVideoPlay.prototype =
 
     reset: function()
     {
-        this.viewer.renderer.onMediaReady.remove(this._setVideo, this);
-
         this._setVideo();
     },
 
@@ -41,8 +39,6 @@ ForgePlugins.MobileVideoPlay.prototype =
 
     destroy: function()
     {
-        this.viewer.renderer.onMediaReady.remove(this._setVideo, this);
-
         this._icon.pointer.onClick.remove(this._iconClickHandler, this);
         this._icon = null;
 
@@ -52,24 +48,14 @@ ForgePlugins.MobileVideoPlay.prototype =
 
     _setVideo: function()
     {
-        if(this.viewer.story.scene.config.media.type === "video")
+        if(this.viewer.story.scene.media.type === FORGE.MediaType.VIDEO)
         {
-            if (this.viewer.renderer.media !== null)
-            {
-                this._video = this.viewer.renderer.media.displayObject;
-                this._video.onPlay.addOnce(this._videoPlayHandler, this);
+            this._video = this.viewer.story.scene.media.displayObject;
+            this._video.onPlay.addOnce(this._videoPlayHandler, this);
 
-                if(this._video.playing === false)
-                {
-                    this.show();
-                }
-            }
-            else
+            if(this._video.playing === false)
             {
-                if (this.viewer.renderer.onMediaReady.has(this._setVideo, this) === false)
-                {
-                    this.viewer.renderer.onMediaReady.addOnce(this._setVideo, this);
-                }
+                this.show();
             }
         }
         else
