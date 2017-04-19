@@ -1,10 +1,10 @@
 {
-    "uid": "org.forgejs.webvrbutton",
-    "name": "WebVR Button",
-    "slug": "webvr-button",
+    "uid": "org.forgejs.gyroscopebutton",
+    "name": "Gyroscope Button",
+    "slug": "gyroscope-button",
     "version": "1.0.0",
-    "versionName": "WebVR Button 1.0.0",
-    "description": "Add a simple button, allowing to switch to the WebVR view.",
+    "versionName": "GYroscope Button 1.0.0",
+    "description": "Add a simple button, allowing to turn the gyroscope on.",
 
     "author":
     {
@@ -22,7 +22,7 @@
 
     "device":
     {
-        "webVR": true
+        "gyroscope": true
     },
 
     "options":
@@ -34,13 +34,13 @@
         "horizontalCenter": false,
         "verticalCenter": false,
 
-        "image": "assets/webvr.png"
+        "image": "assets/gyroscope.png"
     },
 
     "sources":
     [
-        "src/WebVRButton.js"
+        "src/GyroscopeButton.js"
     ],
 
-    "constructor": "ForgePlugins.WebVRButton"
+    "constructor": "ForgePlugins.GyroscopeButton"
 }

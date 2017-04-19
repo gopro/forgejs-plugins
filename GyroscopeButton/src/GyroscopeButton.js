@@ -3,24 +3,44 @@ var ForgePlugins = ForgePlugins || {};
 /**
  * The plugin provides a button for Gyroscope toggle
  */
-ForgePlugins.WebVRButton = function()
+ForgePlugins.GyroscopeButton = function()
 {
     /**
      * The image that is the button. It is made of a single sprite that got two frames.
-     * @name ForgePlugins.WebVRButton#_image
+     * @name ForgePlugins.GyroscopeButton#_image
      * @type {FORGE.Image}
      * @private
      */
     this._image = null;
+
+    /**
+     * The reference to the gyroscope controller.
+     * @name ForgePlugins.GyroscopeButton#_gyroscope
+     * @type {FORGE.ControllerGyroscope}
+     * @private
+     */
+    this._gyroscope = null;
 };
 
-ForgePlugins.WebVRButton.prototype =
+ForgePlugins.GyroscopeButton.prototype =
 {
     /**
      * Boot function, add the button to the scene given the position.
      */
     boot: function()
     {
+        FORGE.Device.onReady.addOnce(this._deviceReadyHandler, this);
+    },
+
+    _deviceReadyHandler: function()
+    {
+        this._gyroscope = this.viewer.controllers.getByType(FORGE.ControllerType.GYROSCOPE);
+
+        if (this._gyroscope === null)
+        {
+            return;
+        }
+
         var config = {
             url: this.plugin.fullUrl + this.plugin.options.image,
         };
@@ -40,26 +60,14 @@ ForgePlugins.WebVRButton.prototype =
         this._image.pointer.enabled = true;
         this._image.pointer.cursor = FORGE.Pointer.cursors.POINTER;
         this._image.pointer.onClick.add(this._imageClickHandler, this);
-        this._image.pointer.onOver.add(this._imageOverHandler, this);
-        this._image.pointer.onOut.add(this._imageOutHandler, this);
 
-        this._imageChange(this.viewer.renderer.presentingVR);
+        this._imageChange(this._gyroscope.enabled);
     },
 
     _imageClickHandler: function()
     {
-        this.viewer.renderer.toggleVR();
-        this._imageChange(this.viewer.renderer.presentingVR);
-    },
-
-    _imageOverHandler: function()
-    {
-        this._imageChange(!this.viewer.renderer.presentingVR);
-    },
-
-    _imageOutHandler: function()
-    {
-        this._imageChange(this.viewer.renderer.presentingVR);
+        this._gyroscope.enabled = !this._gyroscope.enabled;
+        this._imageChange(this._gyroscope.enabled);
     },
 
     _imageChange: function(on)
