@@ -45,6 +45,22 @@ ForgePlugins.GyroscopeButton.prototype =
             url: this.plugin.fullUrl + this.plugin.options.image,
         };
 
+        if (typeof this.plugin.options.background !== "undefined")
+        {
+            this._background = this.plugin.create.displayObjectContainer();
+            this._background.background = this.plugin.options.background;
+            this._background.width = 64;
+            this._background.height = 64;
+            this._background.top = this.plugin.options.top;
+            this._background.left = this.plugin.options.left;
+            this._background.right = this.plugin.options.right;
+            this._background.bottom = this.plugin.options.bottom;
+            this._background.horizontalCenter = this.plugin.options.horizontalCenter;
+            this._background.verticalCenter = this.plugin.options.verticalCenter;
+
+            this.plugin.container.addChild(this._background);
+        }
+
         this._image = this.plugin.create.image(config);
         this._image.top = this.plugin.options.top;
         this._image.right = this.plugin.options.right;
