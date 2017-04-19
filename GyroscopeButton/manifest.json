@@ -33,6 +33,7 @@
         "left": null,
         "horizontalCenter": false,
         "verticalCenter": false,
+        "background": "",
 
         "image": "assets/gyroscope.png"
     },
