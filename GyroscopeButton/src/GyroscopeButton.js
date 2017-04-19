@@ -12,6 +12,14 @@ ForgePlugins.GyroscopeButton = function()
      * @private
      */
     this._image = null;
+
+    /**
+     * The reference to the gyroscope controller.
+     * @name ForgePlugins.GyroscopeButton#_gyroscope
+     * @type {FORGE.ControllerGyroscope}
+     * @private
+     */
+    this._gyroscope = null;
 };
 
 ForgePlugins.GyroscopeButton.prototype =
@@ -21,9 +29,15 @@ ForgePlugins.GyroscopeButton.prototype =
      */
     boot: function()
     {
-        if (FORGE.Device.ready === false)
+        FORGE.Device.onReady.addOnce(this._deviceReadyHandler, this);
+    },
+
+    _deviceReadyHandler: function()
+    {
+        this._gyroscope = this.viewer.controllers.getByType(FORGE.ControllerType.GYROSCOPE);
+
+        if (this._gyroscope === null)
         {
-            window.setTimeout(ForgePlugins.GyroscopeButton.prototype.boot.bind(this), 10);
             return;
         }
 
@@ -47,13 +61,13 @@ ForgePlugins.GyroscopeButton.prototype =
         this._image.pointer.cursor = FORGE.Pointer.cursors.POINTER;
         this._image.pointer.onClick.add(this._imageClickHandler, this);
 
-        this._imageChange(this.viewer.controllers.gyroscope);
+        this._imageChange(this._gyroscope.enabled);
     },
 
     _imageClickHandler: function()
     {
-        this.viewer.controllers.gyroscope = !this.viewer.controllers.gyroscope;
-        this._imageChange(this.viewer.controllers.gyroscope);
+        this._gyroscope.enabled = !this._gyroscope.enabled;
+        this._imageChange(this._gyroscope.enabled);
     },
 
     _imageChange: function(on)
