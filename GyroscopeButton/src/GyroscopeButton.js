@@ -46,6 +46,7 @@ ForgePlugins.GyroscopeButton.prototype =
         };
 
         this._image = this.plugin.create.image(config);
+        this._image.background = this.plugin.options.background;
         this._image.top = this.plugin.options.top;
         this._image.right = this.plugin.options.right;
         this._image.bottom = this.plugin.options.bottom;
