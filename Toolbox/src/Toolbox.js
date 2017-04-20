@@ -1,7 +1,7 @@
 var ForgePlugins = ForgePlugins || {};
 
 
-ForgePlugins.Debug = function()
+ForgePlugins.Toolbox = function()
 {
     this._gui = null;
 
@@ -21,7 +21,7 @@ ForgePlugins.Debug = function()
     }
 };
 
-ForgePlugins.Debug.prototype =
+ForgePlugins.Toolbox.prototype =
 {
     /**
      * Boot function

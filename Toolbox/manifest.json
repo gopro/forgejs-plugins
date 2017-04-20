@@ -1,10 +1,10 @@
 {
-    "uid": "org.forgejs.debug",
-    "name": "Debug",
-    "slug": "debug",
+    "uid": "org.forgejs.toolbox",
+    "name": "Toolbox",
+    "slug": "toolbox",
     "version": "1.0.0",
-    "versionName": "Debug 1.0.0",
-    "description": "Add a Debug GUI.",
+    "versionName": "Toolbox 1.0.0",
+    "description": "Add a Toolbox GUI.",
 
     "author":
     {
@@ -29,8 +29,8 @@
     [
         "lib/dat.gui/dat.gui.css",
         "lib/dat.gui/dat.gui.min.js",
-        "src/Debug.js"
+        "src/Toolbox.js"
     ],
 
-    "constructor": "ForgePlugins.Debug"
+    "constructor": "ForgePlugins.Toolbox"
 }
