@@ -18,6 +18,11 @@
         "max": "0.9.3"
     },
 
+    "device":
+    {
+        "chrome": true
+    },
+
     "sources":
     [
         "lib/dat.gui/dat.gui.css",
