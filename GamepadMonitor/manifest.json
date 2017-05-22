@@ -20,7 +20,9 @@
 
     "device":
     {
-        "chrome": true
+        "ie": false,
+        "safari": false,
+        "firefox": false
     },
 
     "sources":
