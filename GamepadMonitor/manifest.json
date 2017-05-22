@@ -1,0 +1,36 @@
+{
+    "uid": "org.forgejs.gamepadmonitor",
+    "name": "Gamepad monitor",
+    "version": "1.0.0",
+    "versionName": "Gamepad monitor 1.0.0",
+    "description": "Displays a gamepad monitor that shows information about connected gamepads",
+    "licence": "Apache 2",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "viewer":
+    {
+        "min": "0.9.3",
+        "max": "0.9.3"
+    },
+
+    "device":
+    {
+        "ie": false,
+        "safari": false,
+        "firefox": false
+    },
+
+    "sources":
+    [
+        "lib/dat.gui/dat.gui.css",
+        "lib/dat.gui/dat.gui.min.js",
+        "src/GamepadMonitor.js"
+    ],
+
+    "constructor": "ForgePlugins.GamepadMonitor"
+}
