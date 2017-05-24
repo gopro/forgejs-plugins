@@ -42,7 +42,7 @@ ForgePlugins.GyroscopeButton.prototype =
         }
 
         var config = {
-            url: this.plugin.fullUrl + this.plugin.options.image,
+            url: this.plugin.options.image
         };
 
         this._image = this.plugin.create.image(config);
