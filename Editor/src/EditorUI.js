@@ -52,12 +52,14 @@ ForgePlugins.EditorUI.prototype =
         this._undoButton = document.createElement("button");
         this._undoButton.id = "hotspot-undo-button";
         this._undoButton.innerHTML = "Undo";
+        this._undoButton.disabled = true;
         this._undoButton.addEventListener("click", this._undoButtonClickHandler.bind(this), false);
         this._container.appendChild(this._undoButton);
 
         this._redoButton = document.createElement("button");
         this._redoButton.id = "hotspot-redo-button";
         this._redoButton.innerHTML = "Redo";
+        this._redoButton.disabled = true;
         this._redoButton.addEventListener("click", this._redoButtonClickHandler.bind(this), false);
         this._container.appendChild(this._redoButton);
 
@@ -92,6 +94,7 @@ ForgePlugins.EditorUI.prototype =
 
         this._editor.onSelected.add(this._onSelectedHandler, this);
         this._editor.onLoadComplete.add(this._onLoadCompleteHandler, this);
+        this._editor.history.onIndexChange.add(this._onIndexChangeHandler, this);
     },
 
     _addButtonClickHandler: function(event)
@@ -156,7 +159,15 @@ ForgePlugins.EditorUI.prototype =
     _onLoadCompleteHandler: function()
     {
         this._deleteButton.disabled = this._editor.selected === null ? true : false;
+        this._undoButton.disabled = this._editor.history.index === 0 ? true : false;
+        this._redoButton.disabled = this._editor.history.index === this._editor.history.states.length - 1 ? true : false;
         this._updateList();
+    },
+
+    _onIndexChangeHandler: function()
+    {
+        this._undoButton.disabled = this._editor.history.index === 0 ? true : false;
+        this._redoButton.disabled = this._editor.history.index === this._editor.history.states.length - 1 ? true : false;
     },
 
     _updateList: function()

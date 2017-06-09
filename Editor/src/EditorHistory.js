@@ -11,9 +11,11 @@ ForgePlugins.EditorHistory = function(editor)
 
     this._index = -1;
 
-    this._limit;
+    this._limit = 50;
 
     this._states = [];
+
+    this.onIndexChange = new FORGE.EventDispatcher(this);
 };
 
 ForgePlugins.EditorHistory.prototype =
@@ -35,12 +37,14 @@ ForgePlugins.EditorHistory.prototype =
 
         this._states.push(state);
 
-        if(this._states.length === this._limit)
+        if(this._states.length > this._limit)
         {
             this._states.splice(0, 1);
         }
 
         this._index = this._states.length - 1;
+
+        this.onIndexChange.dispatch(null, true);
 
         console.log("History Add | index: " + this._index);
     },
@@ -56,6 +60,8 @@ ForgePlugins.EditorHistory.prototype =
         console.log("History undo");
 
         this._index--;
+        this.onIndexChange.dispatch(null, true);
+
         this.load(this._index);
     },
 
@@ -70,6 +76,8 @@ ForgePlugins.EditorHistory.prototype =
         console.log("History redo");
 
         this._index++;
+        this.onIndexChange.dispatch(null, true);
+
         this.load(this._index);
     },
 
@@ -88,6 +96,7 @@ ForgePlugins.EditorHistory.prototype =
     {
         this._states = [];
         this._index = -1;
+        this.onIndexChange.dispatch(null, true);
         this._initialState = null;
     },
 
@@ -96,9 +105,6 @@ ForgePlugins.EditorHistory.prototype =
 
     },
 
-    /**
-     * Destroy the container and its flags
-     */
     destroy: function()
     {
         this._container = null;
@@ -115,5 +121,18 @@ Object.defineProperty(ForgePlugins.EditorHistory.prototype, "states",
     get: function()
     {
         return this._states;
+    }
+});
+
+/**
+ * History index accessor
+ * @name ForgePlugins.EditorHistory#index
+ * @readonly
+ */
+Object.defineProperty(ForgePlugins.EditorHistory.prototype, "index",
+{
+    get: function()
+    {
+        return this._index;
     }
 });
