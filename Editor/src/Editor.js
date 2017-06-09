@@ -24,9 +24,10 @@ ForgePlugins.Editor.prototype =
 {
     boot: function()
     {
-        this._ui = new ForgePlugins.EditorUI(this);
         this._history = new ForgePlugins.EditorHistory(this);
         this._history.add();
+
+        this._ui = new ForgePlugins.EditorUI(this);
     },
 
     add: function(config, history)
