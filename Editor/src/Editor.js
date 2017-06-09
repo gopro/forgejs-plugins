@@ -38,6 +38,7 @@ ForgePlugins.Editor.prototype =
         }
 
         var hotspot = this.viewer.hotspots.create(config);
+        hotspot.onClick.add(this._onClickHandler, this);
         this.reset();
         this.selected = hotspot.uid;
 
@@ -80,7 +81,8 @@ ForgePlugins.Editor.prototype =
 
         for(var i = 0, ii = hotspots.length; i < ii; i++)
         {
-            this.viewer.hotspots.create(hotspots[i]);
+            var hotspot = this.viewer.hotspots.create(hotspots[i]);
+            hotspot.onClick.add(this._onClickHandler, this);
         }
 
         this.populate();
@@ -145,6 +147,11 @@ ForgePlugins.Editor.prototype =
         config.transform = { position: { theta: viewer.camera.yaw, phi: viewer.camera.pitch } };
 
         return config;
+    },
+
+    _onClickHandler: function(event)
+    {
+        this.selected = event.emitter.uid;
     }
 };
 
