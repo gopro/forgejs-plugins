@@ -91,6 +91,7 @@ ForgePlugins.EditorUI.prototype =
         this._updateList();
 
         this._editor.onSelected.add(this._onSelectedHandler, this);
+        this._editor.onLoadComplete.add(this._onLoadCompleteHandler, this);
     },
 
     _addButtonClickHandler: function(event)
@@ -152,6 +153,12 @@ ForgePlugins.EditorUI.prototype =
         this._updateList();
     },
 
+    _onLoadCompleteHandler: function()
+    {
+        this._deleteButton.disabled = this._editor.selected === null ? true : false;
+        this._updateList();
+    },
+
     _updateList: function()
     {
         this._clearList();
@@ -164,8 +171,9 @@ ForgePlugins.EditorUI.prototype =
         {
             hs = hotspots[i];
             p = document.createElement("p");
+            p.id = hs.uid;
             p.addEventListener("click", this._hotspotListClickHandler.bind(this));
-            p.innerHTML = hs.uid;
+            p.innerHTML = hs.name;
 
             if(this._editor.selected === hs.uid)
             {
@@ -183,7 +191,7 @@ ForgePlugins.EditorUI.prototype =
 
     _hotspotListClickHandler: function(event)
     {
-        this._editor.selected = event.target.innerHTML;
+        this._editor.selected = event.target.id;
     },
 
     update: function()

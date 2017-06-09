@@ -5,17 +5,18 @@ ForgePlugins.Editor = function()
 {
     this._ui = null;
 
-    this._count = 0;
-
     this._history = null;
 
     this._selected = null;
 
     this.onSelected = new FORGE.EventDispatcher(this);
+
+    this.onLoadComplete = new FORGE.EventDispatcher(this);
 };
 
 ForgePlugins.Editor.HOTSPOT_DEFAULT_CONFIG =
 {
+    name: "untitled hotspot",
     facingCenter: true
 };
 
@@ -35,9 +36,9 @@ ForgePlugins.Editor.prototype =
             config = this._generateHotspotConfig();
         }
 
-        this.viewer.hotspots.create(config);
+        var hotspot = this.viewer.hotspots.create(config);
         this.reset();
-        this.selected = config.uid;
+        this.selected = hotspot.uid;
 
         if(history !== false)
         {
@@ -82,6 +83,8 @@ ForgePlugins.Editor.prototype =
         }
 
         this.populate();
+
+        this.onLoadComplete.dispatch(null, true);
     },
 
     clear: function()
@@ -133,9 +136,7 @@ ForgePlugins.Editor.prototype =
     _generateHotspotConfig: function()
     {
         var config = FORGE.Utils.extendSimpleObject({}, ForgePlugins.Editor.HOTSPOT_DEFAULT_CONFIG);
-        config.uid = "hotspot-3d-editor-" + this._count;
         config.transform = { position: { theta: viewer.camera.yaw, phi: viewer.camera.pitch } };
-        this._count++;
 
         return config;
     }
@@ -146,7 +147,7 @@ Object.defineProperty(ForgePlugins.Editor.prototype, "history",
     get: function()
     {
         return this._history;
-    },
+    }
 });
 
 Object.defineProperty(ForgePlugins.Editor.prototype, "selected",

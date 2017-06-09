@@ -40,6 +40,7 @@
     font-family: Monospace, Consolas, Menlo-Regular, serif;
     font-size: 11px;
     color: #009fdf;
+    text-align: left;
 }
 
 #hotspots-list>p:hover
