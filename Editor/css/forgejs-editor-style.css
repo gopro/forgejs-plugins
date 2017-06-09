@@ -1,0 +1,70 @@
+
+#editor-main-container
+{
+    pointer-events: all;
+    width: 200px;
+    background-color: #535353;
+    color: #cdcdcd;
+}
+
+#hotspot-add-button,
+#hotspot-delete-button,
+#hotspot-undo-button,
+#hotspot-redo-button,
+#hotspot-save-button,
+#hotspot-load-button
+{
+    width: 30%;
+    margin-left: 13.3%;
+    margin-top: 10px;
+}
+
+#hotspots-list
+{
+    direction: rtl;
+    width: 100%;
+    height:150px;
+    overflow-y : scroll;
+    background-color: #2a2a2a;
+    margin: 10px 0px;
+}
+
+#hotspots-list>p
+{
+    height: 20px;
+    line-height: 20px;
+    margin: 2px;
+    background-color: #323232;
+    padding: 2px 18px;
+    cursor: pointer;
+    font-family: Monospace, Consolas, Menlo-Regular, serif;
+    font-size: 11px;
+    color: #009fdf;
+}
+
+#hotspots-list>p:hover
+{
+    background-color: #009fdf;
+    color: white;
+}
+
+#hotspots-list>p.selected
+{
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABNklEQVQ4jZ3UsStFURgA8N97RDHZDBJSBotBBkbJoGRRJguzP0AUBkX+A4O/wIoMkpQog9HwyBMlC4okPMPz6jrde999vvqWc77v951zO92c9BjGADqRww3OcIDPKr1/YgLHKCXkKaayYtspUJi7aEzDLmrAKllIQvf+gVXyJMTGawSe8R6sTUfB6xqwd7SgHcXI+qPySzBUI9YTOchGsD8CizGNb7itgs3iK6hZga1gsYgu5HEfGRBicTfYyqPO3zjEFb7RhyMM4jKCbYqPPKzGTFpIaEg6WSXXYSxhM0RnqmAlTEIDnhIK5n+x6QzYB5or0+dSCncyYCUshd+nkLExLh9CDFqVn8d/wO44EDqUn0dWqIjeJCway8o/gCToFWuoDxtzKWgTRtGPtt/aO5xjHy9xTT/6efkqXv+hxAAAAABJRU5ErkJggg==);
+    background-repeat: no-repeat;
+    background-position: 3px center;
+    background-size: 10px 10px;
+}
+
+#hotspots-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+#hotspots-list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+#hotspots-list::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}

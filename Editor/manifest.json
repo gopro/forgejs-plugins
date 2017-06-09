@@ -33,8 +33,10 @@
 
     "sources":
     [
+        "css/forgejs-editor-style.css",
         "src/Editor.js",
-        "src/EditorUI.js"
+        "src/EditorUI.js",
+        "src/EditorHistory.js"
     ],
 
     "constructor": "ForgePlugins.Editor"
