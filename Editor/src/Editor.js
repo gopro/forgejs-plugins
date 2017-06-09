@@ -73,7 +73,7 @@ ForgePlugins.Editor.prototype =
         a.click();
     },
 
-    load: function(hotspots)
+    load: function(hotspots, history)
     {
         this.viewer.hotspots.clear();
         this.clear();
@@ -84,6 +84,11 @@ ForgePlugins.Editor.prototype =
         }
 
         this.populate();
+
+        if(history === true)
+        {
+            this._history.add("hotspot load");
+        }
 
         this.onLoadComplete.dispatch(null, true);
     },

@@ -144,7 +144,7 @@ ForgePlugins.EditorUI.prototype =
     {
         console.log(event);
         var data = JSON.parse(event.target.result);
-        this._editor.load(data);
+        this._editor.load(data, true);
     },
 
     _onSelectedHandler: function()
