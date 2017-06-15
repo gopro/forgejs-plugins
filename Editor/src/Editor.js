@@ -71,7 +71,17 @@ ForgePlugins.Editor.prototype =
         var a = document.createElement('a');
         a.download = "hotspots.json";
         a.href = url;
-        a.click();
+
+        if(typeof document.createEvent === "function")
+        {
+            var event = document.createEvent("MouseEvents");
+            event.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            a.dispatchEvent(event);
+        }
+        else if (typeof a.click === "function")
+        {
+            a.click();
+        }
     },
 
     load: function(hotspots, history)
