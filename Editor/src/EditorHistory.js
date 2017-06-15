@@ -35,6 +35,11 @@ ForgePlugins.EditorHistory.prototype =
             this._initialState = state;
         }
 
+        if(this._index < this._states.length - 1)
+        {
+            this._states.splice(this._index + 1);
+        }
+
         this._states.push(state);
 
         if(this._states.length > this._limit)
