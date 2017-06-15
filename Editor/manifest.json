@@ -1,0 +1,43 @@
+{
+    "uid": "org.forgejs.editor",
+    "name": "Editor",
+    "slug": "editor",
+    "version": "1.0.0",
+    "versionName": "Editor 1.0.0",
+    "description": "An editor plugin to tweak hotspots.",
+    "tags": ["editor"],
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "viewer":
+    {
+        "min": "0.9.4",
+        "max": "0.9.4"
+    },
+
+    "options":
+    {
+
+    },
+
+    "actions":
+    [
+
+    ],
+
+    "sources":
+    [
+        "css/forgejs-editor-style.css",
+        "src/Editor.js",
+        "src/EditorUI.js",
+        "src/EditorHistory.js"
+    ],
+
+    "constructor": "ForgePlugins.Editor"
+}
