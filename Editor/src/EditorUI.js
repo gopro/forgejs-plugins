@@ -136,9 +136,9 @@ ForgePlugins.EditorUI.prototype =
         var files = event.target.files;
         var file = files[0];
 
-        if(typeof file !== "undefined" && file.type.match("application/json"))
+        if(typeof file !== "undefined" && file !== null)
         {
-            console.log("json file ok");
+            console.log("JSON file ok");
             this._loadReader.readAsText(file);
         }
     },
