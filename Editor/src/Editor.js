@@ -66,15 +66,16 @@ ForgePlugins.Editor.prototype =
         var dump = this.dump();
         var json = JSON.stringify(dump, null, 4);
         var blob = new Blob([json], {type: "application/json"});
-        var url  = URL.createObjectURL(blob);
 
-        var a = document.createElement('a');
         if(window.navigator.msSaveOrOpenBlob)
         {
             window.navigator.msSaveOrOpenBlob(blob, "hotspots.json");
         }
         else
         {
+            var url  = URL.createObjectURL(blob);
+
+            var a = document.createElement('a');
             a.download = "hotspots.json";
             a.href = url;
 
