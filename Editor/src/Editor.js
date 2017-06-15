@@ -137,7 +137,7 @@ ForgePlugins.Editor.prototype =
         if(FORGE.Utils.isTypeOf(hs, "Hotspot3D"))
         {
             var pos = hs.transform.position;
-            var spherical = FORGE.Math.cartesianToSpherical(pos.x, pos.y, pos.z, "deg");
+            var spherical = FORGE.Math.cartesianToSpherical(pos.x, pos.y, pos.z, FORGE.Math.DEGREES);
             this.viewer.camera.lookAt(spherical.theta, spherical.phi, 0, this.viewer.camera.fov, 100);
         }
     },
