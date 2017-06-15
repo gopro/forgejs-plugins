@@ -69,18 +69,25 @@ ForgePlugins.Editor.prototype =
         var url  = URL.createObjectURL(blob);
 
         var a = document.createElement('a');
-        a.download = "hotspots.json";
-        a.href = url;
-
-        if(typeof document.createEvent === "function")
+        if(window.navigator.msSaveOrOpenBlob)
         {
-            var event = document.createEvent("MouseEvents");
-            event.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            a.dispatchEvent(event);
+            window.navigator.msSaveOrOpenBlob(blob, "hotspots.json");
         }
-        else if (typeof a.click === "function")
+        else
         {
-            a.click();
+            a.download = "hotspots.json";
+            a.href = url;
+
+            if(typeof document.createEvent === "function")
+            {
+                var event = document.createEvent("MouseEvents");
+                event.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                a.dispatchEvent(event);
+            }
+            else if (typeof a.click === "function")
+            {
+                a.click();
+            }
         }
     },
 
