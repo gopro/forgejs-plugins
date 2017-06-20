@@ -95,29 +95,17 @@ ForgePlugins.VideoControls.prototype =
 
         //Playback button ================================
 
+        var ext = (FORGE.Device.ie === true) ? "png" : "svg";
+
         var playSkin = new FORGE.ButtonSkin("play");
-        if (FORGE.Device.ie === true)
-        {
-            playSkin.out.image = {key: "play-out", url: this.plugin.fullUrl+"assets/button-play.png"};
-        }
-        else
-        {
-            playSkin.out.image = {key: "play-out", url: this.plugin.fullUrl+"assets/button-play.svg"};
-        }
+        playSkin.out.image = {key: "play-out", url: this.plugin.fullUrl+"assets/button-play."+ext};
         playSkin.out.align = "center";
         playSkin.out.autoWidth = false;
         playSkin.out.autoHeight = false;
         playSkin.out.background = "#00A3DA";
 
         var pauseSkin = new FORGE.ButtonSkin("pause");
-        if (FORGE.Device.ie === true)
-        {
-            pauseSkin.out.image = {key: "pause-out", url: this.plugin.fullUrl+"assets/button-pause.png"};
-        }
-        else
-        {
-            pauseSkin.out.image = {key: "pause-out", url: this.plugin.fullUrl+"assets/button-pause.svg"};
-        }
+        pauseSkin.out.image = {key: "pause-out", url: this.plugin.fullUrl+"assets/button-pause."+ext};
         pauseSkin.out.align = "center";
         pauseSkin.out.autoWidth = false;
         pauseSkin.out.autoHeight = false;
@@ -148,40 +136,19 @@ ForgePlugins.VideoControls.prototype =
         this._volumeContainerTween = this.plugin.create.tween(this._volumeContainer);
 
         var volume0 = new FORGE.ButtonSkin("volume-0");
-        if (FORGE.Device.ie === true)
-        {
-            volume0.out.image = {key: "volume-0", url: this.plugin.fullUrl+"assets/sound-state-0.png"};
-        }
-        else
-        {
-            volume0.out.image = {key: "volume-0", url: this.plugin.fullUrl+"assets/sound-state-0.svg"};
-        }
+        volume0.out.image = {key: "volume-0", url: this.plugin.fullUrl+"assets/sound-state-0."+ext};
         volume0.out.align = "center";
         volume0.out.autoWidth = false;
         volume0.out.autoHeight = false;
 
         var volume1 = new FORGE.ButtonSkin("volume-1");
-        if (FORGE.Device.ie === true)
-        {
-            volume1.out.image = {key: "volume-1", url: this.plugin.fullUrl+"assets/sound-state-1.png"};
-        }
-        else
-        {
-            volume1.out.image = {key: "volume-1", url: this.plugin.fullUrl+"assets/sound-state-1.svg"};
-        }
+        volume1.out.image = {key: "volume-1", url: this.plugin.fullUrl+"assets/sound-state-1."+ext};
         volume1.out.align = "center";
         volume1.out.autoWidth = false;
         volume1.out.autoHeight = false;
 
         var volume2 = new FORGE.ButtonSkin("volume-2");
-        if (FORGE.Device.ie === true)
-        {
-            volume2.out.image = {key: "volume-2", url: this.plugin.fullUrl+"assets/sound-state-2.png"};
-        }
-        else
-        {
-            volume2.out.image = {key: "volume-2", url: this.plugin.fullUrl+"assets/sound-state-2.svg"};
-        }
+        volume2.out.image = {key: "volume-2", url: this.plugin.fullUrl+"assets/sound-state-2."+ext};
         volume2.out.align = "center";
         volume2.out.autoWidth = false;
         volume2.out.autoHeight = false;
@@ -206,14 +173,7 @@ ForgePlugins.VideoControls.prototype =
         this._volumeBar.verticalCenter = true;
         this._volumeContainer.addChild(this._volumeBar);
 
-        if (FORGE.Device.ie === true)
-        {
-            this._volumeCursor = this.plugin.create.image({key: "volume-cursor", url: "assets/sound-cursor.png"});
-        }
-        else
-        {
-            this._volumeCursor = this.plugin.create.image({key: "volume-cursor", url: "assets/sound-cursor.svg"});
-        }
+        this._volumeCursor = this.plugin.create.image({key: "volume-cursor", url: "assets/sound-cursor."+ext});
         this._volumeCursor.pointer.enabled = true;
         this._volumeCursor.pointer.cursor = FORGE.Pointer.cursors.POINTER;
         this._volumeCursor.top = 21;
@@ -279,27 +239,13 @@ ForgePlugins.VideoControls.prototype =
         //Fullscreen button =================================
 
         var fsEnterSkin = new FORGE.ButtonSkin("fs-enter");
-        if (FORGE.Device.ie === true)
-        {
-            fsEnterSkin.out.image = {key: "fs-enter", url: this.plugin.fullUrl+"assets/button-fs-enter.png"};
-        }
-        else
-        {
-            fsEnterSkin.out.image = {key: "fs-enter", url: this.plugin.fullUrl+"assets/button-fs-enter.svg"};
-        }
+        fsEnterSkin.out.image = {key: "fs-enter", url: this.plugin.fullUrl+"assets/button-fs-enter."+ext};
         fsEnterSkin.out.autoWidth = false;
         fsEnterSkin.out.autoHeight = false;
         fsEnterSkin.out.align = "center";
 
         var fsExitSkin = new FORGE.ButtonSkin("fs-exit");
-        if (FORGE.Device.ie === true)
-        {
-            fsExitSkin.out.image = {key: "fs-exit", url: this.plugin.fullUrl+"assets/button-fs-exit.png"};
-        }
-        else
-        {
-            fsExitSkin.out.image = {key: "fs-exit", url: this.plugin.fullUrl+"assets/button-fs-exit.svg"};
-        }
+        fsExitSkin.out.image = {key: "fs-exit", url: this.plugin.fullUrl+"assets/button-fs-exit."+ext};
         fsExitSkin.out.autoWidth = false;
         fsExitSkin.out.autoHeight = false;
         fsExitSkin.out.align = "center";
