@@ -22,7 +22,7 @@ ForgePlugins.VideoCORS.prototype =
 
         var browserName = FORGE.Device.browser.charAt(0).toUpperCase() + FORGE.Device.browser.slice(1);
         this._textField = this.plugin.create.textField();
-        this._textField.value = this.plugin.options.text.replace("{{browser}}", browserName);
+        this._textField.value = this.plugin.options.text.replace(new RegExp('{{browser}}', 'g'), browserName);
         this._textField.width = 350;
         this._textField.verticalCenter = true;
         this._textField.right = 10;
