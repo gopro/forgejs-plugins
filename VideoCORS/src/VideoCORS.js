@@ -1,18 +1,18 @@
 var ForgePlugins = ForgePlugins || {};
 
-ForgePlugins.SafariCORS = function()
+ForgePlugins.VideoCORS = function()
 {
     this._frame = null;
     this._textField = null;
     this._icon = null;
 };
 
-ForgePlugins.SafariCORS.prototype =
+ForgePlugins.VideoCORS.prototype =
 {
     boot: function()
     {
         this._frame = this.plugin.create.displayObjectContainer();
-        this._frame.id = "forge-plugins-safari-alert-cors";
+        this._frame.id = "forge-plugins-video-alert-cors";
         this._frame.background = this.plugin.options.background;
         this._frame.borderRadius = this.plugin.options.borderRadius;
         this._frame.width = 520;
@@ -20,8 +20,9 @@ ForgePlugins.SafariCORS.prototype =
         this._frame.horizontalCenter = true;
         this._frame.verticalCenter = true;
 
+        var browserName = FORGE.Device.browser.charAt(0).toUpperCase() + FORGE.Device.browser.slice(1);
         this._textField = this.plugin.create.textField();
-        this._textField.value = this.plugin.options.text;
+        this._textField.value = this.plugin.options.text.replace("{{browser}}", browserName);
         this._textField.width = 350;
         this._textField.verticalCenter = true;
         this._textField.right = 10;

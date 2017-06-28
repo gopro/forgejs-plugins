@@ -1,0 +1,50 @@
+{
+    "uid": "org.forgejs.videocors",
+    "name": "Video CORS",
+    "version": "1.1.0",
+    "versionName": "Video CORS 1.1.0",
+    "description": "Displays an dialog box that will warn the user of the browser CORS issue for video scene",
+    "licence": "Apache 2",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "viewer":
+    {
+        "min": "0.9.0",
+        "max": "0.9.4"
+    },
+
+    "device":
+    {
+        "ie": true,
+        "safari": true
+    },
+
+    "options":
+    {
+        "background": "white",
+        "borderRadius": 15,
+
+        "icon": "assets/images/favicon-120x120.png",
+
+        "text": "<h1>{{browser}} detected :(</h1>This video can't be displayed because it is hosted on another server. This is a known {{browser}} issue when using distant video as a texture. Please use <a href=\"https://www.google.com/chrome/\" target=\"_blank\">Google Chrome</a> for a better performance."
+    },
+
+    "actions":
+    [
+        "show",
+        "hide"
+    ],
+
+    "sources":
+    [
+        "src/VideoCORS.js",
+        "style/style.css"
+    ],
+
+    "constructor": "ForgePlugins.VideoCORS"
+}
