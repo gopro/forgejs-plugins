@@ -20,8 +20,11 @@
 
     "device":
     {
-        "ie": true,
-        "safari": true
+        "or":
+        {
+            "ie": true,
+            "safari": true
+        }
     },
 
     "options":
