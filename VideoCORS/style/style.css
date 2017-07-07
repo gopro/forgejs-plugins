@@ -11,12 +11,12 @@
     src: url("../assets/fonts/Dosis-Bold.ttf");
 }
 
-#forge-plugins-safari-alert-cors
+#forge-plugins-video-alert-cors
 {
     font-family: dosislight, sans-serif;
 }
 
-#forge-plugins-safari-alert-cors h1
+#forge-plugins-video-alert-cors h1
 {
     margin: 0px 0px 10px 0px;
     padding: 0;
@@ -24,7 +24,7 @@
     font-family: dosisbold, sans-serif;
 }
 
-#forge-plugins-safari-alert-cors a
+#forge-plugins-video-alert-cors a
 {
     color: #00a3da;
     font-weight: bold;
