@@ -5,6 +5,8 @@ ForgePlugins.Editor = function()
 {
     this._ui = null;
 
+    this._hud = null;
+
     this._history = null;
 
     this._selected = null;
@@ -28,6 +30,8 @@ ForgePlugins.Editor.prototype =
         this._history.add();
 
         this._ui = new ForgePlugins.EditorUI(this);
+
+        this._hud = new ForgePlugins.EditorHUD(this);
     },
 
     add: function(config, history)
@@ -92,8 +96,14 @@ ForgePlugins.Editor.prototype =
         }
     },
 
-    load: function(hotspots, history)
+    load: function(hotspots, clear, history)
     {
+        if(clear === false)
+        {
+            var dump = this.dump();
+            hotspots = dump.concat(hotspots);
+        }
+
         this.viewer.hotspots.clear();
         this.clear();
 
@@ -144,7 +154,7 @@ ForgePlugins.Editor.prototype =
 
     update: function()
     {
-
+        this._hud.update();
     },
 
     dump: function()
@@ -155,8 +165,14 @@ ForgePlugins.Editor.prototype =
 
     destroy: function()
     {
-        this._ui.destroy;
+        this._ui.destroy();
         this._ui = null;
+
+        this._hud.destroy();
+        this._hud = null;
+
+        this._history.destroy();
+        this._history = null;
     },
 
     _generateHotspotConfig: function()

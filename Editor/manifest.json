@@ -36,7 +36,9 @@
         "css/forgejs-editor-style.css",
         "src/Editor.js",
         "src/EditorUI.js",
-        "src/EditorHistory.js"
+        "src/EditorHistory.js",
+        "src/EditorHUD.js",
+        "src/EditorDialogBox.js"
     ],
 
     "constructor": "ForgePlugins.Editor"

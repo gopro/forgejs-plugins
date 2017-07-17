@@ -21,8 +21,6 @@ ForgePlugins.EditorUI = function(editor)
 
     this._loadButton = null;
 
-    this._loadReader = null;
-
     this._hotspotList = null;
 
     this._boot();
@@ -83,9 +81,6 @@ ForgePlugins.EditorUI.prototype =
         this._loadButton.addEventListener("click", this._loadButtonClickHandler.bind(this), false);
         this._container.appendChild(this._loadButton);
 
-        this._loadReader = new FileReader();
-        this._loadReader.onload = this._loadReaderLoadHandler.bind(this);
-
         this._hotspotList = document.createElement("div");
         this._hotspotList.id = "hotspots-list";
         this._container.appendChild(this._hotspotList);
@@ -139,15 +134,55 @@ ForgePlugins.EditorUI.prototype =
         if(typeof file !== "undefined" && file !== null)
         {
             console.log("JSON file ok");
-            this._loadReader.readAsText(file);
+
+            var loadReader = new FileReader();
+            loadReader.onload = this._loadReaderLoadHandler.bind(this);
+            loadReader.readAsText(file);
         }
+
+        var input = event.target;
+        input.value = null;
     },
 
     _loadReaderLoadHandler: function(event)
     {
         console.log(event);
         var data = JSON.parse(event.target.result);
-        this._editor.load(data, true);
+
+        var dialog = new ForgePlugins.EditorDialogBox(this._editor);
+
+        var buttons =
+        [
+            {
+                label: "Merge",
+                callback: this._editor.load,
+                context: this._editor,
+                args: [data, false, true],
+                close: true
+            },
+
+            {
+                label: "Replace",
+                callback: this._editor.load,
+                context: this._editor,
+                args: [data, true, true],
+                close: true
+            },
+
+            {
+                label: "Close",
+                close: true
+            }
+        ];
+
+        dialog.open
+        (
+            "Load Hotspots",
+            "Do you want to replace all hotspots or merge with the current hotspots?",
+            buttons
+        );
+
+        // this._editor.load(data, true);
     },
 
     _onSelectedHandler: function()
