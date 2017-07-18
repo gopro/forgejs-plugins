@@ -29,35 +29,71 @@
     margin: 10px 0px;
 }
 
-#hotspots-list>p
+#hotspots-list>div
 {
-    height: 20px;
-    line-height: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+    direction: ltr;
+    height: 24px;
     margin: 2px;
     background-color: #323232;
-    padding: 2px 18px;
-    cursor: pointer;
-    font-family: Verdana, Monospace, Consolas, Menlo-Regular, serif;
-    font-size: 11px;
     color: #009fdf;
-    text-align: left;
 }
 
-#hotspots-list>p:hover
+#hotspots-list>div:hover
 {
     background-color: #009fdf;
     color: white;
 }
 
-#hotspots-list>p.selected
+#hotspots-list>div.selected
 {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAA51BMVEX////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////bMJBQAAAATHRSTlMAAQIEBgcKCw4RFhgeICIkJyswO0NFRktOUFFUVVheY2RueXp8fYCBgoWGh4mKjJqbn6Girba3uMHEx8nR2d3f4uPm6evw8fX2+Pr9f9OaIwAAALFJREFUeAFVyNVCwzAAhtEfhrs7QxgusBWXUYTSwvf+z0MSkiU9l0fewu7lVWupocTqA87TZrxrem4H/T2T6P7vHTWPMlaIigpoSnqNV41O5PDZp/nkZqQLYFH7GOWbv+1f4EhtIJ/qf6e0h9VWBmTS2P1cODo6wWjJCMe5lgm7hbehgS+sPTXxfoalHZwbggMZXWo+ZI2XpKblTL7EymcVHBY432cNRUNrx53sdH1Ezh/Y9kvZTVhkxAAAAABJRU5ErkJggg==);
     /*
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABNklEQVQ4jZ3UsStFURgA8N97RDHZDBJSBotBBkbJoGRRJguzP0AUBkX+A4O/wIoMkpQog9HwyBMlC4okPMPz6jrde999vvqWc77v951zO92c9BjGADqRww3OcIDPKr1/YgLHKCXkKaayYtspUJi7aEzDLmrAKllIQvf+gVXyJMTGawSe8R6sTUfB6xqwd7SgHcXI+qPySzBUI9YTOchGsD8CizGNb7itgs3iK6hZga1gsYgu5HEfGRBicTfYyqPO3zjEFb7RhyMM4jKCbYqPPKzGTFpIaEg6WSXXYSxhM0RnqmAlTEIDnhIK5n+x6QzYB5or0+dSCncyYCUshd+nkLExLh9CDFqVn8d/wO44EDqUn0dWqIjeJCway8o/gCToFWuoDxtzKWgTRtGPtt/aO5xjHy9xTT/6efkqXv+hxAAAAABJRU5ErkJggg==);
     */
     background-repeat: no-repeat;
-    background-position: 3px center;
+    background-position: 5px center;
     background-size: 10px 10px;
+}
+
+#hotspots-list>div.edited
+{
+    background-color: #017faa;
+    color: white;
+    border: 1px solid white;
+    background-position: 3px center;
+}
+
+#hotspots-list>div>p
+{
+    box-sizing: border-box;
+    height: 24px;
+    line-height: 24px;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 20px;
+    font-family: Verdana, Monospace, Consolas, Menlo-Regular, serif;
+    font-size: 11px;
+    text-align: left;
+}
+
+#hotspots-list>div:hover>p
+{
+}
+
+#hotspots-list>div>input
+{
+    height: 22px;
+    line-height: 22px;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 20px;
+    font-family: Verdana, Monospace, Consolas, Menlo-Regular, serif;
+    font-size: 11px;
+    border: none;
+    background: transparent;
+    outline: none;
 }
 
 #hotspots-list::-webkit-scrollbar {

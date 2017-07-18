@@ -240,21 +240,27 @@ ForgePlugins.EditorUI.prototype =
         var viewer = this._editor.viewer;
         var hotspots = viewer.hotspots.all;
 
-        var hs, p;
+        var hs, div, p;
         for(var i = 0, ii = hotspots.length; i < ii; i++)
         {
             hs = hotspots[i];
+
+            div = document.createElement("div");
+            div.dataset.uid = hs.uid;
+            div.addEventListener("click", this._hotspotListClickHandler.bind(this));
+            div.addEventListener("dblclick", this._hotspotListDoubleClickHandler.bind(this));
+
             p = document.createElement("p");
-            p.id = hs.uid;
-            p.addEventListener("click", this._hotspotListClickHandler.bind(this));
             p.innerHTML = hs.name;
+
+            div.appendChild(p);
 
             if(this._editor.selected === hs.uid)
             {
-                p.className = "selected";
+                div.classList.add("selected");
             }
 
-            this._hotspotList.appendChild(p);
+            this._hotspotList.appendChild(div);
         }
     },
 
@@ -265,7 +271,78 @@ ForgePlugins.EditorUI.prototype =
 
     _hotspotListClickHandler: function(event)
     {
-        this._editor.selected = event.target.id;
+        var div = event.currentTarget;
+        this._editor.selected = div.dataset.uid;
+    },
+
+    _hotspotListDoubleClickHandler: function(event)
+    {
+        var div = event.currentTarget;
+        var hs = FORGE.UID.get(div.dataset.uid);
+
+        while (div.firstChild)
+        {
+            div.removeChild(div.firstChild);
+        }
+
+        var input = document.createElement("input");
+        input.addEventListener("focusout", this._onInputFocusOutHandler.bind(this));
+        input.addEventListener("keydown", this._onInputKeyPressHandler.bind(this));
+
+        // window.addEventListener
+
+        input.dataset.nameBackup = hs.name;
+        input.value = hs.name;
+        div.appendChild(input);
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+
+
+        div.classList.add("edited");
+
+        this._editor.viewer.controllers.enabled = false;
+
+    },
+
+    _onInputFocusOutHandler: function(event)
+    {
+        var input = event.currentTarget;
+
+        this._saveHotspotNameFromInput(input);
+        this._exitEdition();
+    },
+
+    _onInputKeyPressHandler: function(event)
+    {
+        var input = event.currentTarget;
+
+        switch(event.keyCode)
+        {
+            case 13:
+                this._saveHotspotNameFromInput(input);
+                this._exitEdition();
+                break;
+
+            case 27:
+                input.value = input.dataset.nameBackup;
+                this._saveHotspotNameFromInput(input);
+                this._exitEdition();
+                break;
+        }
+    },
+
+    _saveHotspotNameFromInput: function(input)
+    {
+        var div = input.parentElement;
+        var hs = FORGE.UID.get(div.dataset.uid);
+        hs.name = input.value;
+    },
+
+    _exitEdition: function()
+    {
+        this._editor.viewer.controllers.enabled = true;
+
+        this._updateList();
     },
 
     update: function()
