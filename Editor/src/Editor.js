@@ -213,6 +213,11 @@ Object.defineProperty(ForgePlugins.Editor.prototype, "selected",
             return;
         }
 
+        if(value === this._selected)
+        {
+            return;
+        }
+
         var hs = FORGE.UID.get(value);
 
         if(FORGE.Utils.isTypeOf(hs, "Hotspot3D"))
