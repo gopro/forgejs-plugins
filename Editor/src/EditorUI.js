@@ -149,6 +149,39 @@ ForgePlugins.EditorUI.prototype =
         console.log(event);
         var data = JSON.parse(event.target.result);
 
+        var validate = FORGE.UID.validate(this._editor.viewer.hotspots.all.concat(data));
+
+        if(validate === false)
+        {
+            this._loadDialogError();
+        }
+        else
+        {
+            if(this._editor.viewer.hotspots.count > 0)
+            {
+                this._loadDialogMerge(data);
+            }
+            else
+            {
+                this._editor.load(data, true, true);
+            }
+        }
+    },
+
+    _loadDialogError: function()
+    {
+        var dialog = new ForgePlugins.EditorDialogBox(this._editor);
+
+        dialog.open
+        (
+            "Load Hotspots error",
+            "You have duplicate uids",
+            [{ label: "Close"}]
+        );
+    },
+
+    _loadDialogMerge: function(data)
+    {
         var dialog = new ForgePlugins.EditorDialogBox(this._editor);
 
         var buttons =
@@ -178,8 +211,6 @@ ForgePlugins.EditorUI.prototype =
             "Do you want to replace all hotspots or merge with the current hotspots?",
             buttons
         );
-
-        // this._editor.load(data, true);
     },
 
     _onSelectedHandler: function()
