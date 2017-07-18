@@ -85,7 +85,7 @@ ForgePlugins.EditorDialogBox.prototype =
             buttonConfig.callback.apply(context, args);
         }
 
-        if(buttonConfig.close === true)
+        if(buttonConfig.close !== false)
         {
             this.close();
         }

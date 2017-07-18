@@ -157,8 +157,7 @@ ForgePlugins.EditorUI.prototype =
                 label: "Merge",
                 callback: this._editor.load,
                 context: this._editor,
-                args: [data, false, true],
-                close: true
+                args: [data, false, true]
             },
 
             {
@@ -166,12 +165,10 @@ ForgePlugins.EditorUI.prototype =
                 callback: this._editor.load,
                 context: this._editor,
                 args: [data, true, true],
-                close: true
             },
 
             {
-                label: "Close",
-                close: true
+                label: "Close"
             }
         ];
 
