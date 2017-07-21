@@ -11,15 +11,40 @@ ForgePlugins.Editor = function()
 
     this._selected = null;
 
+    this._transformMode = null;
+
+    this._transformSpace = null;
+
+    this.onHotspotsChange = new FORGE.EventDispatcher(this);
+
+    this.onHotspotChange = new FORGE.EventDispatcher(this);
+
     this.onSelected = new FORGE.EventDispatcher(this);
 
     this.onLoadComplete = new FORGE.EventDispatcher(this);
+
+    this.onTransformModeChange = new FORGE.EventDispatcher(this);
+
+    this.onTransformSpaceChange = new FORGE.EventDispatcher(this);
 };
 
 ForgePlugins.Editor.HOTSPOT_DEFAULT_CONFIG =
 {
     name: "untitled hotspot",
-    facingCenter: true
+    facingCenter: false
+};
+
+ForgePlugins.Editor.transformModes =
+{
+    TRANSLATE: "translate",
+    ROTATE: "rotate",
+    SCALE: "scale"
+};
+
+ForgePlugins.Editor.transformSpaces =
+{
+    LOCAL: "local",
+    WORLD: "world"
 };
 
 ForgePlugins.Editor.prototype =
@@ -50,6 +75,8 @@ ForgePlugins.Editor.prototype =
         {
             this._history.add("hotspot add");
         }
+
+        this.onHotspotsChange.dispatch();
     },
 
     delete: function(uid, history)
@@ -61,8 +88,10 @@ ForgePlugins.Editor.prototype =
 
         if(history !== false)
         {
-            this._history.add();
+            this._history.add("hotspot delete");
         }
+
+        this.onHotspotsChange.dispatch();
     },
 
     save: function()
@@ -186,6 +215,51 @@ ForgePlugins.Editor.prototype =
     _onClickHandler: function(event)
     {
         this.selected = event.emitter.uid;
+    },
+
+    _selectHotspot: function(hotspot, dispatch)
+    {
+        this._selected = hotspot.uid;
+        this.lookAt(this._selected);
+
+        if(this._transformSpace === null)
+        {
+            this.transformSpace = ForgePlugins.Editor.transformSpaces.LOCAL;
+        }
+
+        if(this._transformMode === null)
+        {
+            this.transformMode = ForgePlugins.Editor.transformModes.TRANSLATE;
+        }
+
+        hotspot.transform.onChange.add(this._onHotspotChangeHandler, this);
+
+        if(dispatch !== false)
+        {
+            this.onSelected.dispatch({ hotspot: hotspot }, true);
+        }
+    },
+
+    _deselectHotspot: function(dispatch)
+    {
+        var hotspot = FORGE.UID.get(this._selected);
+
+        if(FORGE.Utils.isTypeOf(hotspot, "Hotspot3D"))
+        {
+            hotspot.transform.onChange.remove(this._onHotspotChangeHandler, this);
+        }
+
+        this._selected = null;
+
+        if(dispatch !== false)
+        {
+            this.onSelected.dispatch({ hotspot: null }, true);
+        }
+    },
+
+    _onHotspotChangeHandler: function(event)
+    {
+        this.onHotspotChange.dispatch(null, true);
     }
 };
 
@@ -194,6 +268,14 @@ Object.defineProperty(ForgePlugins.Editor.prototype, "history",
     get: function()
     {
         return this._history;
+    }
+});
+
+Object.defineProperty(ForgePlugins.Editor.prototype, "ui",
+{
+    get: function()
+    {
+        return this._ui;
     }
 });
 
@@ -208,8 +290,7 @@ Object.defineProperty(ForgePlugins.Editor.prototype, "selected",
     {
         if(value === null)
         {
-            this._selected = null;
-            this.onSelected.dispatch();
+            this._deselectHotspot(true);
             return;
         }
 
@@ -218,13 +299,49 @@ Object.defineProperty(ForgePlugins.Editor.prototype, "selected",
             return;
         }
 
-        var hs = FORGE.UID.get(value);
+        var hotspot = FORGE.UID.get(value);
 
-        if(FORGE.Utils.isTypeOf(hs, "Hotspot3D"))
+        if(FORGE.Utils.isTypeOf(hotspot, "Hotspot3D"))
         {
-            this._selected = value;
-            this.lookAt(this._selected);
-            this.onSelected.dispatch();
+            this._selectHotspot(hotspot, true);
         }
+    }
+});
+
+Object.defineProperty(ForgePlugins.Editor.prototype, "transformSpace",
+{
+    get: function()
+    {
+        return this._transformSpace;
+    },
+
+    set: function(value)
+    {
+        if(value === this._transformSpace)
+        {
+            return;
+        }
+
+        this._transformSpace = value;
+        this.onTransformSpaceChange.dispatch({ space: this._transformSpace }, true);
+    }
+});
+
+Object.defineProperty(ForgePlugins.Editor.prototype, "transformMode",
+{
+    get: function()
+    {
+        return this._transformMode;
+    },
+
+    set: function(value)
+    {
+        if(value === this._transformMode)
+        {
+            return;
+        }
+
+        this._transformMode = value;
+        this.onTransformModeChange.dispatch({ mode: this._transformMode }, true);
     }
 });

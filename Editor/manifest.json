@@ -34,9 +34,20 @@
     "sources":
     [
         "css/forgejs-editor-style.css",
+
+        "lib/TransformControls.js",
+
         "src/Editor.js",
-        "src/EditorUI.js",
         "src/EditorHistory.js",
+        "src/EditorUI.js",
+        "src/EditorUIItem.js",
+        "src/EditorUIGroup.js",
+        "src/EditorUIVector3.js",
+        "src/EditorUITransformButton.js",
+        "src/EditorButtonPanel.js",
+        "src/EditorHierarchyPanel.js",
+        "src/EditorInspectorPanel.js",
+        "src/EditorHelperPanel.js",
         "src/EditorHUD.js",
         "src/EditorDialogBox.js"
     ],
