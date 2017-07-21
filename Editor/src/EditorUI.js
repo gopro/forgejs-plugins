@@ -35,8 +35,8 @@ ForgePlugins.EditorUI.prototype =
         this._helperPanel = new ForgePlugins.EditorHelperPanel(this._editor);
         this._container.appendChild(this._helperPanel.container);
 
-        // this._inspectorPanel = new ForgePlugins.EditorInspectorPanel(this._editor);
-        // this._container.appendChild(this._inspectorPanel.container);
+        this._inspectorPanel = new ForgePlugins.EditorInspectorPanel(this._editor);
+        this._container.appendChild(this._inspectorPanel.container);
     },
 
     update: function()
