@@ -11,6 +11,10 @@ ForgePlugins.EditorHierarchyPanel = function(editor)
 
     this._list = null;
 
+    this._edited = null;
+
+    this._switching = false;
+
     this._boot();
 };
 
@@ -74,6 +78,17 @@ ForgePlugins.EditorHierarchyPanel.prototype =
 
             this._list.appendChild(div);
         }
+
+        if(this._edited !== null)
+        {
+            this._enterEdition();
+        }
+        else
+        {
+            this._editor.viewer.controllers.enabled = true;
+        }
+
+        this._switching = false;
     },
 
     _clearList: function()
@@ -134,10 +149,17 @@ ForgePlugins.EditorHierarchyPanel.prototype =
         this._enterEdition();
     },
 
-    _enterEdition: function()
+    _enterEdition: function(edited)
     {
-        var div = this._getItemByUid(this._editor.selected);
-        var hs = FORGE.UID.get(this._editor.selected);
+        this._edited = edited || this._editor.selected;
+
+        if(this._edited === null)
+        {
+            return;
+        }
+
+        var div = this._getItemByUid(this._edited);
+        var hs = FORGE.UID.get(this._edited);
 
         while (div.firstChild)
         {
@@ -145,6 +167,7 @@ ForgePlugins.EditorHierarchyPanel.prototype =
         }
 
         var input = document.createElement("input");
+        input.addEventListener("focusin", this._onInputFocusInHandler.bind(this));
         input.addEventListener("focusout", this._onInputFocusOutHandler.bind(this));
         input.addEventListener("keydown", this._onInputKeyPressHandler.bind(this));
 
@@ -159,18 +182,16 @@ ForgePlugins.EditorHierarchyPanel.prototype =
         this._editor.viewer.controllers.enabled = false;
     },
 
-    _exitEdition: function()
+    _onInputFocusInHandler: function(event)
     {
-        this._editor.viewer.controllers.enabled = true;
-        this._updateList();
+        this._editor.viewer.controllers.enabled = false;
     },
 
     _onInputFocusOutHandler: function(event)
     {
         var input = event.currentTarget;
-
         this._saveHotspotNameFromInput(input);
-        this._exitEdition();
+        this._editor.viewer.controllers.enabled = true;
     },
 
     _onInputKeyPressHandler: function(event)
@@ -183,18 +204,20 @@ ForgePlugins.EditorHierarchyPanel.prototype =
         if(keyCode === 27)
         {
             input.value = input.dataset.nameBackup;
+            this._saveHotspotNameFromInput(input);
+            this._edited = null;
         }
 
-
-        if(keyCodes.indexOf(event.keyCode) !== -1)
+        if(keyCode === 13)
         {
-            event.preventDefault();
             this._saveHotspotNameFromInput(input);
-            this._exitEdition();
+            this._edited = null;
         }
 
         if(keyCode === 9)
         {
+            this._switching = true;
+
             var hotspots = this._editor.viewer.hotspots.uids;
 
             if(hotspots.length < 2) { return; }
@@ -207,8 +230,14 @@ ForgePlugins.EditorHierarchyPanel.prototype =
                 next = 0;
             }
 
+            this._edited = hotspots[next];
             this._editor.selected = hotspots[next];
-            this._enterEdition();
+        }
+
+        if(keyCodes.indexOf(event.keyCode) !== -1)
+        {
+            event.preventDefault();
+            this._updateList();
         }
     },
 
