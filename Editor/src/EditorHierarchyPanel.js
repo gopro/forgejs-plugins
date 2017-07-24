@@ -216,7 +216,12 @@ ForgePlugins.EditorHierarchyPanel.prototype =
     {
         var div = input.parentElement;
         var hs = FORGE.UID.get(div.dataset.uid);
-        hs.name = input.value;
+
+        if(hs.name !== input.value)
+        {
+            hs.name = input.value;
+            this._editor.history.add();
+        }
     },
 
     destroy: function()
