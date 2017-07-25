@@ -142,15 +142,36 @@ ForgePlugins.Toolbox.prototype =
     {
         this._controllers = this._gui.addFolder("Controllers");
 
+        var onDragChange = function(value)
+        {
+            var display = value === true ? "none" : "block";
+
+            var ul = this._controllers.domElement.firstChild;
+            var li;
+
+            for(var i = 2, ii = ul.children.length; i < ii; i++)
+            {
+                li = ul.children[i];
+                li.style.display = display;
+            }
+        }.bind(this);
+
         if(viewer.controllers.getByType("pointer") !== null)
         {
-            this._controllers.add(viewer.controllers.getByType("pointer").orientation, "drag");
+            var drag = this._controllers.add(viewer.controllers.getByType("pointer").orientation, "drag").onChange(onDragChange);
+            this._controllers.add(viewer.controllers.getByType("pointer").orientation, "hardness");
+            this._controllers.add(viewer.controllers.getByType("pointer").orientation, "damping");
+            this._controllers.add(viewer.controllers.getByType("pointer").orientation, "velocityMax");
+            this._controllers.add(viewer.controllers.getByType("pointer").orientation.invert, "x").name("invert X");
+            this._controllers.add(viewer.controllers.getByType("pointer").orientation.invert, "y").name("invert Y");
         }
 
         if(this._options.pannels.controllers.open === true)
         {
             this._controllers.open();
         }
+
+        onDragChange(drag.getValue());
     },
 
     _onSceneLoadCompleteHandler: function()
