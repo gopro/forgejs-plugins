@@ -28,7 +28,7 @@ ForgePlugins.Toolbox.DEFAULT_OPTIONS =
         view: { open: false },
         story: { open: false },
         scene : { open: false },
-        controllers: { open: true }
+        controllers: { open: false }
     }
 };
 
