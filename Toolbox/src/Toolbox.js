@@ -22,19 +22,6 @@ ForgePlugins.Toolbox = function()
     this._options = null;
 };
 
-ForgePlugins.Toolbox.DEFAULT_OPTIONS =
-{
-    pannels:
-    {
-        camera: { open: false, options: { cross: false } },
-        view: { open: false },
-        story: { open: false },
-        scene : { open: false },
-        controllerPointerOrientation: { open: false },
-        controllerPointerZoom: { open: false }
-    }
-};
-
 ForgePlugins.Toolbox.prototype =
 {
     /**
@@ -42,8 +29,7 @@ ForgePlugins.Toolbox.prototype =
      */
     boot: function()
     {
-        this._options = FORGE.Utils.extendSimpleObject(ForgePlugins.Toolbox.DEFAULT_OPTIONS, this.plugin.options, true);
-        console.log(this._options)
+        this._options = this.plugin.options;
 
         this._canvas = this.plugin.create.canvas();
         this._canvas.maximize(true);
@@ -53,32 +39,32 @@ ForgePlugins.Toolbox.prototype =
 
         this._gui.add(FORGE, "VERSION").domElement.firstChild.disabled = true;
 
-        if(typeof this._options.pannels.camera === "object")
+        if(typeof this._options.panels.camera === "object")
         {
             this._addCamera();
         }
 
-        if(typeof this._options.pannels.view === "object")
+        if(typeof this._options.panels.view === "object")
         {
             this._addView();
         }
 
-        if(typeof this._options.pannels.story === "object")
+        if(typeof this._options.panels.story === "object")
         {
             this._addStory();
         }
 
-        if(typeof this._options.pannels.scene === "object")
+        if(typeof this._options.panels.scene === "object")
         {
             this._addScene();
         }
 
-        if(typeof this._options.pannels.controllerPointerOrientation === "object")
+        if(typeof this._options.panels.controllerPointerOrientation === "object")
         {
             this._addControllerPointerOrientation();
         }
 
-        if(typeof this._options.pannels.controllerPointerZoom === "object")
+        if(typeof this._options.panels.controllerPointerZoom === "object")
         {
             this._addControllerPointerZoom();
         }
@@ -97,9 +83,9 @@ ForgePlugins.Toolbox.prototype =
         this._camera.add(this.viewer.camera, "fov").listen();
         this._camera.add(this.viewer.camera, "parallax", 0, 1).listen();
 
-        this._camera.add(this._options.pannels.camera.options, "cross").name("cross");
+        this._camera.add(this._options.panels.camera.options, "cross").name("cross");
 
-        if(this._options.pannels.camera.open === true)
+        if(this._options.panels.camera.open === true)
         {
             this._camera.open();
         }
@@ -110,7 +96,7 @@ ForgePlugins.Toolbox.prototype =
         this._view = this._gui.addFolder("View");
         this._view.add(this.viewer.renderer.view, "type", ["rectilinear", "gopro", "flat"]).listen();
 
-        if(this._options.pannels.view.open === true)
+        if(this._options.panels.view.open === true)
         {
             this._view.open();
         }
@@ -126,7 +112,7 @@ ForgePlugins.Toolbox.prototype =
             this._story.add(this.viewer.story, "groupUid", this.viewer.story.groupUids).name("group").listen();
         }
 
-        if(this._options.pannels.story.open === true)
+        if(this._options.panels.story.open === true)
         {
             this._story.open();
         }
@@ -140,7 +126,7 @@ ForgePlugins.Toolbox.prototype =
         this._scene.add(this.viewer.story.scene, "slug");
         this._scene.add(this.viewer.story.scene, "viewCount");
 
-        if(this._options.pannels.scene.open === true)
+        if(this._options.panels.scene.open === true)
         {
             this._scene.open();
         }
@@ -174,7 +160,7 @@ ForgePlugins.Toolbox.prototype =
             this._controllerPointerOrientation.add(viewer.controllers.getByType("pointer").orientation.invert, "y").name("invert Y");
         }
 
-        if(this._options.pannels.controllerPointerOrientation.open === true)
+        if(this._options.panels.controllerPointerOrientation.open === true)
         {
             this._controllerPointerOrientation.open();
         }
@@ -193,7 +179,7 @@ ForgePlugins.Toolbox.prototype =
             this._controllerPointerZoom.add(viewer.controllers.getByType("pointer").zoom, "invert");
         }
 
-        if(this._options.pannels.controllerPointerZoom.open === true)
+        if(this._options.panels.controllerPointerZoom.open === true)
         {
             this._controllerPointerZoom.open();
         }
@@ -237,7 +223,7 @@ ForgePlugins.Toolbox.prototype =
     {
         this._clearCanvas();
 
-        var camera = this._options.pannels.camera;
+        var camera = this._options.panels.camera;
 
         if(typeof camera === "object" && camera.options.cross === true)
         {

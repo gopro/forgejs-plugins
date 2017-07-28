@@ -22,7 +22,15 @@
 
     "options":
     {
-
+        "panels":
+        {
+            "camera": { "open": false, "options": { "cross": true } },
+            "view": { "open": false },
+            "story": { "open": false },
+            "scene" : { "open": false },
+            "controllerPointerOrientation": { "open": false },
+            "controllerPointerZoom": { "open": false }
+        }
     },
 
     "sources":
