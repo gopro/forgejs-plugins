@@ -13,7 +13,9 @@ ForgePlugins.Toolbox = function()
 
     this._scene = null;
 
-    this._controllers = null;
+    this._controllerPointerOrientation = null;
+
+    this._controllerPointerZoom = null;
 
     this._canvas = null;
 
@@ -28,7 +30,8 @@ ForgePlugins.Toolbox.DEFAULT_OPTIONS =
         view: { open: false },
         story: { open: false },
         scene : { open: false },
-        controllers: { open: false }
+        controllerPointerOrientation: { open: false },
+        controllerPointerZoom: { open: false }
     }
 };
 
@@ -70,9 +73,14 @@ ForgePlugins.Toolbox.prototype =
             this._addScene();
         }
 
-        if(typeof this._options.pannels.controllers === "object")
+        if(typeof this._options.pannels.controllerPointerOrientation === "object")
         {
-            this._addControllers();
+            this._addControllerPointerOrientation();
+        }
+
+        if(typeof this._options.pannels.controllerPointerZoom === "object")
+        {
+            this._addControllerPointerZoom();
         }
 
         this.viewer.story.onSceneLoadComplete.add(this._onSceneLoadCompleteHandler, this);
@@ -138,15 +146,15 @@ ForgePlugins.Toolbox.prototype =
         }
     },
 
-    _addControllers: function()
+    _addControllerPointerOrientation: function()
     {
-        this._controllers = this._gui.addFolder("Controllers");
+        this._controllerPointerOrientation = this._gui.addFolder("Controller Pointer Orientation");
 
         var onDragChange = function(value)
         {
             var display = value === true ? "none" : "block";
 
-            var ul = this._controllers.domElement.firstChild;
+            var ul = this._controllerPointerOrientation.domElement.firstChild;
             var li;
 
             for(var i = 2, ii = ul.children.length; i < ii; i++)
@@ -158,20 +166,37 @@ ForgePlugins.Toolbox.prototype =
 
         if(viewer.controllers.getByType("pointer") !== null)
         {
-            var drag = this._controllers.add(viewer.controllers.getByType("pointer").orientation, "drag").onChange(onDragChange);
-            this._controllers.add(viewer.controllers.getByType("pointer").orientation, "hardness");
-            this._controllers.add(viewer.controllers.getByType("pointer").orientation, "damping");
-            this._controllers.add(viewer.controllers.getByType("pointer").orientation, "velocityMax");
-            this._controllers.add(viewer.controllers.getByType("pointer").orientation.invert, "x").name("invert X");
-            this._controllers.add(viewer.controllers.getByType("pointer").orientation.invert, "y").name("invert Y");
+            var drag = this._controllerPointerOrientation.add(viewer.controllers.getByType("pointer").orientation, "drag").onChange(onDragChange);
+            this._controllerPointerOrientation.add(viewer.controllers.getByType("pointer").orientation, "hardness");
+            this._controllerPointerOrientation.add(viewer.controllers.getByType("pointer").orientation, "damping");
+            this._controllerPointerOrientation.add(viewer.controllers.getByType("pointer").orientation, "velocityMax");
+            this._controllerPointerOrientation.add(viewer.controllers.getByType("pointer").orientation.invert, "x").name("invert X");
+            this._controllerPointerOrientation.add(viewer.controllers.getByType("pointer").orientation.invert, "y").name("invert Y");
         }
 
-        if(this._options.pannels.controllers.open === true)
+        if(this._options.pannels.controllerPointerOrientation.open === true)
         {
-            this._controllers.open();
+            this._controllerPointerOrientation.open();
         }
 
         onDragChange(drag.getValue());
+    },
+
+    _addControllerPointerZoom: function()
+    {
+        this._controllerPointerZoom = this._gui.addFolder("Controller Pointer Zoom");
+
+        if(viewer.controllers.getByType("pointer") !== null)
+        {
+            this._controllerPointerZoom.add(viewer.controllers.getByType("pointer").zoom, "toPointer");
+            this._controllerPointerZoom.add(viewer.controllers.getByType("pointer").zoom, "hardness");
+            this._controllerPointerZoom.add(viewer.controllers.getByType("pointer").zoom, "invert");
+        }
+
+        if(this._options.pannels.controllerPointerZoom.open === true)
+        {
+            this._controllerPointerZoom.open();
+        }
     },
 
     _onSceneLoadCompleteHandler: function()
