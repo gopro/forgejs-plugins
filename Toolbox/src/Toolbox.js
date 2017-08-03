@@ -93,13 +93,44 @@ ForgePlugins.Toolbox.prototype =
 
     _addView: function()
     {
+        var onViewChange = function()
+        {
+            // Clear options controllers
+            var controllers = this._view.__controllers;
+            var c;
+
+            var i = controllers.length;
+            while (i--)
+            {
+                c = controllers[i];
+
+                if(c.property !== "type")
+                {
+                    this._view.remove(c);
+                }
+            }
+
+            //add controllers for options
+            var view = this.viewer.view.current;
+
+            for(var j in view.options)
+            {
+                this._view.add(this.viewer.view.current.options, j).listen();
+            }
+
+
+        }.bind(this);
+
         this._view = this._gui.addFolder("View");
-        this._view.add(this.viewer.renderer.view, "type", ["rectilinear", "gopro", "flat"]).listen();
+        this._view.add(this.viewer.renderer.view, "type", ["rectilinear", "gopro", "flat"]).listen().onChange(onViewChange);
+
 
         if(this._options.panels.view.open === true)
         {
             this._view.open();
         }
+
+        onViewChange();
     },
 
     _addStory: function()
@@ -189,13 +220,17 @@ ForgePlugins.Toolbox.prototype =
     {
         var controller;
 
-        for(var i = 0, ii = this._scene.__controllers.length; i < ii; i++)
+        if(this._scene !== null)
         {
-            controller = this._scene.__controllers[i];
-            controller.object = this.viewer.story.scene;
+            for(var i = 0, ii = this._scene.__controllers.length; i < ii; i++)
+            {
+                controller = this._scene.__controllers[i];
+                controller.object = this.viewer.story.scene;
+            }
+
+            this._scene.updateDisplay();
         }
 
-        this._scene.updateDisplay();
     },
 
     _clearCanvas: function()
