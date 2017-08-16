@@ -1,0 +1,65 @@
+{
+    "uid": "org.forgejs.googlemaps",
+    "name": "Google Maps",
+    "shortName": "maps",
+    "version": "1.0.0",
+    "versionName": "Google Maps 1.0.0",
+    "description": "Display a simple Google Maps that can be loaded with gpx data.",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "options":
+    {
+        "width": 200,
+        "height": 200,
+        "overWidth": 600,
+        "overHeight": 400,
+
+        "top": null,
+        "left": null,
+        "right": null,
+        "bottom": null,
+
+        "strokeColor": null,
+        "strokeOpacity": 1,
+        "strokeWeight": 5,
+
+        "marker":
+        {
+            "title": "Current position",
+            "url": null,
+            "width": null,
+            "height": null,
+            "anchorX": null,
+            "anchorY": null
+        },
+
+        "source": "media",
+
+        "googleMapsStyle": null
+    },
+
+    "data":
+    {
+        "gpx": "",
+        "googleMapsKey": ""
+    },
+
+    "events":
+    {
+        "over": null
+    },
+
+    "sources": [
+        "src/style.css",
+        "src/GoogleMaps.js"
+    ],
+
+    "constructor": "ForgePlugins.GoogleMaps"
+}
