@@ -57,15 +57,15 @@ ForgePlugins.Altimeter.prototype = {
         this._altitudeField.bottom = this.plugin.options.bottom;
         this._altitudeField.textAlign = "right";
 
-        this._altitudeField.color = this.plugin.options.text.color;
-        this._altitudeField.font = this.plugin.options.text.font;
-        this._altitudeField.fontFamily = this.plugin.options.text.fontFamily;
-        this._altitudeField.fontSize = this.plugin.options.text.fontSize;
-        this._altitudeField.fontStyle = this.plugin.options.text.fontStyle;
-        this._altitudeField.fontVariant = this.plugin.options.text.fontVariant;
+        this._altitudeField.color = this.plugin.options.label.color;
+        this._altitudeField.font = this.plugin.options.label.font;
+        this._altitudeField.fontFamily = this.plugin.options.label.fontFamily;
+        this._altitudeField.fontSize = this.plugin.options.label.fontSize;
+        this._altitudeField.fontStyle = this.plugin.options.label.fontStyle;
+        this._altitudeField.fontVariant = this.plugin.options.label.fontVariant;
         this._altitudeField.fontWeight = 100;
 
-        this._altitudeField.value = "altitude";
+        this._altitudeField.value = this.plugin.options.label.value || "altitude";
 
         this.plugin.container.addChild(this._altitudeField);
 
@@ -86,7 +86,10 @@ ForgePlugins.Altimeter.prototype = {
         this._setupVideo();
     },
 
-    _setupVideo: function(video)
+    /**
+     * Setup a video file. Can be a scene media or a plugin
+     */
+    _setupVideo: function()
     {
         if (this.plugin.options.source === "media")
         {
