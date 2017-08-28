@@ -1,0 +1,82 @@
+{
+    "uid": "org.forgejs.compass",
+    "name": "Compass",
+    "shortName": "compass",
+    "version": "1.0.0",
+    "versionName": "Compass 1.0.0",
+    "description": "Display a simple Compass that can be loaded with the metadata from a GoPro.",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "options":
+    {
+        "size": 150,
+
+        "top": null,
+        "left": null,
+        "right": null,
+        "bottom": null,
+
+        "arc":
+        {
+            "color": "rgba(120, 120, 120, 0.6)",
+            "width": 4
+        },
+
+        "arrow":
+        {
+            "color": "red",
+            "width": 15,
+            "height": 30
+        },
+
+        "label":
+        {
+            "values":
+            {
+                "north": "N",
+                "east" : "E",
+                "south": "S",
+                "west": "W"
+            },
+
+            "color": "white",
+            "font": "normal small-caps normal 20px dosisbold, sans-serif",
+            "fontFamily": "dosisbold, sans-serif",
+            "fontSize": "20px",
+            "fontStyle": "normal",
+            "fontVariant": "small-caps",
+            "fontWeight": "normal"
+        },
+
+        "text":
+        {
+            "color": "white",
+            "font": "normal small-caps normal 22px dosisbold, sans-serif",
+            "fontFamily": "dosisbold, sans-serif",
+            "fontSize": "22px",
+            "fontStyle": "normal",
+            "fontVariant": "small-caps",
+            "fontWeight": "normal"
+        },
+
+        "source": "media"
+    },
+
+    "data":
+    {
+        "json": ""
+    },
+
+    "sources": [
+        "src/Compass.js"
+    ],
+
+    "constructor": "ForgePlugins.Compass"
+}

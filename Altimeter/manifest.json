@@ -27,7 +27,7 @@
         "text":
         {
             "color": "white",
-            "font": null,
+            "font": "normal small-caps normal 20px dosisbold, sans-serif",
             "fontFamily": "dosisbold, sans-serif",
             "fontSize": "20px",
             "fontStyle": "normal",
@@ -39,7 +39,7 @@
         {
             "value": "altitude",
             "color": "white",
-            "font": null,
+            "font": "normal small-caps normal 20px dosislight, sans-serif",
             "fontFamily": "dosislight, sans-serif",
             "fontSize": "20px",
             "fontStyle": "normal",
