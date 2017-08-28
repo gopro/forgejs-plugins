@@ -1,0 +1,54 @@
+{
+    "uid": "org.forgejs.speedometer",
+    "name": "Speedometer",
+    "shortName": "speedometer",
+    "version": "1.0.0",
+    "versionName": "Speedometer 1.0.0",
+    "description": "Display a simple Speedometer that can be loaded with the metadata from a GoPro.",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "options":
+    {
+        "size": 150,
+
+        "top": null,
+        "left": null,
+        "right": null,
+        "bottom": null,
+
+        "color": "white",
+        "gaugeColor": "steelblue",
+
+        "text":
+        {
+            "color": "white",
+            "font": null,
+            "fontFamily": "dosisbold, sans-serif",
+            "fontSize": "35px",
+            "fontStyle": "normal",
+            "fontVariant": "small-caps",
+            "fontWeight": "normal"
+        },
+
+        "source": "media"
+    },
+
+    "data":
+    {
+        "json": ""
+    },
+
+    "sources": [
+        "src/style.css",
+        "src/Speedometer.js"
+    ],
+
+    "constructor": "ForgePlugins.Speedometer"
+}
