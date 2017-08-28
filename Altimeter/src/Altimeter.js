@@ -36,12 +36,18 @@ ForgePlugins.Altimeter.prototype = {
         this._valueField.textAlign = "right";
 
         this._valueField.color = this.plugin.options.text.color;
-        this._valueField.font = this.plugin.options.text.font;
-        this._valueField.fontFamily = this.plugin.options.text.fontFamily;
-        this._valueField.fontSize = this.plugin.options.text.fontSize;
-        this._valueField.fontStyle = this.plugin.options.text.fontStyle;
-        this._valueField.fontVariant = this.plugin.options.text.fontVariant;
-        this._valueField.fontWeight = this.plugin.options.text.fontWeight;
+        if (this.plugin.options.text.font !== null)
+        {
+            this._valueField.font = this.plugin.options.text.font;
+        }
+        else
+        {
+            this._valueField.fontFamily = this.plugin.options.text.fontFamily;
+            this._valueField.fontSize = this.plugin.options.text.fontSize;
+            this._valueField.fontStyle = this.plugin.options.text.fontStyle;
+            this._valueField.fontVariant = this.plugin.options.text.fontVariant;
+            this._valueField.fontWeight = this.plugin.options.text.fontWeight;
+        }
 
         this._valueField.value = "0";
 
@@ -58,12 +64,18 @@ ForgePlugins.Altimeter.prototype = {
         this._altitudeField.textAlign = "right";
 
         this._altitudeField.color = this.plugin.options.label.color;
-        this._altitudeField.font = this.plugin.options.label.font;
-        this._altitudeField.fontFamily = this.plugin.options.label.fontFamily;
-        this._altitudeField.fontSize = this.plugin.options.label.fontSize;
-        this._altitudeField.fontStyle = this.plugin.options.label.fontStyle;
-        this._altitudeField.fontVariant = this.plugin.options.label.fontVariant;
-        this._altitudeField.fontWeight = 100;
+        if (this.plugin.options.label.font !== null)
+        {
+            this._altitudeField.font = this.plugin.options.label.font;
+        }
+        else
+        {
+            this._altitudeField.fontFamily = this.plugin.options.label.fontFamily;
+            this._altitudeField.fontSize = this.plugin.options.label.fontSize;
+            this._altitudeField.fontStyle = this.plugin.options.label.fontStyle;
+            this._altitudeField.fontVariant = this.plugin.options.label.fontVariant;
+            this._altitudeField.fontWeight = this.plugin.options.label.fontWeight;
+        }
 
         this._altitudeField.value = this.plugin.options.label.value || "altitude";
 

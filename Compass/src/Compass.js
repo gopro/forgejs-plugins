@@ -134,29 +134,29 @@ ForgePlugins.Compass.prototype = {
         // draw outside circle
         var radius = this._size / 2;
         ctx.beginPath();
-        ctx.strokeStyle = "rgba(120, 120, 120, 0.6)";
-        ctx.lineWidth = 4;
+        ctx.strokeStyle = this.plugin.options.arc.color;
+        ctx.lineWidth = this.plugin.options.arc.width;
         ctx.arc(this._size / 2, this._size / 2, radius - 2, 1.4, 0.3);
         ctx.stroke();
         ctx.closePath();
 
         // draw NSEW directions
         ctx.beginPath();
-        ctx.font = this.plugin.options.text.style + " " + this.plugin.options.text.size + " " + this.plugin.options.text.font;
-        ctx.fillStyle = this.plugin.options.text.color;
+        ctx.font = (this.plugin.options.label.font !== null) ? this.plugin.options.label.font : this.plugin.options.label.fontStyle + " " + this.plugin.options.label.fontVariant + " " + this.plugin.options.label.fontWeight + " " + this.plugin.options.label.fontSize + " " + this.plugin.options.label.fontFamily;
+        ctx.fillStyle = this.plugin.options.label.color;
         ctx.textAlign = "center";
-        ctx.fillText("N", this._size / 2, parseInt(this.plugin.options.text.size) + 5);
-        ctx.fillText("S", this._size / 2, this._size - 10);
+        ctx.fillText(this.plugin.options.label.values.north, this._size / 2, parseInt(this.plugin.options.label.fontSize) + 5);
+        ctx.fillText(this.plugin.options.label.values.south, this._size / 2, this._size - 10);
         ctx.textAlign = "right";
-        ctx.fillText("E", this._size - 10, this._size / 2 + parseInt(this.plugin.options.text.size) / 2);
+        ctx.fillText(this.plugin.options.label.values.east, this._size - 10, this._size / 2 + parseInt(this.plugin.options.label.fontSize) / 2);
         ctx.textAlign = "left";
-        ctx.fillText("W", 10, this._size / 2 + parseInt(this.plugin.options.text.size) / 2);
+        ctx.fillText(this.plugin.options.label.values.west, 10, this._size / 2 + parseInt(this.plugin.options.label.fontSize) / 2);
         ctx.closePath();
 
         // draw value
         var value = data.toFixed(0);
         ctx.beginPath();
-        ctx.font = this.plugin.options.text.style + " " + this.plugin.options.text.size + " " + this.plugin.options.text.font;
+        ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + this.plugin.options.text.fontSize + " " + this.plugin.options.text.fontFamily;
         ctx.fillStyle = this.plugin.options.text.color;
         ctx.textAlign = "right";
         ctx.fillText(value + "°", this._size - 2, 7 / 8 * this._size);

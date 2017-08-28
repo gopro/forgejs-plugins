@@ -23,6 +23,12 @@
         "right": null,
         "bottom": null,
 
+        "arc":
+        {
+            "color": "rgba(120, 120, 120, 0.6)",
+            "width": 4
+        },
+
         "arrow":
         {
             "color": "red",
@@ -30,12 +36,34 @@
             "height": 30
         },
 
+        "label":
+        {
+            "values":
+            {
+                "north": "N",
+                "east" : "E",
+                "south": "S",
+                "west": "W"
+            },
+
+            "color": "white",
+            "font": "normal small-caps normal 20px dosisbold, sans-serif",
+            "fontFamily": "dosisbold, sans-serif",
+            "fontSize": "20px",
+            "fontStyle": "normal",
+            "fontVariant": "small-caps",
+            "fontWeight": "normal"
+        },
+
         "text":
         {
             "color": "white",
-            "font": "dosisbold, sans-serif",
-            "size": "20px",
-            "style": "bold"
+            "font": "normal small-caps normal 22px dosisbold, sans-serif",
+            "fontFamily": "dosisbold, sans-serif",
+            "fontSize": "22px",
+            "fontStyle": "normal",
+            "fontVariant": "small-caps",
+            "fontWeight": "normal"
         },
 
         "source": "media"
