@@ -22,12 +22,13 @@
 
     "options":
     {
+        "yaw": true,
+        "pitch": true,
+        "roll": false,
+        "fov": true,
+        "view": true,
 
-    },
-
-    "events":
-    {
-
+        "format": "short"
     },
 
     "sources":

@@ -1,11 +1,21 @@
 var ForgePlugins = ForgePlugins || {};
 
-
+/**
+ * This plugin create an url with camera parameters for view sharing.<br>
+ * This plugin accepts 2 sets of querystring parameters:
+ * - normal: &yaw=<decimal-value>&pitch=<decimal-value>&roll=<decimal-value>&fov=<decimal-value>&view=<[rectilinear,gopro,flat]>
+ * - short: &y<decimal-value>p<decimal-value>r<decimal-value>f<decimal-value>v<[rectilinear,gopro,flat]>
+ */
 ForgePlugins.Share = function()
 {
+    // Timer object
     this._timer = null;
 
+    // Timer event object
     this._loop = null;
+
+    // Parameters suffix
+    this._paramSuffix = "&";
 };
 
 ForgePlugins.Share.prototype = {
@@ -24,8 +34,12 @@ ForgePlugins.Share.prototype = {
      */
     destroy: function()
     {
+        this._timer.stop();
+
         this._timer.destroy();
         this._timer = null;
+
+        this._loop = null;
     },
 
     createURL: function()
@@ -34,11 +48,34 @@ ForgePlugins.Share.prototype = {
         var history = this.viewer.history;
 
         var hash = history.generateHash(this.viewer.story.scene, false);
-        hash += "&yaw=" + camera.yaw.toFixed(0);
-        hash += "&pitch=" + camera.pitch.toFixed(0);
-        hash += "&roll=" + camera.roll.toFixed(0);
-        hash += "&fov=" + camera.fov.toFixed(0);
-        hash += "&view=" + this.viewer.view.type;
+
+        var format = this.plugin.options.format;
+
+        if (format === "short")
+        {
+            hash += this._paramSuffix;
+        }
+
+        if (this.plugin.options.yaw === true)
+        {
+            hash += (format !== "short" ? this._paramSuffix + "yaw=" : "y") + camera.yaw.toFixed(2);
+        }
+        if (this.plugin.options.pitch === true)
+        {
+            hash += (format !== "short" ? this._paramSuffix + "pitch=" : "p") + camera.pitch.toFixed(2);
+        }
+        if (this.plugin.options.roll === true)
+        {
+            hash += (format !== "short" ? this._paramSuffix + "roll=" : "r") + camera.roll.toFixed(2);
+        }
+        if (this.plugin.options.fov === true)
+        {
+            hash += (format !== "short" ? this._paramSuffix + "fov=" : "f") + camera.fov.toFixed(2);
+        }
+        if (this.plugin.options.view === true)
+        {
+            hash += (format !== "short" ? this._paramSuffix + "view=" : "v") + this.viewer.view.type;
+        }
 
         return hash;
     },
@@ -54,27 +91,61 @@ ForgePlugins.Share.prototype = {
 
         if(hashParameters !== null)
         {
-            if(typeof hashParameters.view === "string")
+            // short URL
+            var hash = FORGE.URL.parse()["hash"];
+
+            // verify the short parameters and add them as hashParameters
+            var re = /&?(y|p|r|f|v)([0-9\-.]+|rectilinear|gopro|flat)/gi;
+            var rr;
+            while ((rr = re.exec(hash)) !== null)
             {
-                this.viewer.view.type = hashParameters.view;
+                if (typeof rr[2] === "string")
+                {
+                    if (rr[1] === "y" && this.plugin.options.yaw === true)
+                    {
+                        this.viewer.camera.yaw = Number(rr[2]);
+                    }
+                    if (rr[1] === "p" && this.plugin.options.pitch === true)
+                    {
+                        this.viewer.camera.pitch = Number(rr[2]);
+                    }
+                    if (rr[1] === "r" && this.plugin.options.roll === true)
+                    {
+                        this.viewer.camera.roll = Number(rr[2]);
+                    }
+                    if (rr[1] === "f" && this.plugin.options.fov === true)
+                    {
+                        this.viewer.camera.fov = Number(rr[2]);
+                    }
+                    if (rr[1] === "v"&& this.plugin.options.view === true)
+                    {
+                        this.viewer.view.type = rr[2].toLowerCase();
+                    }
+                }
             }
 
-            if(typeof hashParameters.yaw === "string")
+            // normal URL
+            if(typeof hashParameters.view === "string" && this.plugin.options.view === true)
+            {
+                this.viewer.view.type = hashParameters.view.toLowerCase();
+            }
+
+            if(typeof hashParameters.yaw === "string" && this.plugin.options.yaw === true)
             {
                 this.viewer.camera.yaw = Number(hashParameters.yaw);
             }
 
-            if(typeof hashParameters.pitch === "string")
+            if(typeof hashParameters.pitch === "string" && this.plugin.options.pitch === true)
             {
                 this.viewer.camera.pitch = Number(hashParameters.pitch);
             }
 
-            if(typeof hashParameters.roll === "string")
+            if(typeof hashParameters.roll === "string" && this.plugin.options.roll === true)
             {
                 this.viewer.camera.roll = Number(hashParameters.roll);
             }
 
-            if(typeof hashParameters.fov === "string")
+            if(typeof hashParameters.fov === "string" && this.plugin.options.fov === true)
             {
                 this.viewer.camera.fov = Number(hashParameters.fov);
             }
