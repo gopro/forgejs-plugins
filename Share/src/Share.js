@@ -88,7 +88,32 @@ ForgePlugins.Share.prototype = {
 
     updateURL: function()
     {
-        window.location.hash = this.createURL();
+        var url = this.createURL();
+
+        if (window.history.replaceState)
+        {
+            var scene = this.viewer.story.scene;
+            var state =
+            {
+                "viewer":
+                {
+                    uid: this.viewer.uid
+                },
+
+                "scene":
+                {
+                    uid: scene.uid
+                },
+
+                "locale": this.viewer.i18n.locale
+            }
+
+            window.history.replaceState(state, scene.name, url);
+        }
+        else
+        {
+            window.location.hash = url;
+        }
     },
 
     _sceneLoadCompleteHandler: function()
@@ -97,6 +122,32 @@ ForgePlugins.Share.prototype = {
 
         if(hashParameters !== null)
         {
+            // verify and apply the normal URL parameters
+            if(typeof hashParameters.view === "string" && this.plugin.options.view === true)
+            {
+                this.viewer.view.type = hashParameters.view.toLowerCase();
+            }
+
+            if(typeof hashParameters.yaw === "string" && this.plugin.options.yaw === true)
+            {
+                this.viewer.camera.yaw = Number(hashParameters.yaw);
+            }
+
+            if(typeof hashParameters.pitch === "string" && this.plugin.options.pitch === true)
+            {
+                this.viewer.camera.pitch = Number(hashParameters.pitch);
+            }
+
+            if(typeof hashParameters.roll === "string" && this.plugin.options.roll === true)
+            {
+                this.viewer.camera.roll = Number(hashParameters.roll);
+            }
+
+            if(typeof hashParameters.fov === "string" && this.plugin.options.fov === true)
+            {
+                this.viewer.camera.fov = Number(hashParameters.fov);
+            }
+
             // hash for short URL
             var hash = FORGE.URL.parse()["hash"];
 
@@ -128,32 +179,6 @@ ForgePlugins.Share.prototype = {
                         this.viewer.view.type = rr[1].toLowerCase();
                     }
                 }
-            }
-
-            // verify and apply the normal URL parameters
-            if(typeof hashParameters.view === "string" && this.plugin.options.view === true)
-            {
-                this.viewer.view.type = hashParameters.view.toLowerCase();
-            }
-
-            if(typeof hashParameters.yaw === "string" && this.plugin.options.yaw === true)
-            {
-                this.viewer.camera.yaw = Number(hashParameters.yaw);
-            }
-
-            if(typeof hashParameters.pitch === "string" && this.plugin.options.pitch === true)
-            {
-                this.viewer.camera.pitch = Number(hashParameters.pitch);
-            }
-
-            if(typeof hashParameters.roll === "string" && this.plugin.options.roll === true)
-            {
-                this.viewer.camera.roll = Number(hashParameters.roll);
-            }
-
-            if(typeof hashParameters.fov === "string" && this.plugin.options.fov === true)
-            {
-                this.viewer.camera.fov = Number(hashParameters.fov);
             }
         }
 
