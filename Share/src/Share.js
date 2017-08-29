@@ -58,23 +58,29 @@ ForgePlugins.Share.prototype = {
 
         if (this.plugin.options.yaw === true)
         {
-            hash += (format !== "short" ? this._paramSuffix + "yaw=" : "y") + camera.yaw.toFixed(2);
+            hash += (format !== "short" ? this._paramSuffix + "yaw=" + camera.yaw.toFixed(2) : camera.yaw.toFixed(2) + "y,");
         }
         if (this.plugin.options.pitch === true)
         {
-            hash += (format !== "short" ? this._paramSuffix + "pitch=" : "p") + camera.pitch.toFixed(2);
+            hash += (format !== "short" ? this._paramSuffix + "pitch=" + camera.pitch.toFixed(2) : camera.pitch.toFixed(2) + "p,");
         }
         if (this.plugin.options.roll === true)
         {
-            hash += (format !== "short" ? this._paramSuffix + "roll=" : "r") + camera.roll.toFixed(2);
+            hash += (format !== "short" ? this._paramSuffix + "roll=" + camera.roll.toFixed(2) : camera.roll.toFixed(2) + "r,");
         }
         if (this.plugin.options.fov === true)
         {
-            hash += (format !== "short" ? this._paramSuffix + "fov=" : "f") + camera.fov.toFixed(2);
+            hash += (format !== "short" ? this._paramSuffix + "fov=" + camera.fov.toFixed(2) : camera.fov.toFixed(2) + "f,");
         }
         if (this.plugin.options.view === true)
         {
-            hash += (format !== "short" ? this._paramSuffix + "view=" : "v") + this.viewer.view.type;
+            hash += (format !== "short" ? this._paramSuffix + "view=" + this.viewer.view.type : this.viewer.view.type + "v,");
+        }
+
+        // remove last comma
+        if (format === "short" && hash.substr(-1) === ",")
+        {
+            hash = hash.slice(0, -1);
         }
 
         return hash;
@@ -91,40 +97,40 @@ ForgePlugins.Share.prototype = {
 
         if(hashParameters !== null)
         {
-            // short URL
+            // hash for short URL
             var hash = FORGE.URL.parse()["hash"];
 
-            // verify the short parameters and add them as hashParameters
-            var re = /&?(y|p|r|f|v)([0-9\-.]+|rectilinear|gopro|flat)/gi;
+            // verify and apply the short URL parameters
+            var re = /&?([0-9\-.]+|rectilinear|gopro|flat)(y|p|r|f|v)\,?/gi;
             var rr;
             while ((rr = re.exec(hash)) !== null)
             {
-                if (typeof rr[2] === "string")
+                if (typeof rr[1] === "string")
                 {
-                    if (rr[1] === "y" && this.plugin.options.yaw === true)
+                    if (rr[2] === "y" && this.plugin.options.yaw === true)
                     {
-                        this.viewer.camera.yaw = Number(rr[2]);
+                        this.viewer.camera.yaw = Number(rr[1]);
                     }
-                    if (rr[1] === "p" && this.plugin.options.pitch === true)
+                    if (rr[2] === "p" && this.plugin.options.pitch === true)
                     {
-                        this.viewer.camera.pitch = Number(rr[2]);
+                        this.viewer.camera.pitch = Number(rr[1]);
                     }
-                    if (rr[1] === "r" && this.plugin.options.roll === true)
+                    if (rr[2] === "r" && this.plugin.options.roll === true)
                     {
-                        this.viewer.camera.roll = Number(rr[2]);
+                        this.viewer.camera.roll = Number(rr[1]);
                     }
-                    if (rr[1] === "f" && this.plugin.options.fov === true)
+                    if (rr[2] === "f" && this.plugin.options.fov === true)
                     {
-                        this.viewer.camera.fov = Number(rr[2]);
+                        this.viewer.camera.fov = Number(rr[1]);
                     }
-                    if (rr[1] === "v"&& this.plugin.options.view === true)
+                    if (rr[2] === "v"&& this.plugin.options.view === true)
                     {
-                        this.viewer.view.type = rr[2].toLowerCase();
+                        this.viewer.view.type = rr[1].toLowerCase();
                     }
                 }
             }
 
-            // normal URL
+            // verify and apply the normal URL parameters
             if(typeof hashParameters.view === "string" && this.plugin.options.view === true)
             {
                 this.viewer.view.type = hashParameters.view.toLowerCase();
