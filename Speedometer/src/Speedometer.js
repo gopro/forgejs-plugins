@@ -193,7 +193,7 @@ ForgePlugins.Speedometer.prototype = {
 
             // draw graduation
             ctx.strokeStyle = this.plugin.options.color;
-            ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " 12px " + this.plugin.options.text.fontFamily;
+            ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + (this._size / 12) + "px " + this.plugin.options.text.fontFamily;
             ctx.fillStyle = this.plugin.options.text.color;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
