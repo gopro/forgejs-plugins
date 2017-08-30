@@ -181,6 +181,8 @@ ForgePlugins.Share.prototype = {
                     }
                 }
             }
+
+            this.viewer.view.current.updateUniforms();
         }
 
         if (this._timer === null)
