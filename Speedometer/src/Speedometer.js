@@ -1,4 +1,5 @@
 var ForgePlugins = ForgePlugins || {};
+
 /**
  * This plugin displays a simple speedometer, that can be loaded with altitude data.
  */
@@ -175,7 +176,8 @@ ForgePlugins.Speedometer.prototype = {
 
         var value = this._getClosestFromTime(this._video.currentTime);
         var angle = Math.PI / 2 + value * this._multiplicator;
-        var radius = this._size / 2 - 2;
+        var radius = this._size / 2 - (this.plugin.options.gauge.tracker / 2 + 4);
+        var center = this._size / 2;
 
         var ctx = this._canvas.context2D;
 
@@ -184,17 +186,17 @@ ForgePlugins.Speedometer.prototype = {
             ctx.clearRect(0, 0, this._size, this._size);
 
             // draw moving gauge
-            ctx.strokeStyle = this.plugin.options.gaugeColor;
-            ctx.lineWidth = 5;
+            ctx.strokeStyle = this.plugin.options.gauge.color;
+            ctx.lineWidth = this.plugin.options.gauge.line;
             ctx.beginPath();
-            ctx.arc(radius, radius, radius - 5, Math.PI / 2, angle);
+            ctx.arc(center, center, radius - this.plugin.options.gauge.line, Math.PI / 2, angle);
             ctx.stroke();
             ctx.closePath();
 
             // draw graduation
-            ctx.strokeStyle = this.plugin.options.color;
-            ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + (this._size / 12) + "px " + this.plugin.options.text.fontFamily;
-            ctx.fillStyle = this.plugin.options.text.color;
+            ctx.strokeStyle = this.plugin.options.dial.color;
+            ctx.font = (this.plugin.options.dial.label.font !== null) ? this.plugin.options.dial.label.font : this.plugin.options.dial.label.fontStyle + " " + this.plugin.options.dial.label.fontVariant + " " + this.plugin.options.dial.label.fontWeight + " " + (this._size / 12) + "px " + this.plugin.options.dial.label.fontFamily;
+            ctx.fillStyle = this.plugin.options.dial.label.color;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
 
@@ -206,26 +208,26 @@ ForgePlugins.Speedometer.prototype = {
                 {
                     start = Math.PI / 2 + (i - 0.1) * offset;
                     end = Math.PI / 2 + (i + 0.2) * offset;
-                    ctx.lineWidth = 10;
-                    ctx.fillText(this._graduation[i / 5], radius + this._size * 0.35 * Math.cos(start), radius + this._size * 0.35 * Math.sin(start));
+                    ctx.lineWidth = this.plugin.options.dial.graduation.large;
+                    ctx.fillText(this._graduation[i / 5], center + radius * 0.70 * Math.cos(start), center + radius * 0.70 * Math.sin(start));
                 }
                 else
                 {
                     start = Math.PI / 2 + i * offset;
                     end = Math.PI / 2 + (i + 0.1) * offset;
-                    ctx.lineWidth = 6;
+                    ctx.lineWidth = this.plugin.options.dial.graduation.small;
                 }
 
                 ctx.beginPath();
-                ctx.arc(radius, radius, radius - 5, start, end);
+                ctx.arc(center, center, radius - this.plugin.options.gauge.line, start, end);
                 ctx.stroke();
                 ctx.closePath();
             }
 
             // draw end of moving gauge
-            ctx.fillStyle = this.plugin.options.gaugeColor;
+            ctx.fillStyle = this.plugin.options.gauge.color;
             ctx.beginPath();
-            ctx.arc(this._size * (0.5 + 0.465 * Math.cos(angle)), this._size * (0.5 + 0.465 * Math.sin(angle)), 5, 0, 2 * Math.PI);
+            ctx.arc(center + radius * (1 - ((this.plugin.options.gauge.tracker / 2 + 2) / radius)) * Math.cos(angle), center + radius * (1 - ((this.plugin.options.gauge.tracker / 2 + 2) / radius)) * Math.sin(angle), (this.plugin.options.gauge.tracker / 2) + 4, 0, 2 * Math.PI);
             ctx.fill();
             ctx.lineWidth = 2;
             ctx.stroke();
@@ -237,10 +239,10 @@ ForgePlugins.Speedometer.prototype = {
             ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + this.plugin.options.text.fontSize + " " + this.plugin.options.text.fontFamily;
             ctx.fillStyle = this.plugin.options.text.color;
             ctx.textBaseline = "alphabetic";
-            ctx.textAlign = "right";
-            ctx.fillText(value, this._size / 2 + 24, this._size / 2);
             ctx.textAlign = "center";
-            ctx.fillText(this._data.unit, this._size / 2, this._size / 2 + 0.7 * parseInt(this.plugin.options.text.fontSize));
+            ctx.fillText(value, this._size / 2, this._size / 2 + 0.2 * parseInt(this.plugin.options.label.fontSize));
+            ctx.font = (this.plugin.options.label.font !== null) ? this.plugin.options.label.font : this.plugin.options.label.fontStyle + " " + this.plugin.options.label.fontVariant + " " + this.plugin.options.label.fontWeight + " " + this.plugin.options.label.fontSize + " " + this.plugin.options.label.fontFamily;
+            ctx.fillText(this._data.unit, this._size / 2, this._size / 2 + 0.9 * parseInt(this.plugin.options.label.fontSize));
             ctx.closePath();
         }
         catch (e)

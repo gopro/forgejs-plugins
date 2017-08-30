@@ -23,15 +23,51 @@
         "right": null,
         "bottom": null,
 
-        "color": "white",
-        "gaugeColor": "steelblue",
+        "dial":
+        {
+            "color": "white",
+
+            "graduation":
+            {
+                "large": 10,
+                "small": 6
+            },
+
+            "label":
+            {
+                "color": "white",
+                "font": null,
+                "fontFamily": "dosisbold, sans-serif",
+                "fontStyle": "normal",
+                "fontVariant": "small-caps",
+                "fontWeight": "normal"
+            }
+        },
+
+        "gauge":
+        {
+            "color": "steelblue",
+            "line": 5,
+            "tracker": 4
+        },
 
         "text":
         {
             "color": "white",
-            "font": null,
+            "font": "normal small-caps normal 35px dosisbold, sans-serif",
             "fontFamily": "dosisbold, sans-serif",
             "fontSize": "35px",
+            "fontStyle": "normal",
+            "fontVariant": "small-caps",
+            "fontWeight": "normal"
+        },
+
+        "label":
+        {
+            "color": "white",
+            "font": "normal small-caps normal 25px dosisbold, sans-serif",
+            "fontFamily": "dosisbold, sans-serif",
+            "fontSize": "25px",
             "fontStyle": "normal",
             "fontVariant": "small-caps",
             "fontWeight": "normal"
