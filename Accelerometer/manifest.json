@@ -23,6 +23,12 @@
         "right": null,
         "bottom": null,
 
+        "dial":
+        {
+            "color": "rgba(120, 120, 120, 0.8)",
+            "width": 6
+        },
+
         "point":
         {
             "color": "red",
@@ -39,12 +45,23 @@
         "text":
         {
             "color": "white",
-            "font": "normal normal 22px dosisbold, sans-serif",
+            "font": "normal normal normal 26px dosisbold, sans-serif",
             "fontFamily": "dosisbold, sans-serif",
-            "fontSize": "22px",
-            "fontStyle": null,
-            "fontVariant": null,
-            "fontWeight": null
+            "fontSize": "26px",
+            "fontStyle": "normal",
+            "fontVariant": "normal",
+            "fontWeight": "normal"
+        },
+
+        "label":
+        {
+            "color": "white",
+            "font": "normal normal normal 20px dosisbold, sans-serif",
+            "fontFamily": "dosisbold, sans-serif",
+            "fontSize": "20px",
+            "fontStyle": "normal",
+            "fontVariant": "normal",
+            "fontWeight": "normal"
         },
 
         "source": "media"
@@ -56,6 +73,7 @@
     },
 
     "sources": [
+        "src/style.css",
         "src/Accelerometer.js"
     ],
 

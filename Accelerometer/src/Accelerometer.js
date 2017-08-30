@@ -19,6 +19,12 @@ ForgePlugins.Accelerometer = function()
 
     // The half size of the plugin
     this._size = 0;
+
+    // padding for items
+    this._padding = 5;
+
+    // init value for the text width
+    this._initTextWidth = null;
 };
 
 ForgePlugins.Accelerometer.prototype = {
@@ -31,7 +37,7 @@ ForgePlugins.Accelerometer.prototype = {
         this._size = this.plugin.options.size / 2;
         // Create the canvas
         this._canvas = this.plugin.create.canvas();
-        this._canvas.width = this._size * 4;
+        this._canvas.width = this._size * 3;
         this._canvas.height = this._size * 2;
         this._canvas.top = this.plugin.options.top;
         this._canvas.left = this.plugin.options.left;
@@ -146,13 +152,13 @@ ForgePlugins.Accelerometer.prototype = {
         var data = this._getClosestFromTime(this._video.currentTime);
 
         var ctx = this._canvas.context2D;
-        ctx.clearRect(0, 0, this._size * 4, this._size * 2);
+        ctx.clearRect(0, 0, this._size * 3, this._size * 2);
 
         // draw outside circle
         var radius = this._size;
         ctx.beginPath();
-        ctx.strokeStyle = "rgba(120, 120, 120, 0.8)";
-        ctx.lineWidth = 6;
+        ctx.strokeStyle = this.plugin.options.dial.color;
+        ctx.lineWidth = this.plugin.options.dial.width;
         ctx.arc(this._size, this._size, radius - 3, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.closePath();
@@ -212,7 +218,19 @@ ForgePlugins.Accelerometer.prototype = {
         ctx.beginPath();
         ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + this.plugin.options.text.fontSize + " " + this.plugin.options.text.fontFamily;
         ctx.fillStyle = this.plugin.options.text.color;
-        ctx.fillText(value + " G", this._size * 2, this._size * 2 - 3);
+        if (this._initTextWidth === null)
+        {
+            this._initTextWidth = ctx.measureText(value).width;
+        }
+        ctx.textAlign = "right";
+        ctx.fillText(value, this._size * 2 + this._initTextWidth, this._size * 2 - this._padding);
+
+        // draw G label
+        ctx.textAlign = "left";
+        ctx.font = (this.plugin.options.label.font !== null) ? this.plugin.options.label.font : this.plugin.options.label.fontStyle + " " + this.plugin.options.label.fontVariant + " " + this.plugin.options.label.fontWeight + " " + this.plugin.options.label.fontSize + " " + this.plugin.options.label.fontFamily;
+        ctx.fillStyle = this.plugin.options.label.color;
+        ctx.fillText("G", this._size * 2 + this._initTextWidth + this._padding, this._size * 2 - this._padding);
+
         ctx.closePath();
     },
 
