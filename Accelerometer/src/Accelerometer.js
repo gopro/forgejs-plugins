@@ -3,7 +3,7 @@ var ForgePlugins = ForgePlugins || {};
 /**
  * This plugin displays a simple google maps, that can be loaded with GPX data.
  */
-ForgePlugins.Compass = function()
+ForgePlugins.Accelerometer = function()
 {
     // Canvas of the plugin
     this._canvas = null;
@@ -14,23 +14,31 @@ ForgePlugins.Compass = function()
     // Loaded data
     this._data = null;
 
-    // Reference to the size of the plugin
-    this._size = 0
+    // The "history" to draw the trail
+    this._trail = [];
+
+    // The half size of the plugin
+    this._size = 0;
+
+    // padding for items
+    this._padding = 5;
+
+    // init value for the text width
+    this._initTextWidth = null;
 };
 
-ForgePlugins.Compass.prototype = {
+ForgePlugins.Accelerometer.prototype = {
 
     /**
      * The boot function
      */
     boot: function()
     {
-        this._size = this.plugin.options.size;
-
+        this._size = this.plugin.options.size / 2;
         // Create the canvas
         this._canvas = this.plugin.create.canvas();
-        this._canvas.width = this.plugin.options.size;
-        this._canvas.height = this.plugin.options.size;
+        this._canvas.width = this._size * 3;
+        this._canvas.height = this._size * 2;
         this._canvas.top = this.plugin.options.top;
         this._canvas.left = this.plugin.options.left;
         this._canvas.right = this.plugin.options.right;
@@ -95,7 +103,7 @@ ForgePlugins.Compass.prototype = {
         }
         else
         {
-            this.plugin.warn("Plugin compass can't load json data: invalid URL!");
+            this.plugin.warn("Plugin accelerometer can't load json data: invalid URL!");
         }
     },
 
@@ -113,6 +121,21 @@ ForgePlugins.Compass.prototype = {
     _getClosestFromTime: function(time)
     {
         var index = Math.floor(time * this._data.frequency);
+
+        // set the trail
+        this._trail = [];
+        var idx;
+
+        for (var i = 0, ii = this.plugin.options.trail.length; i < ii; i++)
+        {
+            idx = index - i;
+
+            if (idx > -1)
+            {
+                this._trail.unshift(this._data.data[idx]);
+            }
+        }
+
         return this._data.data[index];
     },
 
@@ -129,50 +152,85 @@ ForgePlugins.Compass.prototype = {
         var data = this._getClosestFromTime(this._video.currentTime);
 
         var ctx = this._canvas.context2D;
-        ctx.clearRect(0, 0, this._size, this._size);
+        ctx.clearRect(0, 0, this._size * 3, this._size * 2);
 
         // draw outside circle
-        var radius = this._size / 2;
+        var radius = this._size;
         ctx.beginPath();
-        ctx.strokeStyle = this.plugin.options.arc.color;
-        ctx.lineWidth = this.plugin.options.arc.width;
-        ctx.arc(this._size / 2, this._size / 2, radius - 2, 1.4, 0.3);
+        ctx.strokeStyle = this.plugin.options.dial.color;
+        ctx.lineWidth = this.plugin.options.dial.width;
+        ctx.arc(this._size, this._size, radius - 3, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.closePath();
 
-        // draw NSEW directions
+        // draw trail
+        var l = this._trail.length,
+            r = this.plugin.options.trail.size / 2,
+            tx, ty, ratio;
+
+        for (var i = 0, ii = l; i < ii; i++)
+        {
+            tx = this._trail[i][1] * this._size;
+            ty = this._trail[i][0] * this._size;
+
+            ratio = Math.sqrt(tx * tx + ty * ty) / this._size;
+            if (ratio > 1)
+            {
+                tx /= ratio;
+                ty /= ratio;
+            }
+
+            tx += this._size + 3;
+            ty += this._size + 3;
+
+            ctx.beginPath();
+            ctx.globalAlpha = i / l;
+            ctx.fillStyle = this.plugin.options.trail.color;
+            ctx.arc(tx, ty, r * (i / l), 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        ctx.globalAlpha = 1;
+
+        // current data
+        var x = data[1] * this._size;
+        var y = data[0] * this._size;
+
+        ratio = Math.sqrt(x * x + y * y) / this._size;
+        if (ratio > 1)
+        {
+            x /= ratio;
+            y /= ratio;
+        }
+
+        x += this._size + 3;
+        y += this._size + 3;
+
         ctx.beginPath();
-        ctx.font = (this.plugin.options.label.font !== null) ? this.plugin.options.label.font : this.plugin.options.label.fontStyle + " " + this.plugin.options.label.fontVariant + " " + this.plugin.options.label.fontWeight + " " + this.plugin.options.label.fontSize + " " + this.plugin.options.label.fontFamily;
-        ctx.fillStyle = this.plugin.options.label.color;
-        ctx.textAlign = "center";
-        ctx.fillText(this.plugin.options.label.values.north, this._size / 2, parseInt(this.plugin.options.label.fontSize) + 5);
-        ctx.fillText(this.plugin.options.label.values.south, this._size / 2, this._size - 10);
-        ctx.textAlign = "right";
-        ctx.fillText(this.plugin.options.label.values.east, this._size - 10, this._size / 2 + parseInt(this.plugin.options.label.fontSize) / 2);
-        ctx.textAlign = "left";
-        ctx.fillText(this.plugin.options.label.values.west, 10, this._size / 2 + parseInt(this.plugin.options.label.fontSize) / 2);
+        ctx.fillStyle = this.plugin.options.point.color;
+        ctx.arc(x, y, this.plugin.options.point.size / 2, 0, 2 * Math.PI);
+        ctx.fill();
         ctx.closePath();
 
-        // draw value
-        var value = data.toFixed(0);
+        // draw G value
+        var value = data[2].toFixed(1);
         ctx.beginPath();
         ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + this.plugin.options.text.fontSize + " " + this.plugin.options.text.fontFamily;
         ctx.fillStyle = this.plugin.options.text.color;
+        if (this._initTextWidth === null)
+        {
+            this._initTextWidth = ctx.measureText(value).width;
+        }
         ctx.textAlign = "right";
-        ctx.fillText(value + "°", this._size - 2, 7 / 8 * this._size);
-        ctx.closePath();
+        ctx.fillText(value, this._size * 2 + this._initTextWidth, this._size * 2 - this._padding);
 
-        // arrow
-        var c = this._size / 2;
-        var v = data * Math.PI / 180 - Math.PI / 2;
-        ctx.beginPath();
-        ctx.fillStyle = this.plugin.options.arrow.color;
-        ctx.lineTo(c * (1 + 0.1 * Math.cos(v + Math.PI)), c * (1 + 0.1 * Math.sin(v + Math.PI)));
-        ctx.lineTo(c * (1 + 0.3 * Math.cos(v + 3 * Math.PI / 4)), c * (1 + 0.3 * Math.sin(v + 3 * Math.PI / 4)));
-        ctx.lineTo(c * (1 + 0.5 * Math.cos(v)), c * (1 + 0.5 * Math.sin(v)));
-        ctx.lineTo(c * (1 + 0.3 * Math.cos(v - 3 * Math.PI / 4)), c * (1 + 0.3 * Math.sin(v - 3 * Math.PI / 4)));
-        ctx.lineTo(c * (1 + 0.1 * Math.cos(v + Math.PI)), c * (1 + 0.1 * Math.sin(v + Math.PI)));
-        ctx.fill();
+        // draw G label
+        ctx.textAlign = "left";
+        ctx.font = (this.plugin.options.label.font !== null) ? this.plugin.options.label.font : this.plugin.options.label.fontStyle + " " + this.plugin.options.label.fontVariant + " " + this.plugin.options.label.fontWeight + " " + this.plugin.options.label.fontSize + " " + this.plugin.options.label.fontFamily;
+        ctx.fillStyle = this.plugin.options.label.color;
+        ctx.fillText("G", this._size * 2 + this._initTextWidth + this._padding, this._size * 2 - this._padding);
+
         ctx.closePath();
     },
 
@@ -185,7 +243,8 @@ ForgePlugins.Compass.prototype = {
         this._canvas = null;
 
         this._video = null;
-
         this._data = null;
+
+        this._trail = null;
     }
 };
