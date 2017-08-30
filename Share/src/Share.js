@@ -50,6 +50,7 @@ ForgePlugins.Share.prototype = {
         var hash = history.generateHash(this.viewer.story.scene, false);
 
         var format = this.plugin.options.format;
+        var precision = this.plugin.options.precision;
 
         if (format === "short")
         {
@@ -58,19 +59,19 @@ ForgePlugins.Share.prototype = {
 
         if (this.plugin.options.yaw === true)
         {
-            hash += (format !== "short" ? this._paramSuffix + "yaw=" + camera.yaw.toFixed(2) : camera.yaw.toFixed(2) + "y,");
+            hash += (format !== "short" ? this._paramSuffix + "yaw=" + camera.yaw.toFixed(precision) : camera.yaw.toFixed(precision) + "y,");
         }
         if (this.plugin.options.pitch === true)
         {
-            hash += (format !== "short" ? this._paramSuffix + "pitch=" + camera.pitch.toFixed(2) : camera.pitch.toFixed(2) + "p,");
+            hash += (format !== "short" ? this._paramSuffix + "pitch=" + camera.pitch.toFixed(precision) : camera.pitch.toFixed(precision) + "p,");
         }
         if (this.plugin.options.roll === true)
         {
-            hash += (format !== "short" ? this._paramSuffix + "roll=" + camera.roll.toFixed(2) : camera.roll.toFixed(2) + "r,");
+            hash += (format !== "short" ? this._paramSuffix + "roll=" + camera.roll.toFixed(precision) : camera.roll.toFixed(precision) + "r,");
         }
         if (this.plugin.options.fov === true)
         {
-            hash += (format !== "short" ? this._paramSuffix + "fov=" + camera.fov.toFixed(2) : camera.fov.toFixed(2) + "f,");
+            hash += (format !== "short" ? this._paramSuffix + "fov=" + camera.fov.toFixed(precision) : camera.fov.toFixed(precision) + "f,");
         }
         if (this.plugin.options.view === true)
         {

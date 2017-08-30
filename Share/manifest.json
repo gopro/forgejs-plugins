@@ -28,7 +28,8 @@
         "fov": true,
         "view": true,
 
-        "format": "short"
+        "format": "short",
+        "precision": 2
     },
 
     "sources":
