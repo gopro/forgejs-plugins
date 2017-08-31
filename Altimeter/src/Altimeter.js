@@ -171,7 +171,10 @@ ForgePlugins.Altimeter.prototype = {
 
         var value = this._getClosestFromTime(this._video.currentTime);
 
-        this._valueField.value = value.toFixed() + " " + this._data.unit;
+        if (typeof value !== "undefined")
+        {
+            this._valueField.value = value.toFixed() + " " + this._data.unit;
+        }
     },
 
     /**
