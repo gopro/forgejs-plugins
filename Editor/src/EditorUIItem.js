@@ -27,7 +27,6 @@ ForgePlugins.EditorUIItem.prototype =
 
     deactivate: function()
     {
-        console.log("deactivate");
         this._active = false;
         this._container.classList.remove("active");
         this.onDeactivate.dispatch(null, true);

@@ -43,6 +43,14 @@ ForgePlugins.EditorUIGroup.prototype =
         }
     },
 
+    deactivateAll: function()
+    {
+        for (var i = 0, ii = this._children.length; i < ii; i++)
+        {
+            this._children[i].deactivate();
+        }
+    },
+
     _onChildActivateHandler: function(event)
     {
         this._active = event.emitter;

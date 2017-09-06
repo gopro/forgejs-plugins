@@ -31,20 +31,21 @@ ForgePlugins.EditorInspectorPanel.prototype =
 
         var positionConfig = { title: "Position" };
         this._position = new ForgePlugins.EditorUIVector3(this._editor, positionConfig);
+        this._position.onChange.add(this._onVectorChangeHandler, this);
         this._transform.add(this._position);
 
         var rotationConfig = { title: "Rotation" };
         this._rotation = new ForgePlugins.EditorUIVector3(this._editor, rotationConfig);
+        this._rotation.onChange.add(this._onVectorChangeHandler, this);
         this._transform.add(this._rotation);
 
         var scaleConfig = { title: "Scale" };
         this._scale = new ForgePlugins.EditorUIVector3(this._editor, scaleConfig);
+        this._scale.onChange.add(this._onVectorChangeHandler, this);
         this._transform.add(this._scale);
 
-        //this._transform.activate(0);
-
         this._editor.onSelected.add(this._onSelectedHandler, this);
-        this._editor.onHotspotChange.add(this._onhotspotsChangeHandler, this);
+        this._editor.onHotspotChange.add(this._onHotspotsChangeHandler, this);
         this._editor.onTransformModeChange.add(this._onTransformModeChangedHandler, this);
     },
 
@@ -54,11 +55,17 @@ ForgePlugins.EditorInspectorPanel.prototype =
 
         if(hotspot !== null)
         {
+            this.enable();
             this._populate(hotspot.uid);
+        }
+        else
+        {
+            this._transform.deactivateAll();
+            this.disable();
         }
     },
 
-    _onhotspotsChangeHandler: function(event)
+    _onHotspotsChangeHandler: function(event)
     {
         this._populate();
     },
@@ -102,6 +109,13 @@ ForgePlugins.EditorInspectorPanel.prototype =
         }
     },
 
+    _onVectorChangeHandler: function(event)
+    {
+        console.log(event.emitter.toString());
+        var hotspot = FORGE.UID.get(this._editor.selected);
+        hotspot.transform.load(this.dump());
+    },
+
     _populate: function(uid)
     {
         uid = uid || this._editor.selected;
@@ -123,6 +137,32 @@ ForgePlugins.EditorInspectorPanel.prototype =
         y = hs.transform.scale.y.toFixed(2);
         z = hs.transform.scale.z.toFixed(2);
         this._scale.set(new THREE.Vector3(x, y, z));
+    },
+
+    enable: function()
+    {
+        this._position.enable();
+        this._rotation.enable();
+        this._scale.enable();
+    },
+
+    dump: function()
+    {
+        var dump =
+        {
+            position: this._position.dump(),
+            rotation: this._rotation.dump(),
+            scale: this._scale.dump()
+        };
+
+        return dump;
+    },
+
+    disable: function()
+    {
+        this._position.disable();
+        this._rotation.disable();
+        this._scale.disable();
     },
 
     destroy: function()

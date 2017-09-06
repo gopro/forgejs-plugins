@@ -310,3 +310,8 @@ div.editor-ui-vec3-container>input
     border: none;
     background: white;
 }
+
+div.editor-ui-vec3-container>input:disabled
+{
+    background: #aaa;
+}
