@@ -33,6 +33,15 @@ ForgePlugins.EditorHUD.prototype =
         {
             var center = { x: this._canvas.pixelWidth / 2, y: this._canvas.pixelHeight / 2 };
 
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "black";
+            ctx.beginPath();
+            ctx.moveTo(center.x - 11, center.y);
+            ctx.lineTo(center.x + 11, center.y);
+            ctx.moveTo(center.x, center.y - 11);
+            ctx.lineTo(center.x, center.y + 11);
+            ctx.stroke();
+
             ctx.lineWidth = 2;
             ctx.strokeStyle = "white";
             ctx.beginPath();
