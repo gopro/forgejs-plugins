@@ -184,6 +184,7 @@ ForgePlugins.Editor.prototype =
     update: function()
     {
         this._hud.update();
+        this._ui.update();
     },
 
     dump: function()

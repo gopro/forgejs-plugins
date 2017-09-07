@@ -173,6 +173,11 @@ ForgePlugins.EditorHelperPanel.prototype =
         }
     },
 
+    update: function()
+    {
+        this._transformControls.update();
+    },
+
     destroy: function()
     {
         this._editor.viewer.renderer.onAfterRender.remove(this._onAfterRenderHandler, this);

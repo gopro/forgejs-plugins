@@ -41,7 +41,7 @@ ForgePlugins.EditorUI.prototype =
 
     update: function()
     {
-
+        this._helperPanel.update();
     },
 
     destroy: function()
