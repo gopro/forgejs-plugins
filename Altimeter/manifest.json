@@ -16,13 +16,15 @@
 
     "options":
     {
-        "width": 200,
-        "height": 100,
+        "width": 150,
+        "height": 45,
 
         "top": null,
         "left": null,
         "right": null,
         "bottom": null,
+
+        "align": "center",
 
         "text":
         {
