@@ -1,9 +1,7 @@
 
 var ForgePlugins = ForgePlugins || {};
 
-/**
- */
-ForgePlugins.EditorInspectorPanel = function(editor)
+ForgePlugins.EditorTransformInspector = function(editor)
 {
     this._editor = editor;
 
@@ -17,7 +15,7 @@ ForgePlugins.EditorInspectorPanel = function(editor)
     this._boot();
 };
 
-ForgePlugins.EditorInspectorPanel.prototype =
+ForgePlugins.EditorTransformInspector.prototype =
 {
     _boot: function()
     {
@@ -31,16 +29,19 @@ ForgePlugins.EditorInspectorPanel.prototype =
 
         var positionConfig = { title: "Position" };
         this._position = new ForgePlugins.EditorUIVector3(this._editor, positionConfig);
+        this._position.onFocus.add(this._onVectorFocusHandler, this);
         this._position.onChange.add(this._onVectorChangeHandler, this);
         this._transform.add(this._position);
 
         var rotationConfig = { title: "Rotation" };
         this._rotation = new ForgePlugins.EditorUIVector3(this._editor, rotationConfig);
+        this._rotation.onFocus.add(this._onVectorFocusHandler, this);
         this._rotation.onChange.add(this._onVectorChangeHandler, this);
         this._transform.add(this._rotation);
 
         var scaleConfig = { title: "Scale" };
         this._scale = new ForgePlugins.EditorUIVector3(this._editor, scaleConfig);
+        this._scale.onFocus.add(this._onVectorFocusHandler, this);
         this._scale.onChange.add(this._onVectorChangeHandler, this);
         this._transform.add(this._scale);
 
@@ -109,11 +110,17 @@ ForgePlugins.EditorInspectorPanel.prototype =
         }
     },
 
+    _onVectorFocusHandler: function(event)
+    {
+
+    },
+
     _onVectorChangeHandler: function(event)
     {
-        console.log(event.emitter.toString());
         var hotspot = FORGE.UID.get(this._editor.selected);
         hotspot.transform.load(this.dump());
+
+        this._editor.history.add(this._editor.transformMode);
     },
 
     _populate: function(uid)
@@ -167,16 +174,28 @@ ForgePlugins.EditorInspectorPanel.prototype =
 
     destroy: function()
     {
+        this._position.onFocus.remove(this._onVectorFocusHandler, this);
+        this._position.onChange.remove(this._onVectorChangeHandler, this);
+        this._position.detroy();
+
+        this._rotation.onFocus.remove(this._onVectorFocusHandler, this);
+        this._rotation.onChange.remove(this._onVectorChangeHandler, this);
+        this._rotation.detroy();
+
+        this._scale.onFocus.remove(this._onVectorFocusHandler, this);
+        this._scale.onChange.remove(this._onVectorChangeHandler, this);
+        this._scale.detroy();
+
         this._editor = null;
     }
 };
 
 /**
  * Container of the panel
- * @name ForgePlugins.EditorInspectorPanel#container
+ * @name ForgePlugins.EditorTransformInspector#container
  * @readonly
  */
-Object.defineProperty(ForgePlugins.EditorInspectorPanel.prototype, "container",
+Object.defineProperty(ForgePlugins.EditorTransformInspector.prototype, "container",
 {
     get: function()
     {
@@ -186,10 +205,10 @@ Object.defineProperty(ForgePlugins.EditorInspectorPanel.prototype, "container",
 
 /**
  * The transform group
- * @name ForgePlugins.EditorInspectorPanel#transform
+ * @name ForgePlugins.EditorTransformInspector#transform
  * @readonly
  */
-Object.defineProperty(ForgePlugins.EditorInspectorPanel.prototype, "transform",
+Object.defineProperty(ForgePlugins.EditorTransformInspector.prototype, "transform",
 {
     get: function()
     {

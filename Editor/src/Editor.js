@@ -52,7 +52,7 @@ ForgePlugins.Editor.prototype =
     boot: function()
     {
         this._history = new ForgePlugins.EditorHistory(this);
-        this._history.add();
+        this._history.add("init");
 
         this._ui = new ForgePlugins.EditorUI(this);
 
@@ -73,7 +73,7 @@ ForgePlugins.Editor.prototype =
 
         if(history !== false)
         {
-            this._history.add("hotspot add");
+            this._history.add("add");
         }
 
         this.onHotspotsChange.dispatch();
@@ -88,7 +88,7 @@ ForgePlugins.Editor.prototype =
 
         if(history !== false)
         {
-            this._history.add("hotspot delete");
+            this._history.add("delete");
         }
 
         this.onHotspotsChange.dispatch();
@@ -136,6 +136,8 @@ ForgePlugins.Editor.prototype =
         this.viewer.hotspots.clear();
         this.clear();
 
+        this._selected = null;
+
         for(var i = 0, ii = hotspots.length; i < ii; i++)
         {
             var hotspot = this.viewer.hotspots.create(hotspots[i]);
@@ -146,7 +148,7 @@ ForgePlugins.Editor.prototype =
 
         if(history === true)
         {
-            this._history.add("hotspot load");
+            this._history.add("load");
         }
 
         this.onLoadComplete.dispatch(null, true);

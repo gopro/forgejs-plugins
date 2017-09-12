@@ -27,6 +27,8 @@ ForgePlugins.EditorUIVector3 = function(editor, config)
 
     this.onChange = null;
 
+    this.onFocus = null;
+
     this._boot();
 };
 
@@ -52,6 +54,7 @@ ForgePlugins.EditorUIVector3.prototype._boot = function()
     this._inputX.type = "number";
     this._inputX.step = 0.1;
     this._inputX.disabled = true;
+    this._inputX.addEventListener("focus", this._onInputFocusHandler.bind(this));
     this._inputX.addEventListener("change", this._onInputChangeHandler.bind(this));
     this._container.appendChild(this._inputX);
 
@@ -63,6 +66,7 @@ ForgePlugins.EditorUIVector3.prototype._boot = function()
     this._inputY.id = "editor-inspector-transform-y";
     this._inputY.type = "number";
     this._inputY.disabled = true;
+    this._inputY.addEventListener("focus", this._onInputFocusHandler.bind(this));
     this._inputY.addEventListener("change", this._onInputChangeHandler.bind(this));
     this._container.appendChild(this._inputY);
 
@@ -74,10 +78,13 @@ ForgePlugins.EditorUIVector3.prototype._boot = function()
     this._inputZ.id = "editor-inspector-transform-z";
     this._inputZ.type = "number";
     this._inputZ.disabled = true;
+    this._inputZ.addEventListener("focus", this._onInputFocusHandler.bind(this));
     this._inputZ.addEventListener("change", this._onInputChangeHandler.bind(this));
     this._container.appendChild(this._inputZ);
 
     this.onChange = new FORGE.EventDispatcher(this);
+    this.onFocus = new FORGE.EventDispatcher(this);
+
     this._editor.onSelected.add(this._onSelectedHandler, this);
     this._editor.onHotspotChange.add(this._onhotspotsChangeHandler, this);
 };
@@ -87,11 +94,15 @@ ForgePlugins.EditorUIVector3.prototype._onClickHandler = function()
     this.activate();
 };
 
+ForgePlugins.EditorUIVector3.prototype._onInputFocusHandler = function()
+{
+    this.activate();
+    this.onFocus.dispatch();
+};
+
 ForgePlugins.EditorUIVector3.prototype._onInputChangeHandler = function()
 {
-    console.log("change");
     this.onChange.dispatch();
-
 };
 
 ForgePlugins.EditorUIVector3.prototype.set = function(vector3)

@@ -1,8 +1,6 @@
 
 var ForgePlugins = ForgePlugins || {};
 
-/**
- */
 ForgePlugins.EditorHUD = function(editor)
 {
     this._editor = editor;

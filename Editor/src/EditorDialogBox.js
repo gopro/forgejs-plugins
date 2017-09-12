@@ -1,8 +1,6 @@
 
 var ForgePlugins = ForgePlugins || {};
 
-/**
- */
 ForgePlugins.EditorDialogBox = function(editor)
 {
     this._editor = editor;

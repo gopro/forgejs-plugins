@@ -1,9 +1,7 @@
 
 var ForgePlugins = ForgePlugins || {};
 
-/**
- */
-ForgePlugins.EditorHelperPanel = function(editor)
+ForgePlugins.EditorTransformHelper = function(editor)
 {
     this._editor = editor;
 
@@ -23,10 +21,12 @@ ForgePlugins.EditorHelperPanel = function(editor)
 
     this._spaceSelect = null;
 
+    this._transformBackup = null;
+
     this._boot();
 };
 
-ForgePlugins.EditorHelperPanel.prototype =
+ForgePlugins.EditorTransformHelper.prototype =
 {
     _boot: function()
     {
@@ -98,11 +98,21 @@ ForgePlugins.EditorHelperPanel.prototype =
     _mouseDownHandler: function(event)
     {
         this._editor.viewer.controllers.enabled = false;
+
+        var hotspot = FORGE.UID.get(this._editor.selected);
+        this._transformBackup = hotspot.transform.dump();
     },
 
     _mouseUpHandler: function(event)
     {
         this._editor.viewer.controllers.enabled = true;
+
+        var hotspot = FORGE.UID.get(this._editor.selected);
+
+        if (FORGE.Utils.compareObjects(hotspot.transform.dump(), this._transformBackup) === false)
+        {
+            this._editor.history.add(this._editor.transformMode);
+        }
     },
 
     _onSelectedHandler: function(event)
@@ -192,10 +202,10 @@ ForgePlugins.EditorHelperPanel.prototype =
 
 /**
  * Container of the panel
- * @name ForgePlugins.EditorHelperPanel#container
+ * @name ForgePlugins.EditorTransformHelper#container
  * @readonly
  */
-Object.defineProperty(ForgePlugins.EditorHelperPanel.prototype, "container",
+Object.defineProperty(ForgePlugins.EditorTransformHelper.prototype, "container",
 {
     get: function()
     {

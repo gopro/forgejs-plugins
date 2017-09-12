@@ -9,6 +9,8 @@ ForgePlugins.EditorUI = function(editor)
 
     this._buttonPanel = null;
 
+    this._historyPanel = null;
+
     this._hierarchyPanel = null;
 
     this._helperPanel = null;
@@ -29,19 +31,19 @@ ForgePlugins.EditorUI.prototype =
         this._buttonPanel = new ForgePlugins.EditorButtonPanel(this._editor);
         this._container.appendChild(this._buttonPanel.container);
 
+        this._historyPanel = new ForgePlugins.EditorHistoryPanel(this._editor);
+        this._container.appendChild(this._historyPanel.container);
+
         this._hierarchyPanel = new ForgePlugins.EditorHierarchyPanel(this._editor);
         this._container.appendChild(this._hierarchyPanel.container);
 
-        this._helperPanel = new ForgePlugins.EditorHelperPanel(this._editor);
-        this._container.appendChild(this._helperPanel.container);
-
-        this._inspectorPanel = new ForgePlugins.EditorInspectorPanel(this._editor);
-        this._container.appendChild(this._inspectorPanel.container);
+        this._transformPanel = new ForgePlugins.EditorTransformPanel(this._editor);
+        this._container.appendChild(this._transformPanel.container);
     },
 
     update: function()
     {
-        this._helperPanel.update();
+        this._transformPanel.update();
     },
 
     destroy: function()
@@ -49,6 +51,10 @@ ForgePlugins.EditorUI.prototype =
         this._container.removeChild(this._buttonPanel.container);
         this._buttonPanel.destroy();
         this._buttonPanel = null;
+
+        this._container.removeChild(this._historyPanel.container);
+        this._historyPanel.destroy();
+        this._historyPanel = null;
 
         this._container.removeChild(this._hierarchyPanel.container);
         this._hierarchyPanel.destroy();
@@ -65,11 +71,3 @@ ForgePlugins.EditorUI.prototype =
         this._container = null;
     }
 };
-
-Object.defineProperty(ForgePlugins.EditorUI.prototype, "helper",
-{
-    get: function()
-    {
-        return this._helperPanel;
-    }
-});

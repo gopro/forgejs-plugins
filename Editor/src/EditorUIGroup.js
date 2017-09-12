@@ -1,8 +1,6 @@
 
 var ForgePlugins = ForgePlugins || {};
 
-/**
- */
 ForgePlugins.EditorUIGroup = function(editor, config)
 {
     this._editor = editor;
