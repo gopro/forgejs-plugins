@@ -57,7 +57,7 @@ ForgePlugins.EditorHistoryPanel.prototype._updateList = function()
             div.classList.add("selected");
         }
 
-        this._list.appendChild(div);
+        this._list.insertBefore(div, this._list.firstChild);
     }
 };
 
