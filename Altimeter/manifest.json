@@ -1,0 +1,66 @@
+{
+    "uid": "org.forgejs.altimeter",
+    "name": "Altimeter",
+    "shortName": "altimeter",
+    "version": "1.0.0",
+    "versionName": "Altimeter 1.0.0",
+    "description": "Display a simple Altimeter that can be loaded with the metadata from a GoPro.",
+
+    "author":
+    {
+        "name": "GoPro",
+        "website": "https://forgejs.org"
+    },
+
+    "licence": "Apache 2",
+
+    "options":
+    {
+        "width": 150,
+        "height": 45,
+
+        "top": null,
+        "left": null,
+        "right": null,
+        "bottom": null,
+
+        "align": "center",
+
+        "text":
+        {
+            "color": "white",
+            "font": "normal small-caps normal 20px dosisbold, sans-serif",
+            "fontFamily": "dosisbold, sans-serif",
+            "fontSize": "20px",
+            "fontStyle": "normal",
+            "fontVariant": "small-caps",
+            "fontWeight": "normal"
+        },
+
+        "label":
+        {
+            "value": "altitude",
+            "color": "white",
+            "font": "normal small-caps normal 20px dosislight, sans-serif",
+            "fontFamily": "dosislight, sans-serif",
+            "fontSize": "20px",
+            "fontStyle": "normal",
+            "fontVariant": "small-caps",
+            "fontWeight": "normal"
+        },
+
+        "source": "media"
+    },
+
+    "data":
+    {
+        "json": ""
+    },
+
+    "sources": [
+        "src/style.css",
+        "src/Altimeter.js"
+    ],
+
+    "constructor": "ForgePlugins.Altimeter"
+}

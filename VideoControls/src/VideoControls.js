@@ -19,7 +19,6 @@ ForgePlugins.VideoControls = function()
     this._buttonBar = null;
     this._playbackButton = null;
     this._fsButton = null;
-    this._qualityButton = null;
 
     this._volumeContainer = null;
     this._volumeContainerTween = null;
@@ -35,12 +34,22 @@ ForgePlugins.VideoControls = function()
     this._totalTime = null;
 
     this._qualityNames = ["LOW", "MEDIUM", "HIGH", "ULTRA"];
+    this._qualityMenuButton = null;
     this._qualityBar = null;
     this._qualityContainer = null;
     this._qualityButtons = null;
     this._qualityHighlight = null;
     this._qualityHighlightTween = null;
     this._qualityButtonWidth = 120;
+
+    this._speeds = [0.25, 0.5, 1, 1.5, 2];
+    this._speedMenuButton = null;
+    this._speedBar = null;
+    this._speedContainer = null;
+    this._speedButtons = null;
+    this._speedHighlight = null;
+    this._speedHighlightTween = null;
+    this._speedButtonWidth = 80;
 
     this._spinner = null;
 };
@@ -289,7 +298,27 @@ ForgePlugins.VideoControls.prototype =
         this._buttonBar.addChild(this._spinner);
         this._buttonBar.addChild(this._qualityMenuButton);
 
+        //Button showing the current speed in the bottom main button bar ================
+
+        var speedMenuButtonSkin = new FORGE.ButtonSkin("speedMenu");
+        speedMenuButtonSkin.out.label = {value: "x1", color: "white", fontFamily: "dosisbold, sans-serif", fontSize: 18};
+        speedMenuButtonSkin.out.autoWidth = false;
+        speedMenuButtonSkin.out.autoHeight = false;
+
+        this._speedMenuButton = this.plugin.create.button({skins: [speedMenuButtonSkin], default: "1"});
+        this._speedMenuButton.pointer.enabled = true;
+        this._speedMenuButton.pointer.onClick.add(this._speedMenuBtnClickHandler, this);
+        this._speedMenuButton.width = 80;
+        this._speedMenuButton.height = 60;
+        this._speedMenuButton.right = 145;
+        this._buttonBar.addChild(this._speedMenuButton);
+
+        // ==================================
+
         this._setupVideo();
+
+        this._createSpeedUI();
+
     },
 
     reset: function()
@@ -310,6 +339,7 @@ ForgePlugins.VideoControls.prototype =
         this._video.onQualityRequest.add(this._onQualityRequestHandler, this);
         this._video.onQualityChange.add(this._onQualityChangeHandler, this);
         this._video.onQualityModeChange.add(this._onQualityModeChangeHandler, this);
+        this._video.onRateChange.add(this._onRateChangeHandler, this);
     },
 
     _clearVideo: function()
@@ -324,6 +354,7 @@ ForgePlugins.VideoControls.prototype =
             this._video.onQualityRequest.remove(this._onQualityRequestHandler, this);
             this._video.onQualityChange.remove(this._onQualityChangeHandler, this);
             this._video.onQualityModeChange.remove(this._onQualityModeChangeHandler, this);
+            this._video.onRateChange.remove(this._onRateChangeHandler, this);
         }
 
         this._video = null;
@@ -418,6 +449,73 @@ ForgePlugins.VideoControls.prototype =
         this._updateQualityButtons();
     },
 
+    _createSpeedUI: function()
+    {
+        var speedSkins = [];
+        var speedSkinsSelected = [];
+        var skin, btn;
+
+        for(var i = 0, ii = this._speeds.length; i < ii; i++)
+        {
+            skin = new FORGE.ButtonSkin("light");
+            skin.out.label = {value: "x" + this._speeds[i], color: "white", fontFamily: "dosislight, sans-serif", fontSize: 28};
+            skin.out.autoWidth = false;
+            skin.out.autoHeight = false;
+            skin.out.align = "center";
+            speedSkins.push(skin);
+
+            skin = new FORGE.ButtonSkin("bold");
+            skin.out.label = {value: "x" + this._speeds[i], color: "white", fontFamily: "dosisbold, sans-serif"};
+            skin.out.autoWidth = false;
+            skin.out.autoHeight = false;
+            skin.out.align = "center";
+            speedSkinsSelected.push(skin);
+        }
+
+        //Bar that will contain the qualities width 100%
+        this._speedBar = this.plugin.create.displayObjectContainer();
+        this._speedBar.width = "100%";
+        this._speedBar.height = "60px";
+        this._speedBar.background = "rgba(33,31,32,0.50)";
+        this._speedBar.top = 0;
+        this._speedBar.visible = false;
+        this._bottomContainer.addChild(this._speedBar);
+
+        //Highliter
+        this._speedHighlight = this.plugin.create.displayObject();
+        this._speedHighlight.id = "speedHighlight";
+        this._speedHighlight.width = this._speedButtonWidth;
+        this._speedHighlight.height = 60;
+        this._speedHighlight.background = "#00A3DA";
+        this._speedBar.addChild(this._speedHighlight);
+
+        //Container for the buttons
+        this._speedContainer = this.plugin.create.displayObjectContainer();
+        this._speedContainer.width = this._speeds.length * this._speedButtonWidth;
+        this._speedContainer.height = 60;
+        this._speedContainer.horizontalCenter = true;
+        this._speedBar.addChild(this._speedContainer);
+
+        //Tween for the quality highlighter
+        this._speedHighlightTween = this.plugin.create.tween(this._speedHighlight);
+
+        //Creation of buttons for all the qualities
+        this._speedButtons = [];
+        for(var j = 0, jj = this._speeds.length; j < jj; j++)
+        {
+            btn = this.plugin.create.button({skins: [speedSkins[j], speedSkinsSelected[j]]});
+            btn.width = this._speedButtonWidth;
+            btn.height = 60;
+            btn.left = this._speedButtonWidth * j;
+            btn.data = {speed: this._speeds[j]};
+            btn.pointer.onClick.add(this._speedButtonClickHandler, this);
+            this._speedContainer.addChild(btn);
+            this._speedButtons.push(btn);
+        }
+
+        this._updateSpeedButtons();
+    },
+
     _playbackClickHandler: function()
     {
         this._video.togglePlayback();
@@ -492,6 +590,11 @@ ForgePlugins.VideoControls.prototype =
 
     _qualityMenuBtnClickHandler:function()
     {
+        if(this._speedBar !== null)
+        {
+            this._speedBar.hide();
+        }
+
         this._qualityBar.toggleVisibility();
         this._updateQualityButtons(false);
     },
@@ -515,7 +618,7 @@ ForgePlugins.VideoControls.prototype =
 
     _updateQualityButtons: function(tween)
     {
-        var buttonIndex;
+        var buttonHiglightIndex;
         var buttonBoldIndexes;
 
         if(this._video.qualityMode === FORGE.VideoQualityMode.AUTO)
@@ -578,6 +681,60 @@ ForgePlugins.VideoControls.prototype =
             this._updateQualityButtons();
         }
     },
+
+    // SPEED
+
+    _speedMenuBtnClickHandler:function()
+    {
+        if(this._qualityBar !== null)
+        {
+            this._qualityBar.hide();
+        }
+
+        this._speedBar.toggleVisibility();
+        this._updateSpeedButtons(false);
+    },
+
+    _speedButtonClickHandler: function(event)
+    {
+        var speed = event.emitter.data.speed
+        this._video.playbackRate = speed;
+    },
+
+    _highlightSpeedLabel: function(index)
+    {
+        this._speedContainer.children[index].skin = "bold";
+        this._speedHighlightTween.to({ x: this._speedContainer.x + (index * this._speedButtonWidth) }, 400).start();
+    },
+
+    _updateSpeedButtons: function(tween)
+    {
+        var buttonHiglightIndex = this._speeds.indexOf(this._video.playbackRate);
+        this._speedMenuButton.skin.out.label = "x" + this._video.playbackRate;
+        this._speedMenuButton.updateSkin();
+
+        var highlighterX = this._speedContainer.x + (buttonHiglightIndex * this._speedButtonWidth);
+        if(tween === false)
+        {
+            this._speedHighlight.x = highlighterX;
+        }
+        else
+        {
+            this._speedHighlightTween.to({ x: highlighterX }, 400).start();
+        }
+
+        for(var i = 0, ii = this._speedContainer.children.length; i < ii; i++)
+        {
+            this._speedContainer.children[i].skin = i === buttonHiglightIndex ? "bold" : "light";
+        }
+    },
+
+    _onRateChangeHandler: function()
+    {
+        this._updateSpeedButtons();
+    },
+
+    // ======
 
     _onLoadedMetaDataHandler: function()
     {
@@ -687,9 +844,15 @@ ForgePlugins.VideoControls.prototype =
     {
         this._bottomContainerTweening = true;
         this._bottomContainerTween.to({ bottom: -60 }, 150).start();
+
         if(this._qualityBar !== null)
         {
             this._qualityBar.hide();
+        }
+
+        if(this._speedBar !== null)
+        {
+            this._speedBar.hide();
         }
     },
 
@@ -780,8 +943,8 @@ ForgePlugins.VideoControls.prototype =
         this._totalTime = null;
 
         this._fsButton = null;
-        this._qualityButton = null;
 
+        this._qualityMenuButton = null;
         this._qualityBar = null;
         this._qualityContainer = null;
         this._qualityButtons = null;
