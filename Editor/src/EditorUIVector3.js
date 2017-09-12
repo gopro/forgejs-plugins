@@ -65,6 +65,7 @@ ForgePlugins.EditorUIVector3.prototype._boot = function()
     this._inputY = document.createElement("input");
     this._inputY.id = "editor-inspector-transform-y";
     this._inputY.type = "number";
+    this._inputY.step = 0.1;
     this._inputY.disabled = true;
     this._inputY.addEventListener("focus", this._onInputFocusHandler.bind(this));
     this._inputY.addEventListener("change", this._onInputChangeHandler.bind(this));
@@ -77,6 +78,7 @@ ForgePlugins.EditorUIVector3.prototype._boot = function()
     this._inputZ = document.createElement("input");
     this._inputZ.id = "editor-inspector-transform-z";
     this._inputZ.type = "number";
+    this._inputZ.step = 0.1;
     this._inputZ.disabled = true;
     this._inputZ.addEventListener("focus", this._onInputFocusHandler.bind(this));
     this._inputZ.addEventListener("change", this._onInputChangeHandler.bind(this));
