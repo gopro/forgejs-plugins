@@ -23,6 +23,8 @@ ForgePlugins.EditorTransformHelper = function(editor)
 
     this._transformBackup = null;
 
+    this._visible = false;
+
     this._boot();
 };
 
@@ -77,6 +79,7 @@ ForgePlugins.EditorTransformHelper.prototype =
         this._editor.onSelected.add(this._onSelectedHandler, this);
         this._editor.onTransformModeChange.add(this._onTransformModeChangedHandler, this);
         this._editor.onTransformSpaceChange.add(this._onTransformSpaceChangedHandler, this);
+        this._editor.onLoadComplete.add(this._onLoadCompleteHandler, this);
 
         // For the render
         this._editor.viewer.renderer.onAfterRender.add(this._onAfterRenderHandler, this);
@@ -117,20 +120,21 @@ ForgePlugins.EditorTransformHelper.prototype =
 
     _onSelectedHandler: function(event)
     {
-        var hotspot = event.data.hotspot;
+        this._updateSelectedHotspot();
+    },
 
-        if(hotspot !== null)
-        {
-            this._transformControls.attach(hotspot.mesh);
-        }
-        else
-        {
-            this._transformControls.detach();
-        }
+    _onLoadCompleteHandler: function()
+    {
+        this._updateSelectedHotspot();
     },
 
     _onAfterRenderHandler: function()
     {
+        if(this._visible === false)
+        {
+            return;
+        }
+
         var viewer = this._editor.viewer;
         var camera = viewer.camera.main;
 
@@ -180,6 +184,22 @@ ForgePlugins.EditorTransformHelper.prototype =
             case 2:
                 this._editor.transformMode = ForgePlugins.Editor.transformModes.SCALE;
                 break;
+        }
+    },
+
+    _updateSelectedHotspot: function()
+    {
+
+        if(this._editor.selected !== null)
+        {
+            var hotspot = FORGE.UID.get(this._editor.selected);
+            this._transformControls.attach(hotspot.mesh);
+            this._visible = true;
+        }
+        else
+        {
+            this._transformControls.detach();
+            this._visible = false;
         }
     },
 
