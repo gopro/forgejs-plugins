@@ -42,7 +42,10 @@ ForgePlugins.Altimeter.prototype = {
         // Load the JSON data
         this._loadJsonData();
 
-        // this.plugin.notifyInstanceReady();
+        if (this.plugin.options.dom === false)
+        {
+            this.plugin.notifyInstanceReady();
+        }
     },
 
     /**
@@ -121,7 +124,7 @@ ForgePlugins.Altimeter.prototype = {
      */
     update: function()
     {
-        if (this._data === null)
+        if (this._data === null || this._canvas === null)
         {
             return;
         }

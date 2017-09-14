@@ -47,7 +47,10 @@ ForgePlugins.Compass.prototype = {
         // Load the JSON data
         this._loadJsonData();
 
-        // this.plugin.notifyInstanceReady();
+        if (this.plugin.options.dom === false)
+        {
+            this.plugin.notifyInstanceReady();
+        }
     },
 
     /**
@@ -126,7 +129,7 @@ ForgePlugins.Compass.prototype = {
      */
     update: function()
     {
-        if (this._data === null)
+        if (this._data === null || this._canvas === null)
         {
             return;
         }
@@ -187,6 +190,22 @@ ForgePlugins.Compass.prototype = {
         {
             // waiting next frame to get the canvas not yet created
         }
+    },
+
+    /**
+     * Show
+     */
+    show: function()
+    {
+        this._canvas.show();
+    },
+
+    /**
+     * Hide
+     */
+    hide: function()
+    {
+        this._canvas.hide();
     },
 
     /**
