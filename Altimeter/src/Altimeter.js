@@ -206,6 +206,7 @@ ForgePlugins.Altimeter.prototype = {
         this._data = null;
 
         this._canvas.destroy();
+        this._canvas = null;
     }
 };
 

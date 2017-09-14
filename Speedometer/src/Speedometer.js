@@ -285,6 +285,7 @@ ForgePlugins.Speedometer.prototype = {
         this._graduation = null;
 
         this._canvas.destroy();
+        this._canvas = null;
     }
 };
 
