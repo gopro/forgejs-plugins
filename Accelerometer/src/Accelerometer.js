@@ -55,10 +55,7 @@ ForgePlugins.Accelerometer.prototype = {
         // Load the JSON data
         this._loadJsonData();
 
-        if (this.plugin.options.dom === false)
-        {
-            this.plugin.notifyInstanceReady();
-        }
+        this.plugin.notifyInstanceReady();
     },
 
     /**
@@ -67,6 +64,15 @@ ForgePlugins.Accelerometer.prototype = {
      */
     reset: function()
     {
+        if (this.plugin.options.dom === false && this.plugin.container.hasChild(this._canvas) === true)
+        {
+            this.plugin.container.removeChild(this._canvas);
+        }
+        else if (this.plugin.options.dom === true && this.plugin.container.hasChild(this._canvas) === false)
+        {
+            this.plugin.container.addChild(this._canvas);
+        }
+
         this._video = null;
         this._setupVideo();
     },
@@ -271,13 +277,17 @@ ForgePlugins.Accelerometer.prototype = {
      */
     destroy: function()
     {
-        this._canvas.destroy();
-        this._canvas = null;
+        if (this.plugin.options.dom === false && this.plugin.container.hasChild(this._canvas) === true)
+        {
+            this.plugin.container.removeChild(this._canvas);
+        }
 
+        this._canvas.destroy();
+
+        this._canvas = null;
+        this._trail = null;
         this._video = null;
         this._data = null;
-
-        this._trail = null;
     }
 };
 
