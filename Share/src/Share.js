@@ -159,7 +159,7 @@ ForgePlugins.Share.prototype = {
             {
                 if (typeof rr[1] === "string")
                 {
-                    if (rr[2] === "v"&& this.plugin.options.view === true)
+                    if (rr[2] === "v" && this.plugin.options.view === true)
                     {
                         this.viewer.view.type = rr[1].toLowerCase();
                     }

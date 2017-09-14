@@ -73,7 +73,9 @@
             "fontWeight": "normal"
         },
 
-        "source": "media"
+        "source": "media",
+
+        "dom": true
     },
 
     "data":

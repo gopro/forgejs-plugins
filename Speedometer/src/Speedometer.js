@@ -42,13 +42,18 @@ ForgePlugins.Speedometer.prototype = {
         this._canvas.right = this.plugin.options.right;
         this._canvas.bottom = this.plugin.options.bottom;
 
-        this.plugin.container.addChild(this._canvas);
+        if (this.plugin.options.dom === true)
+        {
+            this.plugin.container.addChild(this._canvas);
+        }
 
         // Setup the reference to the video
         this._setupVideo();
 
         // Load the JSON data
         this._loadJsonData();
+
+        // this.plugin.notifyInstanceReady();
     },
 
     /**
@@ -263,3 +268,14 @@ ForgePlugins.Speedometer.prototype = {
         this._canvas.destroy();
     }
 };
+
+/**
+ * Return the canvas, to use it as texture.
+ */
+Object.defineProperty(ForgePlugins.Speedometer.prototype, "texture",
+{
+    get: function()
+    {
+        return this._canvas;
+    }
+});
