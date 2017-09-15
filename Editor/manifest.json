@@ -17,7 +17,7 @@
 
     "viewer":
     {
-        "min": "0.9.4",
+        "min": "0.9.5",
         "max": "0.9.5"
     },
 
@@ -34,9 +34,25 @@
     "sources":
     [
         "css/forgejs-editor-style.css",
+
+        "lib/TransformControls.js",
+
         "src/Editor.js",
+        "src/EditorHistory.js",
         "src/EditorUI.js",
-        "src/EditorHistory.js"
+        "src/EditorUIPanel.js",
+        "src/EditorUIItem.js",
+        "src/EditorUIGroup.js",
+        "src/EditorUIVector3.js",
+        "src/EditorUITransformButton.js",
+        "src/EditorButtonPanel.js",
+        "src/EditorHierarchyPanel.js",
+        "src/EditorHistoryPanel.js",
+        "src/EditorTransformHelper.js",
+        "src/EditorTransformInspector.js",
+        "src/EditorTransformPanel.js",
+        "src/EditorHUD.js",
+        "src/EditorDialogBox.js"
     ],
 
     "constructor": "ForgePlugins.Editor"

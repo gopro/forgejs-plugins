@@ -1,8 +1,6 @@
 
 var ForgePlugins = ForgePlugins || {};
 
-/**
- */
 ForgePlugins.EditorHistory = function(editor)
 {
     this._editor = editor;
@@ -64,10 +62,7 @@ ForgePlugins.EditorHistory.prototype =
 
         console.log("History undo");
 
-        this._index--;
-        this.onIndexChange.dispatch(null, true);
-
-        this.load(this._index);
+        this.load(this._index - 1);
     },
 
     redo: function()
@@ -80,21 +75,24 @@ ForgePlugins.EditorHistory.prototype =
 
         console.log("History redo");
 
-        this._index++;
-        this.onIndexChange.dispatch(null, true);
-
-        this.load(this._index);
+        this.load(this._index + 1);
     },
 
     load: function(index)
     {
-        var state = this._states[index];
-        var hotspots = state.hotspots;
+        if(index >= 0 && index < this._states.length && index !== this._index)
+        {
+            this._index = index;
+            this.onIndexChange.dispatch(null, true);
 
-        this._editor.load(hotspots);
-        this._editor.selected = state.selected;
+            var state = this._states[index];
+            var hotspots = state.hotspots;
 
-        console.log("History load | index: " + this._index);
+            this._editor.load(hotspots);
+            this._editor.selected = state.selected;
+
+            console.log("History load | index: " + this._index);
+        }
     },
 
     reset: function()
