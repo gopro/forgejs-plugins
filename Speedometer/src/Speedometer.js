@@ -42,9 +42,11 @@ ForgePlugins.Speedometer.prototype = {
         this._canvas.right = this.plugin.options.right;
         this._canvas.bottom = this.plugin.options.bottom;
 
-        if (this.plugin.options.dom === true)
+        this.plugin.container.addChild(this._canvas);
+
+        if (this.plugin.options.dom === false)
         {
-            this.plugin.container.addChild(this._canvas);
+            this.hide();
         }
 
         // Setup the reference to the video
@@ -62,13 +64,13 @@ ForgePlugins.Speedometer.prototype = {
      */
     reset: function()
     {
-        if (this.plugin.options.dom === false && this.plugin.container.hasChild(this._canvas) === true)
+        if (this.plugin.options.dom === false)
         {
-            this.plugin.container.removeChild(this._canvas);
+            this.hide();
         }
-        else if (this.plugin.options.dom === true && this.plugin.container.hasChild(this._canvas) === false)
+        else
         {
-            this.plugin.container.addChild(this._canvas);
+            this.show();
         }
 
         this._video = null;
@@ -270,7 +272,10 @@ ForgePlugins.Speedometer.prototype = {
      */
     show: function()
     {
-        this._canvas.show();
+        if (this._canvas !== null)
+        {
+            this._canvas.show();
+        }
     },
 
     /**
@@ -278,7 +283,10 @@ ForgePlugins.Speedometer.prototype = {
      */
     hide: function()
     {
-        this._canvas.hide();
+        if (this._canvas !== null)
+        {
+            this._canvas.hide();
+        }
     },
 
     /**
@@ -286,10 +294,7 @@ ForgePlugins.Speedometer.prototype = {
      */
     destroy: function()
     {
-        if (this.plugin.options.dom === false && this.plugin.container.hasChild(this._canvas) === true)
-        {
-            this.plugin.container.removeChild(this._canvas);
-        }
+        this.plugin.container.removeChild(this._canvas);
 
         this._canvas.destroy();
 
