@@ -33,11 +33,18 @@ ForgePlugins.Altimeter.prototype = {
 
         this.plugin.container.addChild(this._canvas);
 
+        if (this.plugin.options.dom === false)
+        {
+            this.hide();
+        }
+
         // Setup the reference to the video
         this._setupVideo();
 
         // Load the JSON data
         this._loadJsonData();
+
+        this.plugin.notifyInstanceReady();
     },
 
     /**
@@ -46,6 +53,15 @@ ForgePlugins.Altimeter.prototype = {
      */
     reset: function()
     {
+        if (this.plugin.options.dom === false)
+        {
+            this.hide();
+        }
+        else
+        {
+            this.show();
+        }
+
         this._video = null;
         this._setupVideo();
     },
@@ -116,7 +132,7 @@ ForgePlugins.Altimeter.prototype = {
      */
     update: function()
     {
-        if (this._data === null)
+        if (this._data === null || this._canvas === null)
         {
             return;
         }
@@ -174,13 +190,49 @@ ForgePlugins.Altimeter.prototype = {
     },
 
     /**
+     * Show
+     */
+    show: function()
+    {
+        if (this._canvas !== null)
+        {
+            this._canvas.show();
+        }
+    },
+
+    /**
+     * Hide
+     */
+    hide: function()
+    {
+        if (this._canvas !== null)
+        {
+            this._canvas.hide();
+        }
+    },
+
+    /**
      * Destroy routine
      */
     destroy: function()
     {
-        this._video = null;
-        this._data = null;
+        this.plugin.container.removeChild(this._canvas);
 
         this._canvas.destroy();
+
+        this._canvas = null;
+        this._video = null;
+        this._data = null;
     }
 };
+
+/**
+ * Return the canvas, to use it as texture.
+ */
+Object.defineProperty(ForgePlugins.Altimeter.prototype, "texture",
+{
+    get: function()
+    {
+        return this._canvas;
+    }
+});

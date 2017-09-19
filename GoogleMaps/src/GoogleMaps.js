@@ -53,7 +53,15 @@ ForgePlugins.GoogleMaps.prototype = {
         // Setup the reference to the video
         this._setupVideo();
 
-        this._loadGoogleMapScript();
+        if (typeof google === "undefined" || !("maps" in google))
+        {
+            this._loadGoogleMapScript();
+        }
+        else if (typeof google !== "undefined" && "maps" in google)
+        {
+            this._createMap();
+            this._loadGpx();
+        }
     },
 
     /**
@@ -80,13 +88,16 @@ ForgePlugins.GoogleMaps.prototype = {
         this._clearVideo();
         this._setupVideo();
 
-        if (typeof google !== "undefined")
+        if (typeof google !== "undefined" && "maps" in google)
         {
             this._loadGpx();
         }
     },
 
-    _setupVideo: function(video)
+    /**
+     * Setup a video as media or plugin
+     */
+    _setupVideo: function()
     {
         if (this.plugin.options.source === "media")
         {
@@ -110,6 +121,9 @@ ForgePlugins.GoogleMaps.prototype = {
         }
     },
 
+    /**
+     * Clean the video object
+     */
     _clearVideo: function()
     {
         this._video = null;
@@ -132,7 +146,9 @@ ForgePlugins.GoogleMaps.prototype = {
         }
     },
 
-    // Actions to do on Google Maps script loaded
+    /**
+     * Actions to do on Google Maps script loaded
+     */
     _googleMapScriptLoadComplete: function()
     {
         this._createMap();
@@ -467,7 +483,10 @@ ForgePlugins.GoogleMaps.prototype = {
      */
     destroy: function()
     {
-        google.maps.event.clearListeners(this._poly, 'click');
+        if (typeof google !== "undefined" && "maps" in google && this._poly !== null)
+        {
+            google.maps.event.clearListeners(this._poly, 'click');
+        }
 
         this._video = null;
         this._container = null;
