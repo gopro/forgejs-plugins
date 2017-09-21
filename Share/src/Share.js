@@ -155,31 +155,54 @@ ForgePlugins.Share.prototype = {
             // verify and apply the short URL parameters
             var re = /&?([0-9\-.]+|rectilinear|gopro|flat)(y|p|r|f|v)\,?/gi;
             var rr;
+            var result = {};
             while ((rr = re.exec(hash)) !== null)
             {
                 if (typeof rr[1] === "string")
                 {
                     if (rr[2] === "v" && this.plugin.options.view === true)
                     {
-                        this.viewer.view.type = rr[1].toLowerCase();
+                        result.view = rr[1].toLowerCase();
                     }
                     if (rr[2] === "f" && this.plugin.options.fov === true)
                     {
-                        this.viewer.camera.fov = Number(rr[1]);
+                        result.fov = Number(rr[1]);
                     }
                     if (rr[2] === "y" && this.plugin.options.yaw === true)
                     {
-                        this.viewer.camera.yaw = Number(rr[1]);
+                        result.yaw = Number(rr[1]);
                     }
                     if (rr[2] === "p" && this.plugin.options.pitch === true)
                     {
-                        this.viewer.camera.pitch = Number(rr[1]);
+                        result.pitch = Number(rr[1]);
                     }
                     if (rr[2] === "r" && this.plugin.options.roll === true)
                     {
-                        this.viewer.camera.roll = Number(rr[1]);
+                        result.roll = Number(rr[1]);
                     }
                 }
+            }
+
+            // This order needs to be respected, of else bad update might happen
+            if (typeof result.view !== "undefined")
+            {
+                this.viewer.view.type = result.view;
+            }
+            if (typeof result.fov !== "undefined")
+            {
+                this.viewer.camera.fov = result.fov;
+            }
+            if (typeof result.yaw !== "undefined")
+            {
+                this.viewer.camera.yaw = result.yaw;
+            }
+            if (typeof result.pitch !== "undefined")
+            {
+                this.viewer.camera.pitch = result.pitch;
+            }
+            if (typeof result.roll !== "undefined")
+            {
+                this.viewer.camera.roll = result.roll;
             }
 
             this.viewer.view.current.updateUniforms();
