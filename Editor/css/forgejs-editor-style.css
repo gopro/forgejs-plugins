@@ -368,3 +368,36 @@ div.editor-ui-vec3-container>input:disabled
 {
     background: #aaa;
 }
+
+/* GEOMETRY ============================================================= */
+
+
+div#geometry-type-container
+{
+    padding-top: 8px;
+    height: 20px;
+}
+
+div#geometry-type-container p
+{
+    padding: 0;
+    margin: 0;
+    margin: 0 15px 0 5px;
+    float: left;
+}
+
+div#geometry-type-container select
+{
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+
+
+
+
+
+
+
+
