@@ -1,0 +1,10 @@
+#Node packages
+**/node_modules
+
+# Others
+.DS_Store
+**/.DS_Store
+.dropbox
+
+
+
