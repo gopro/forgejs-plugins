@@ -9,6 +9,7 @@ module.exports = function(grunt)
         "src/EditorUIItem.js",
         "src/EditorUIGroup.js",
         "src/EditorUIVector3.js",
+        "src/EditorUINumber.js",
         "src/EditorUITransformButton.js",
         "src/EditorButtonPanel.js",
         "src/EditorHierarchyPanel.js",

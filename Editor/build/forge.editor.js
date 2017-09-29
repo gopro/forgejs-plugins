@@ -737,7 +737,7 @@ Object.defineProperty(ForgePlugins.EditorUIItem.prototype, "container",
 
 var ForgePlugins = ForgePlugins || {};
 
-ForgePlugins.EditorUIGroup = function(editor, config)
+ForgePlugins.EditorUIGroup = function(editor)
 {
     this._editor = editor;
 
@@ -850,8 +850,6 @@ Object.defineProperty(ForgePlugins.EditorUIGroup.prototype, "active",
 
 var ForgePlugins = ForgePlugins || {};
 
-/**
- */
 ForgePlugins.EditorUIVector3 = function(editor, config)
 {
     ForgePlugins.EditorUIItem.call(this, editor);
@@ -1004,6 +1002,15 @@ ForgePlugins.EditorUIVector3.prototype.toString = function()
 
 ForgePlugins.EditorUIVector3.prototype.destroy = function()
 {
+    this._inputX.addEventListener("focus", this._onInputFocusHandler.bind(this));
+    this._inputX.addEventListener("change", this._onInputChangeHandler.bind(this));
+
+    this._inputY.addEventListener("focus", this._onInputFocusHandler.bind(this));
+    this._inputY.addEventListener("change", this._onInputChangeHandler.bind(this));
+
+    this._inputZ.addEventListener("focus", this._onInputFocusHandler.bind(this));
+    this._inputZ.addEventListener("change", this._onInputChangeHandler.bind(this));
+
     ForgePlugins.EditorUIItem.prototype.destroy.call(this);
 };
 
@@ -1038,6 +1045,139 @@ Object.defineProperty(ForgePlugins.EditorUIVector3.prototype, "title",
         return this._config.title;
     }
 });
+
+
+var ForgePlugins = ForgePlugins || {};
+
+ForgePlugins.EditorUINumber = function(editor, config)
+{
+    ForgePlugins.EditorUIItem.call(this, editor);
+
+    this._config = config || { title: "Number", name: "number" };
+
+    this._label = null;
+
+    this._input = null;
+
+    this._enabled = false;
+
+    this.onChange = null;
+
+    this.onFocus = null;
+
+    this._boot();
+};
+
+ForgePlugins.EditorUINumber.prototype = Object.create(ForgePlugins.EditorUIItem.prototype);
+ForgePlugins.EditorUINumber.prototype.constructor = ForgePlugins.EditorUINumber;
+
+
+ForgePlugins.EditorUINumber.prototype._boot = function()
+{
+    this._container.className = "editor-ui-number-container";
+    this._container.addEventListener("click", this._onClickHandler.bind(this));
+
+    this._label = document.createElement("label");
+    this._label.innerHTML = this._config.title;
+    this._container.appendChild(this._label);
+
+    this._input = document.createElement("input");
+    this._input.className = "editor-ui-number-input";
+    this._input.type = "number";
+    this._input.disabled = true;
+    this._input.addEventListener("focus", this._onInputFocusHandler.bind(this));
+    this._input.addEventListener("change", this._onInputChangeHandler.bind(this));
+    this._container.appendChild(this._input);
+
+    this.onChange = new FORGE.EventDispatcher(this);
+    this.onFocus = new FORGE.EventDispatcher(this);
+
+    // this._editor.onSelected.add(this._onSelectedHandler, this);
+    // this._editor.onHotspotChange.add(this._onhotspotsChangeHandler, this);
+};
+
+ForgePlugins.EditorUINumber.prototype._onClickHandler = function()
+{
+    this.activate();
+};
+
+ForgePlugins.EditorUINumber.prototype._onInputFocusHandler = function()
+{
+    this.activate();
+    this.onFocus.dispatch();
+};
+
+ForgePlugins.EditorUINumber.prototype._onInputChangeHandler = function()
+{
+    this.onChange.dispatch();
+};
+
+ForgePlugins.EditorUINumber.prototype.set = function(number)
+{
+    this._input.value = number;
+};
+
+ForgePlugins.EditorUINumber.prototype.enable = function()
+{
+    this._input.disabled = false;
+    this._enabled = true;
+};
+
+ForgePlugins.EditorUINumber.prototype.disable = function()
+{
+    this._input.disabled = true;
+    this._input.value = "";
+    this._enabled = false;
+};
+
+ForgePlugins.EditorUINumber.prototype.dump = function()
+{
+    var dump =
+    {
+
+    };
+
+    return dump;
+};
+
+ForgePlugins.EditorUINumber.prototype.toString = function()
+{
+    return this._config.title + ": " + this.value;
+};
+
+ForgePlugins.EditorUINumber.prototype.destroy = function()
+{
+    this._input.removeEventListener("focus", this._onInputFocusHandler.bind(this));
+    this._input.removeEventListener("change", this._onInputChangeHandler.bind(this));
+
+    ForgePlugins.EditorUIItem.prototype.destroy.call(this);
+};
+
+Object.defineProperty(ForgePlugins.EditorUINumber.prototype, "value",
+{
+    get: function()
+    {
+        return Number(this._input.value) || 0;
+    }
+});
+
+Object.defineProperty(ForgePlugins.EditorUINumber.prototype, "title",
+{
+    get: function()
+    {
+        return this._config.title;
+    }
+});
+
+Object.defineProperty(ForgePlugins.EditorUINumber.prototype, "name",
+{
+    get: function()
+    {
+        return this._config.name;
+    }
+});
+
+
 
 
 var ForgePlugins = ForgePlugins || {};
@@ -2232,6 +2372,8 @@ ForgePlugins.EditorGeometryPanel = function(editor)
     this._geometryTypeLabel = null;
     this._geometryTypeSelect = null;
 
+    this._geometryFormContainer = null;
+
     ForgePlugins.EditorUIPanel.call(this, editor);
 
     this._boot();
@@ -2242,7 +2384,7 @@ ForgePlugins.EditorGeometryPanel.prototype.constructor = FORGE.EditorGeometryPan
 
 ForgePlugins.EditorGeometryPanel.params =
 {
-    plan: ["width", "height"],
+    plane: ["width", "height"],
     box: ["width", "height", "depth"],
     sphere: ["radius"],
     cylinder: ["radiusTop", "radiusBottom", "height"],
@@ -2280,7 +2422,54 @@ ForgePlugins.EditorGeometryPanel.prototype._boot = function()
 
     this._geometryTypeContainer.appendChild(this._geometryTypeSelect);
 
+    this._geometryFormContainer = new ForgePlugins.EditorUIGroup(this._editor);
+    this.content.appendChild(this._geometryFormContainer.container);
+
     this._editor.onSelected.add(this._onSelectedHandler, this);
+};
+
+ForgePlugins.EditorGeometryPanel.prototype._clearGeometryForm = function()
+{
+    var children = this._geometryFormContainer.children;
+
+    for(var i = 0, ii = children.length; i < ii; i++)
+    {
+        children[i].onChange.remove(this._numberChangeHandler, this);
+    }
+
+    this._geometryFormContainer.container.innerHTML = "";
+};
+
+ForgePlugins.EditorGeometryPanel.prototype._generateGeometryForm = function()
+{
+    var type = this.type;
+    var params = ForgePlugins.EditorGeometryPanel.params[type];
+    var options = null;
+
+    if(this._editor.selected !== null)
+    {
+        var hotspot = FORGE.UID.get(this._editor.selected);
+        options = hotspot.geometry.dump().options;
+    }
+
+    if(params !== null)
+    {
+        var config, number;
+        for(var i = 0, ii = params.length; i < ii; i++)
+        {
+            config = { title: params[i], name: params[i] };
+            number = new ForgePlugins.EditorUINumber(this._editor, config);
+            number.onChange.add(this._numberChangeHandler, this);
+            number.enable();
+
+            this._geometryFormContainer.add(number);
+
+            if(options !== null)
+            {
+                number.set(options[params[i]]);
+            }
+        }
+    }
 };
 
 ForgePlugins.EditorGeometryPanel.prototype._onSelectedHandler = function()
@@ -2289,6 +2478,9 @@ ForgePlugins.EditorGeometryPanel.prototype._onSelectedHandler = function()
     {
         var hotspot = FORGE.UID.get(this._editor.selected);
         this._geometryTypeSelect.value = hotspot.geometry.type;
+
+        this._clearGeometryForm();
+        this._generateGeometryForm();
     }
 };
 
@@ -2297,10 +2489,29 @@ ForgePlugins.EditorGeometryPanel.prototype._geometryTypeSelectChangeHandler = fu
     if(this._editor.selected !== null)
     {
         var hotspot = FORGE.UID.get(this._editor.selected);
-
         hotspot.geometry.onLoadComplete.addOnce(this._geometryLoadCompleteHandler, this);
 
         var g = { type: this.type };
+        hotspot.geometry.load(g);
+    }
+};
+
+ForgePlugins.EditorGeometryPanel.prototype._numberChangeHandler = function()
+{
+    if(this._editor.selected !== null)
+    {
+        var hotspot = FORGE.UID.get(this._editor.selected);
+        hotspot.geometry.onLoadComplete.addOnce(this._geometryLoadCompleteHandler, this);
+
+        var children = this._geometryFormContainer.children;
+
+        var g = { type: this.type, options: {} };
+
+        for(var i = 0, ii = children.length; i < ii; i++)
+        {
+            g.options[children[i].name] = children[i].value;
+        }
+
         hotspot.geometry.load(g);
     }
 };
@@ -2311,6 +2522,9 @@ ForgePlugins.EditorGeometryPanel.prototype._geometryLoadCompleteHandler = functi
     {
         var hotspot = FORGE.UID.get(this._editor.selected);
         hotspot.mesh.geometry = hotspot.geometry.geometry;
+
+        this._clearGeometryForm();
+        this._generateGeometryForm();
 
         this._editor.history.add("geometry change");
     }

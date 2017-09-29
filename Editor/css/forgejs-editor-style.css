@@ -301,8 +301,33 @@ button#helper-scale-button {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAACSUlEQVRYhe3Yz0sUYRzH8VcdsqgMKTFI00tWl6joJHTrT4j+tLBLkApGP6CTUpcQvUTSIahTEJUeSgN3tUNgbofZxWl3duY77m512A/MYZbP83neO/P8+D5DX339Wx3K+G0Ng6jltDmJBdzBj4I+jmIWt7FdkFvFaEGeWuB6h6GioJROYDWYXahKTuM9PCoB1qwZ/MrJr3QKuItzHQAO4mcvAWv4gIkDwI3gfUF2VwBr+FYS8iw+B3K7BljDJsYDeSP4EswMAW4FwxqQYzlZw1gvkbcVAazWzc8wha8FoRuy164zil9rtd7HbP1+OwJYw9vU/YRkzBWNyalUmxsBuAoupdq8ElwHF3Cs6bcI5GLK/zAAd7mpj8N4GgFsp/OSMZfV4apkMjR0GsttvNu42AlInsa0PsnXkn+fpaUmbxWTvYJLQzae5JscuIZW7D+5C71F29cVzGEg6J/z5yTq67/XJKZL+KdxvUcsLUpvXysB/4u697v8bbErGta6Qyzl+BebvBt6CDksOa9kLb7LOJXyHsfzNt5NyaJ/YD3RurZF6rmFlH++wNuunpyJANYkG3cZuCpupdrclLzOMpAvBYuFxtFwHlfxKQCXtUOMKi4wNnAN9+r3OxHAMgXrjvy9dUwye6N5oYI1WvJHq5Jx7augrDKsK4BZ9VyeJhS/7q4BrpeES0N+7DXgrs7WsCE9Prjv4X4HgHd14dNHZDCvSj4IRTWgtbpudxVqTbK2VdpcjWPpY62HqywdwQP7Mz8vdy0C2Fdff1O/AQ4D6Y1U+T55AAAAAElFTkSuQmCC);
 }
 
+/* GEOMETRY ============================================================= */
 
-/* INSPECTOR ================================ */
+
+div#geometry-type-container
+{
+    padding: 8px 0 8px 0;
+    height: 20px;
+}
+
+div#geometry-type-container p
+{
+    width: 100px;
+    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+    float: left;
+}
+
+div#geometry-type-container select
+{
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+
+/* VECTOR 3 ================================ */
 
 div.editor-ui-vec3-container
 {
@@ -332,6 +357,11 @@ div.editor-ui-vec3-container>p
     line-height: 26px;
     float: left;
     cursor: pointer;
+}
+
+div.editor-ui-vec3-container>p:first-letter
+{
+    text-transform: uppercase;
 }
 
 div.editor-ui-vec3-container>label
@@ -369,29 +399,65 @@ div.editor-ui-vec3-container>input:disabled
     background: #aaa;
 }
 
-/* GEOMETRY ============================================================= */
+/* NUMBER ================================ */
 
-
-div#geometry-type-container
+div.editor-ui-number-container
 {
-    padding-top: 8px;
-    height: 20px;
+    height: 26px;
+    line-height: 26px;
 }
 
-div#geometry-type-container p
+div.editor-ui-number-container.active
 {
-    padding: 0;
-    margin: 0;
-    margin: 0 15px 0 5px;
+    color: #009fdf;
+}
+
+div.editor-ui-number-container:after
+{
+    content:'';
+    display:block;
+    clear: both;
+}
+
+div.editor-ui-number-container>label
+{
+    box-sizing: border-box;
+    width: 100px;
+    margin: 0px;
+    margin-left: 5px;
+    height: 26px;
+    line-height: 26px;
     float: left;
+    cursor: pointer;
 }
 
-div#geometry-type-container select
+div.editor-ui-number-container>label:first-letter
 {
-    padding: 0;
-    margin: 0;
-    display: block;
+    text-transform: uppercase;
 }
+
+div.editor-ui-number-container>input
+{
+    box-sizing: border-box;
+
+    float: left;
+    width: 60px;
+    height: 18px;
+    line-height: 18px;
+    margin: 0px;
+    margin-top: 4px;
+    padding: 2px;
+    font-size: 10px;
+    border: none;
+    background: white;
+}
+
+div.editor-ui-number-container>input:disabled
+{
+    background: #aaa;
+}
+
+
 
 
 

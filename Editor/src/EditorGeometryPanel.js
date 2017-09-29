@@ -7,6 +7,8 @@ ForgePlugins.EditorGeometryPanel = function(editor)
     this._geometryTypeLabel = null;
     this._geometryTypeSelect = null;
 
+    this._geometryFormContainer = null;
+
     ForgePlugins.EditorUIPanel.call(this, editor);
 
     this._boot();
@@ -17,7 +19,7 @@ ForgePlugins.EditorGeometryPanel.prototype.constructor = FORGE.EditorGeometryPan
 
 ForgePlugins.EditorGeometryPanel.params =
 {
-    plan: ["width", "height"],
+    plane: ["width", "height"],
     box: ["width", "height", "depth"],
     sphere: ["radius"],
     cylinder: ["radiusTop", "radiusBottom", "height"],
@@ -55,7 +57,54 @@ ForgePlugins.EditorGeometryPanel.prototype._boot = function()
 
     this._geometryTypeContainer.appendChild(this._geometryTypeSelect);
 
+    this._geometryFormContainer = new ForgePlugins.EditorUIGroup(this._editor);
+    this.content.appendChild(this._geometryFormContainer.container);
+
     this._editor.onSelected.add(this._onSelectedHandler, this);
+};
+
+ForgePlugins.EditorGeometryPanel.prototype._clearGeometryForm = function()
+{
+    var children = this._geometryFormContainer.children;
+
+    for(var i = 0, ii = children.length; i < ii; i++)
+    {
+        children[i].onChange.remove(this._numberChangeHandler, this);
+    }
+
+    this._geometryFormContainer.container.innerHTML = "";
+};
+
+ForgePlugins.EditorGeometryPanel.prototype._generateGeometryForm = function()
+{
+    var type = this.type;
+    var params = ForgePlugins.EditorGeometryPanel.params[type];
+    var options = null;
+
+    if(this._editor.selected !== null)
+    {
+        var hotspot = FORGE.UID.get(this._editor.selected);
+        options = hotspot.geometry.dump().options;
+    }
+
+    if(params !== null)
+    {
+        var config, number;
+        for(var i = 0, ii = params.length; i < ii; i++)
+        {
+            config = { title: params[i], name: params[i] };
+            number = new ForgePlugins.EditorUINumber(this._editor, config);
+            number.onChange.add(this._numberChangeHandler, this);
+            number.enable();
+
+            this._geometryFormContainer.add(number);
+
+            if(options !== null)
+            {
+                number.set(options[params[i]]);
+            }
+        }
+    }
 };
 
 ForgePlugins.EditorGeometryPanel.prototype._onSelectedHandler = function()
@@ -64,6 +113,9 @@ ForgePlugins.EditorGeometryPanel.prototype._onSelectedHandler = function()
     {
         var hotspot = FORGE.UID.get(this._editor.selected);
         this._geometryTypeSelect.value = hotspot.geometry.type;
+
+        this._clearGeometryForm();
+        this._generateGeometryForm();
     }
 };
 
@@ -72,10 +124,29 @@ ForgePlugins.EditorGeometryPanel.prototype._geometryTypeSelectChangeHandler = fu
     if(this._editor.selected !== null)
     {
         var hotspot = FORGE.UID.get(this._editor.selected);
-
         hotspot.geometry.onLoadComplete.addOnce(this._geometryLoadCompleteHandler, this);
 
         var g = { type: this.type };
+        hotspot.geometry.load(g);
+    }
+};
+
+ForgePlugins.EditorGeometryPanel.prototype._numberChangeHandler = function()
+{
+    if(this._editor.selected !== null)
+    {
+        var hotspot = FORGE.UID.get(this._editor.selected);
+        hotspot.geometry.onLoadComplete.addOnce(this._geometryLoadCompleteHandler, this);
+
+        var children = this._geometryFormContainer.children;
+
+        var g = { type: this.type, options: {} };
+
+        for(var i = 0, ii = children.length; i < ii; i++)
+        {
+            g.options[children[i].name] = children[i].value;
+        }
+
         hotspot.geometry.load(g);
     }
 };
@@ -86,6 +157,9 @@ ForgePlugins.EditorGeometryPanel.prototype._geometryLoadCompleteHandler = functi
     {
         var hotspot = FORGE.UID.get(this._editor.selected);
         hotspot.mesh.geometry = hotspot.geometry.geometry;
+
+        this._clearGeometryForm();
+        this._generateGeometryForm();
 
         this._editor.history.add("geometry change");
     }

@@ -1,8 +1,6 @@
 
 var ForgePlugins = ForgePlugins || {};
 
-/**
- */
 ForgePlugins.EditorUIVector3 = function(editor, config)
 {
     ForgePlugins.EditorUIItem.call(this, editor);
@@ -155,6 +153,15 @@ ForgePlugins.EditorUIVector3.prototype.toString = function()
 
 ForgePlugins.EditorUIVector3.prototype.destroy = function()
 {
+    this._inputX.addEventListener("focus", this._onInputFocusHandler.bind(this));
+    this._inputX.addEventListener("change", this._onInputChangeHandler.bind(this));
+
+    this._inputY.addEventListener("focus", this._onInputFocusHandler.bind(this));
+    this._inputY.addEventListener("change", this._onInputChangeHandler.bind(this));
+
+    this._inputZ.addEventListener("focus", this._onInputFocusHandler.bind(this));
+    this._inputZ.addEventListener("change", this._onInputChangeHandler.bind(this));
+
     ForgePlugins.EditorUIItem.prototype.destroy.call(this);
 };
 
