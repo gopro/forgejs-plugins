@@ -17,6 +17,8 @@ ForgePlugins.EditorUI = function(editor)
 
     this._inspectorPanel = null;
 
+    this._geometryPanel = null;
+
     this._boot();
 };
 
@@ -39,6 +41,9 @@ ForgePlugins.EditorUI.prototype =
 
         this._transformPanel = new ForgePlugins.EditorTransformPanel(this._editor);
         this._container.appendChild(this._transformPanel.container);
+
+        this._geometryPanel = new ForgePlugins.EditorGeometryPanel(this._editor);
+        this._container.appendChild(this._geometryPanel.container);
     },
 
     update: function()
@@ -68,6 +73,18 @@ ForgePlugins.EditorUI.prototype =
         this._inspectorPanel.destroy();
         this._inspectorPanel = null;
 
+        this._container.removeChild(this._geometryPanel.container);
+        this._geometryPanel.destroy();
+        this._geometryPanel = null;
+
         this._container = null;
     }
 };
+
+Object.defineProperty(ForgePlugins.EditorUI.prototype, "geometry",
+{
+    get: function()
+    {
+        return this._geometryPanel;
+    }
+});

@@ -13,7 +13,7 @@
         "website": "https://forgejs.org"
     },
 
-    "licence": "Apache 2",
+    "licence": "Apache-2.0",
 
     "viewer":
     {
@@ -34,25 +34,8 @@
     "sources":
     [
         "css/forgejs-editor-style.css",
-
         "lib/TransformControls.js",
-
-        "src/Editor.js",
-        "src/EditorHistory.js",
-        "src/EditorUI.js",
-        "src/EditorUIPanel.js",
-        "src/EditorUIItem.js",
-        "src/EditorUIGroup.js",
-        "src/EditorUIVector3.js",
-        "src/EditorUITransformButton.js",
-        "src/EditorButtonPanel.js",
-        "src/EditorHierarchyPanel.js",
-        "src/EditorHistoryPanel.js",
-        "src/EditorTransformHelper.js",
-        "src/EditorTransformInspector.js",
-        "src/EditorTransformPanel.js",
-        "src/EditorHUD.js",
-        "src/EditorDialogBox.js"
+        "build/forge.editor.min.js"
     ],
 
     "constructor": "ForgePlugins.Editor"

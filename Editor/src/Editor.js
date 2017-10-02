@@ -211,6 +211,7 @@ ForgePlugins.Editor.prototype =
     {
         var config = FORGE.Utils.extendSimpleObject({}, ForgePlugins.Editor.HOTSPOT_DEFAULT_CONFIG);
         config.transform = { position: { theta: viewer.camera.yaw, phi: viewer.camera.pitch } };
+        // config.geometry = { type: this._ui.geometry.type };
 
         return config;
     },
