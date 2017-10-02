@@ -2382,6 +2382,15 @@ ForgePlugins.EditorGeometryPanel = function(editor)
 ForgePlugins.EditorGeometryPanel.prototype = Object.create(ForgePlugins.EditorUIPanel.prototype);
 ForgePlugins.EditorGeometryPanel.prototype.constructor = FORGE.EditorGeometryPanel;
 
+ForgePlugins.EditorGeometryPanel.types =
+[
+    FORGE.HotspotGeometryType.PLANE,
+    FORGE.HotspotGeometryType.BOX,
+    FORGE.HotspotGeometryType.SPHERE,
+    FORGE.HotspotGeometryType.CYLINDER,
+    FORGE.HotspotGeometryType.SHAPE
+];
+
 ForgePlugins.EditorGeometryPanel.params =
 {
     plane: ["width", "height"],
@@ -2411,12 +2420,13 @@ ForgePlugins.EditorGeometryPanel.prototype._boot = function()
     this._geometryTypeSelect = document.createElement("select");
     this._geometryTypeSelect.addEventListener("change", this._geometryTypeSelectChangeHandler.bind(this));
 
-    var option;
-    for(var type in FORGE.HotspotGeometryType)
+    var option, type;
+    for(var i = 0, ii = ForgePlugins.EditorGeometryPanel.types.length; i <ii; i++)
     {
+        type = ForgePlugins.EditorGeometryPanel.types[i];
         option = document.createElement("option");
-        option.value = FORGE.HotspotGeometryType[type];
-        option.innerHTML = FORGE.HotspotGeometryType[type];
+        option.value = type;
+        option.innerHTML = type;
         this._geometryTypeSelect.appendChild(option);
     }
 
