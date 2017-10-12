@@ -16,45 +16,49 @@
 
     "options":
     {
-        "size": 150,
+        "width": 256,
+        "height": 256,
 
         "top": null,
         "left": null,
         "right": null,
         "bottom": null,
 
-        "dial":
+        "source": "media",
+        "dom": true,
+        "background": null,
+
+        "lines":
         {
-            "color": "white",
+            "color": "#F3F4F4",
+            "large": 10,
+            "small": 6
+        },
 
-            "graduation":
-            {
-                "large": 10,
-                "small": 6
-            },
-
-            "label":
-            {
-                "color": "white",
-                "font": null,
-                "fontFamily": "dosisbold, sans-serif",
-                "fontStyle": "normal",
-                "fontVariant": "small-caps",
-                "fontWeight": "normal"
-            }
+        "labels":
+        {
+            "color": "#F3F4F4",
+            "outline": "#141414",
+            "font": null,
+            "fontFamily": "dosisbold, sans-serif",
+            "fontStyle": "normal",
+            "fontVariant": "small-caps",
+            "fontWeight": "normal"
         },
 
         "gauge":
         {
-            "color": "steelblue",
-            "line": 5,
+            "color": "#009FDF",
+            "background": "rgba(0,0,0,0.3)",
+            "line": 8,
             "tracker": 4
         },
 
-        "text":
+        "value":
         {
             "color": "white",
-            "font": "normal small-caps normal 35px dosisbold, sans-serif",
+            "outline": "#141414",
+            "font": null,
             "fontFamily": "dosisbold, sans-serif",
             "fontSize": "35px",
             "fontStyle": "normal",
@@ -62,20 +66,17 @@
             "fontWeight": "normal"
         },
 
-        "label":
+        "unit":
         {
-            "color": "white",
-            "font": "normal small-caps normal 25px dosisbold, sans-serif",
+            "color": "#F3F4F4",
+            "outline": "#141414",
+            "font": null,
             "fontFamily": "dosisbold, sans-serif",
             "fontSize": "25px",
             "fontStyle": "normal",
             "fontVariant": "small-caps",
             "fontWeight": "normal"
-        },
-
-        "source": "media",
-
-        "dom": true
+        }
     },
 
     "data":
@@ -83,7 +84,8 @@
         "json": ""
     },
 
-    "sources": [
+    "sources":
+    [
         "src/style.css",
         "src/Speedometer.js"
     ],

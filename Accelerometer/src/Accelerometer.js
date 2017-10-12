@@ -19,12 +19,6 @@ ForgePlugins.Accelerometer = function()
 
     // The half size of the plugin
     this._size = 0;
-
-    // padding for items
-    this._padding = 5;
-
-    // init value for the text width
-    this._initTextWidth = null;
 };
 
 ForgePlugins.Accelerometer.prototype = {
@@ -34,11 +28,12 @@ ForgePlugins.Accelerometer.prototype = {
      */
     boot: function()
     {
-        this._size = this.plugin.options.size / 2;
+        this._size = Math.min(this.plugin.options.width, this.plugin.options.height);
+
         // Create the canvas
         this._canvas = this.plugin.create.canvas();
-        this._canvas.width = this._size * 3;
-        this._canvas.height = this._size * 2;
+        this._canvas.width = this.plugin.options.width;
+        this._canvas.height = this.plugin.options.height;
         this._canvas.top = this.plugin.options.top;
         this._canvas.left = this.plugin.options.left;
         this._canvas.right = this.plugin.options.right;
@@ -166,41 +161,43 @@ ForgePlugins.Accelerometer.prototype = {
         }
 
         var data = this._getClosestFromTime(this._video.currentTime);
-
         var ctx = this._canvas.context2D;
 
         try
         {
-            ctx.clearRect(0, 0, this._size * 3, this._size * 2);
+            var radius = this._size / 2 - 10;
+            var w = this.plugin.options.width;
+            var h = this.plugin.options.height;
 
-            // draw outside circle
-            var radius = this._size;
+            ctx.clearRect(0, 0, w, h);
+
+            // draw outside arc
             ctx.beginPath();
-            ctx.strokeStyle = this.plugin.options.dial.color;
-            ctx.lineWidth = this.plugin.options.dial.width;
-            ctx.arc(this._size, this._size, radius - 3, 0, 2 * Math.PI);
+            ctx.strokeStyle = this.plugin.options.arc.color;
+            ctx.lineWidth = this.plugin.options.arc.width;
+            ctx.arc(this._size / 2, this._size / 2, radius - 2, 1.4, 0.3);
             ctx.stroke();
             ctx.closePath();
 
             // draw trail
-            var l = this._trail.length,
-                r = this.plugin.options.trail.size / 2,
-                tx, ty, ratio;
+            var l = this._trail.length;
+            var r = this.plugin.options.trail.size / 2;
+            var tx, ty, ratio;
 
             for (var i = 0, ii = l; i < ii; i++)
             {
-                tx = this._trail[i][1] * this._size;
-                ty = this._trail[i][0] * this._size;
+                tx = this._trail[i][1] * (w / 2);
+                ty = this._trail[i][0] * (h / 2);
 
-                ratio = Math.sqrt(tx * tx + ty * ty) / this._size;
+                ratio = Math.sqrt(tx * tx + ty * ty) / (this._size / 2);
                 if (ratio > 1)
                 {
                     tx /= ratio;
                     ty /= ratio;
                 }
 
-                tx += this._size + 3;
-                ty += this._size + 3;
+                tx += this._size / 2 + 3;
+                ty += this._size / 2 + 3;
 
                 ctx.beginPath();
                 ctx.globalAlpha = i / l;
@@ -213,8 +210,8 @@ ForgePlugins.Accelerometer.prototype = {
             ctx.globalAlpha = 1;
 
             // current data
-            var x = data[1] * this._size;
-            var y = data[0] * this._size;
+            var x = data[1] * this._size / 2;
+            var y = data[0] * this._size / 2;
 
             ratio = Math.sqrt(x * x + y * y) / this._size;
             if (ratio > 1)
@@ -223,8 +220,8 @@ ForgePlugins.Accelerometer.prototype = {
                 y /= ratio;
             }
 
-            x += this._size + 3;
-            y += this._size + 3;
+            x += this._size / 2 + 3;
+            y += this._size / 2 + 3;
 
             ctx.beginPath();
             ctx.fillStyle = this.plugin.options.point.color;
@@ -232,25 +229,15 @@ ForgePlugins.Accelerometer.prototype = {
             ctx.fill();
             ctx.closePath();
 
-            // draw G value
+            // draw value
             var value = data[2].toFixed(1);
-            ctx.beginPath();
-            ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + this.plugin.options.text.fontSize + " " + this.plugin.options.text.fontFamily;
-            ctx.fillStyle = this.plugin.options.text.color;
-            if (this._initTextWidth === null)
-            {
-                this._initTextWidth = ctx.measureText(value).width;
-            }
+            ctx.font = (this.plugin.options.value.font !== null) ? this.plugin.options.value.font : this.plugin.options.value.fontStyle + " " + this.plugin.options.value.fontVariant + " " + this.plugin.options.value.fontWeight + " " + this.plugin.options.value.fontSize + " " + this.plugin.options.value.fontFamily;
+            ctx.fillStyle = this.plugin.options.value.color;
+            ctx.strokeStyle = this.plugin.options.value.outline;
             ctx.textAlign = "right";
-            ctx.fillText(value, this._size * 2 + this._initTextWidth, this._size * 2 - this._padding);
-
-            // draw G label
-            ctx.textAlign = "left";
-            ctx.font = (this.plugin.options.label.font !== null) ? this.plugin.options.label.font : this.plugin.options.label.fontStyle + " " + this.plugin.options.label.fontVariant + " " + this.plugin.options.label.fontWeight + " " + this.plugin.options.label.fontSize + " " + this.plugin.options.label.fontFamily;
-            ctx.fillStyle = this.plugin.options.label.color;
-            ctx.fillText("G", this._size * 2 + this._initTextWidth + this._padding, this._size * 2 - this._padding);
-
-            ctx.closePath();
+            ctx.lineWidth = 4;
+            ctx.strokeText(value + " G", this._size - 2, 7 / 8 * this._size);
+            ctx.fillText(value + " G", this._size - 2, 7 / 8 * this._size);
         }
         catch (e)
         {
@@ -306,3 +293,4 @@ Object.defineProperty(ForgePlugins.Accelerometer.prototype, "texture",
         return this._canvas;
     }
 });
+

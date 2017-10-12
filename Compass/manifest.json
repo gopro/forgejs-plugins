@@ -16,27 +16,32 @@
 
     "options":
     {
-        "size": 150,
+        "width": 256,
+        "height": 256,
 
         "top": null,
         "left": null,
         "right": null,
         "bottom": null,
 
+        "source": "media",
+        "dom": true,
+
         "arc":
         {
-            "color": "rgba(120, 120, 120, 0.6)",
-            "width": 4
+            "color": "rgba(0, 0, 0, 0.3)",
+            "width": 8
         },
 
         "arrow":
         {
-            "color": "red",
+            "color": "#009FDF",
+            "outline": "#009FDF",
             "width": 15,
             "height": 30
         },
 
-        "label":
+        "labels":
         {
             "values":
             {
@@ -46,29 +51,27 @@
                 "west": "W"
             },
 
-            "color": "white",
-            "font": "normal small-caps normal 20px dosisbold, sans-serif",
+            "color": "#F3F4F4",
+            "outline": "#141414",
+            "font": null,
             "fontFamily": "dosisbold, sans-serif",
-            "fontSize": "20px",
+            "fontSize": "28px",
             "fontStyle": "normal",
             "fontVariant": "small-caps",
             "fontWeight": "normal"
         },
 
-        "text":
+        "value":
         {
             "color": "white",
-            "font": "normal small-caps normal 22px dosisbold, sans-serif",
+            "outline": "black",
+            "font": null,
             "fontFamily": "dosisbold, sans-serif",
-            "fontSize": "22px",
+            "fontSize": "40px",
             "fontStyle": "normal",
             "fontVariant": "small-caps",
             "fontWeight": "normal"
-        },
-
-        "source": "media",
-
-        "dom": true
+        }
     },
 
     "data":
@@ -76,7 +79,8 @@
         "json": ""
     },
 
-    "sources": [
+    "sources":
+    [
         "src/Compass.js"
     ],
 
