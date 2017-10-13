@@ -25,7 +25,7 @@
         "bottom": null,
 
         "source": "media",
-        "dom": true,
+        "visible": true,
         "background": null,
 
         "lines":
@@ -50,7 +50,7 @@
         {
             "color": "#009FDF",
             "background": "rgba(0,0,0,0.3)",
-            "line": 8,
+            "line": 8
         },
 
         "value":
