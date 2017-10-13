@@ -33,7 +33,7 @@ ForgePlugins.Altimeter.prototype = {
 
         this.plugin.container.addChild(this._canvas);
 
-        if (this.plugin.options.dom === false)
+        if (this.plugin.options.visible === false)
         {
             this.hide();
         }
@@ -53,7 +53,7 @@ ForgePlugins.Altimeter.prototype = {
      */
     reset: function()
     {
-        if (this.plugin.options.dom === false)
+        if (this.plugin.options.visible === false)
         {
             this.hide();
         }
@@ -146,18 +146,18 @@ ForgePlugins.Altimeter.prototype = {
             try
             {
                 ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+                ctx.fillStyle = this.plugin.options.background;
+                ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
 
-                ctx.beginPath();
-
-                var text = value.toFixed() + " " + this._data.unit;
+                var value = value.toFixed() + " " + this._data.unit;
                 var label = this.plugin.options.label.value || "altitude";
 
-                // draw text values
-                ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + this.plugin.options.text.fontSize + " " + this.plugin.options.text.fontFamily;
-                ctx.fillStyle = this.plugin.options.text.color;
+                // draw value
+                ctx.font = (this.plugin.options.value.font !== null) ? this.plugin.options.value.font : this.plugin.options.value.fontStyle + " " + this.plugin.options.value.fontVariant + " " + this.plugin.options.value.fontWeight + " " + this.plugin.options.value.fontSize + " " + this.plugin.options.value.fontFamily;
+                ctx.fillStyle = this.plugin.options.value.color;
                 ctx.textBaseline = "top";
 
-                var xpos = 0;
+                var xpos = 10;
                 if (this.plugin.options.align === "center")
                 {
                     ctx.textAlign = "center";
@@ -166,21 +166,20 @@ ForgePlugins.Altimeter.prototype = {
                 else if (this.plugin.options.align === "right")
                 {
                     ctx.textAlign = "right";
-                    xpos = this._canvas.width;
+                    xpos = this._canvas.width - 10;
                 }
                 else
                 {
                     ctx.textAlign = "left";
+                    xpos = 10;
                 }
                 var lineHeight = ctx.measureText('M').width + 2;
 
-                ctx.fillText(text, xpos, 0);
+                ctx.fillText(value, xpos, 0);
 
                 ctx.font = (this.plugin.options.label.font !== null) ? this.plugin.options.label.font : this.plugin.options.label.fontStyle + " " + this.plugin.options.label.fontVariant + " " + this.plugin.options.label.fontWeight + " " + this.plugin.options.label.fontSize + " " + this.plugin.options.label.fontFamily;
                 ctx.fillStyle = this.plugin.options.label.color;
-                ctx.fillText(label, xpos, lineHeight);
-
-                ctx.closePath();
+                ctx.fillText(label, xpos, lineHeight + 8);
             }
             catch (e)
             {

@@ -12,12 +12,18 @@
         "website": "https://forgejs.org"
     },
 
-    "licence": "Apache 2",
+    "licence": "Apache-2.0",
+
+    "viewer":
+    {
+        "min": "0.9.5",
+        "max": "0.9.5"
+    },
 
     "options":
     {
-        "width": 150,
-        "height": 45,
+        "width": 90,
+        "height": 50,
 
         "top": null,
         "left": null,
@@ -25,11 +31,15 @@
         "bottom": null,
 
         "align": "center",
+        "background": "rgba(0, 0, 0, 0.3)",
+        "source": "media",
+        "visible": true,
 
-        "text":
+        "value":
         {
-            "color": "white",
-            "font": "normal small-caps normal 20px dosisbold, sans-serif",
+            "color": "#F3F4F4",
+            "outline": "#141414",
+            "font": null,
             "fontFamily": "dosisbold, sans-serif",
             "fontSize": "20px",
             "fontStyle": "normal",
@@ -40,18 +50,15 @@
         "label":
         {
             "value": "altitude",
-            "color": "white",
-            "font": "normal small-caps normal 20px dosislight, sans-serif",
+            "color": "#F3F4F4",
+            "outline": "#141414",
+            "font": null,
             "fontFamily": "dosislight, sans-serif",
             "fontSize": "20px",
             "fontStyle": "normal",
             "fontVariant": "small-caps",
             "fontWeight": "normal"
-        },
-
-        "source": "media",
-
-        "dom": true
+        }
     },
 
     "data":
@@ -59,7 +66,8 @@
         "json": ""
     },
 
-    "sources": [
+    "sources":
+    [
         "src/style.css",
         "src/Altimeter.js"
     ],

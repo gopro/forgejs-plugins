@@ -14,11 +14,11 @@ ForgePlugins.Speedometer = function()
     // Loaded data
     this._data = null;
 
-    // Reference to the size of the plugin
+    // Size of the square
     this._size = 0;
 
-    // Defined graduation on json loading
-    this._graduation = [];
+    // Defined lines on json loading
+    this._lines = [];
 
     // Multiplicator for the value on the arc
     this._multiplicator = 0;
@@ -31,12 +31,12 @@ ForgePlugins.Speedometer.prototype = {
      */
     boot: function()
     {
-        this._size = this.plugin.options.size;
+        this._size = Math.min(this.plugin.options.width, this.plugin.options.height);
 
         // Create the canvas
         this._canvas = this.plugin.create.canvas();
-        this._canvas.width = this.plugin.options.size;
-        this._canvas.height = this.plugin.options.size;
+        this._canvas.width = this.plugin.options.width;
+        this._canvas.height = this.plugin.options.height;
         this._canvas.top = this.plugin.options.top;
         this._canvas.left = this.plugin.options.left;
         this._canvas.right = this.plugin.options.right;
@@ -44,7 +44,7 @@ ForgePlugins.Speedometer.prototype = {
 
         this.plugin.container.addChild(this._canvas);
 
-        if (this.plugin.options.dom === false)
+        if (this.plugin.options.visible === false)
         {
             this.hide();
         }
@@ -64,7 +64,7 @@ ForgePlugins.Speedometer.prototype = {
      */
     reset: function()
     {
-        if (this.plugin.options.dom === false)
+        if (this.plugin.options.visible === false)
         {
             this.hide();
         }
@@ -165,10 +165,10 @@ ForgePlugins.Speedometer.prototype = {
 
         for (var i = 0; i <= res[1]; i++)
         {
-            this._graduation[i] = i * res[0];
+            this._lines[i] = i * res[0];
         }
 
-        this._multiplicator = (0.21 - 0.01 * (this._graduation.length - 1)) / 2;
+        this._multiplicator = (0.21 - 0.01 * (this._lines.length - 1)) / 2;
     },
 
     /**
@@ -192,14 +192,34 @@ ForgePlugins.Speedometer.prototype = {
 
         var value = this._getClosestFromTime(this._video.currentTime);
         var angle = Math.PI / 2 + value * this._multiplicator;
-        var radius = this._size / 2 - (this.plugin.options.gauge.tracker / 2 + 4);
+        var radius = this._size / 2 - 10;
         var center = this._size / 2;
 
         var ctx = this._canvas.context2D;
 
         try
         {
-            ctx.clearRect(0, 0, this._size, this._size);
+            ctx.clearRect(0, 0, this.plugin.options.width, this.plugin.options.height);
+
+            // Background
+            if(typeof this.plugin.options.background === "string")
+            {
+                ctx.fillStyle = this.plugin.options.background;
+                ctx.fillRect(0, 0, this.plugin.options.width, this.plugin.options.height);
+            }
+
+            var start, end, text, x, y;
+            var offset = 0.21 - 0.01 * (this._lines.length - 1);
+
+            var circleAngle = Math.PI / 2 + (5 * (this._lines.length - 1) + 0.1) * offset;
+
+            // Complete circle
+            ctx.strokeStyle = this.plugin.options.gauge.background;
+            ctx.lineWidth = this.plugin.options.gauge.line;
+            ctx.beginPath();
+            ctx.arc(center, center, radius - this.plugin.options.gauge.line, Math.PI / 2, circleAngle);
+            ctx.stroke();
+            ctx.closePath();
 
             // draw moving gauge
             ctx.strokeStyle = this.plugin.options.gauge.color;
@@ -209,30 +229,38 @@ ForgePlugins.Speedometer.prototype = {
             ctx.stroke();
             ctx.closePath();
 
-            // draw graduation
-            ctx.strokeStyle = this.plugin.options.dial.color;
-            ctx.font = (this.plugin.options.dial.label.font !== null) ? this.plugin.options.dial.label.font : this.plugin.options.dial.label.fontStyle + " " + this.plugin.options.dial.label.fontVariant + " " + this.plugin.options.dial.label.fontWeight + " " + (this._size / 12) + "px " + this.plugin.options.dial.label.fontFamily;
-            ctx.fillStyle = this.plugin.options.dial.label.color;
+            // draw lines
+            ctx.font = (this.plugin.options.labels.font !== null) ? this.plugin.options.labels.font : this.plugin.options.labels.fontStyle + " " + this.plugin.options.labels.fontVariant + " " + this.plugin.options.labels.fontWeight + " " + (this._size / 10) + "px " + this.plugin.options.labels.fontFamily;
+            ctx.fillStyle = this.plugin.options.labels.color;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
 
-            var start, end;
-            var offset = 0.21 - 0.01 * (this._graduation.length - 1)
-            for (var i = 0, ii = 5 * (this._graduation.length - 1); i <= ii; i++)
+            for (var i = 0, ii = 5 * (this._lines.length - 1); i <= ii; i++)
             {
                 if (i % 5 === 0)
                 {
                     start = Math.PI / 2 + (i - 0.1) * offset;
                     end = Math.PI / 2 + (i + 0.2) * offset;
-                    ctx.lineWidth = this.plugin.options.dial.graduation.large;
-                    ctx.fillText(this._graduation[i / 5], center + radius * 0.70 * Math.cos(start), center + radius * 0.70 * Math.sin(start));
+
+                    text = this._lines[i / 5];
+                    x = center + radius * 0.70 * Math.cos(start);
+                    y = center + radius * 0.70 * Math.sin(start);
+
+                    ctx.lineWidth = 4;
+                    ctx.strokeStyle = this.plugin.options.labels.outline;
+                    ctx.strokeText(text, x, y);
+                    ctx.fillText(text, x, y);
+
+                    ctx.lineWidth = this.plugin.options.lines.large;
                 }
                 else
                 {
                     start = Math.PI / 2 + i * offset;
                     end = Math.PI / 2 + (i + 0.1) * offset;
-                    ctx.lineWidth = this.plugin.options.dial.graduation.small;
+                    ctx.lineWidth = this.plugin.options.lines.small;
                 }
+
+                ctx.strokeStyle = this.plugin.options.lines.color;
 
                 ctx.beginPath();
                 ctx.arc(center, center, radius - this.plugin.options.gauge.line, start, end);
@@ -240,26 +268,27 @@ ForgePlugins.Speedometer.prototype = {
                 ctx.closePath();
             }
 
-            // draw end of moving gauge
-            ctx.fillStyle = this.plugin.options.gauge.color;
-            ctx.beginPath();
-            ctx.arc(center + radius * (1 - ((this.plugin.options.gauge.tracker / 2 + 2) / radius)) * Math.cos(angle), center + radius * (1 - ((this.plugin.options.gauge.tracker / 2 + 2) / radius)) * Math.sin(angle), (this.plugin.options.gauge.tracker / 2) + 4, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.closePath();
-
             // draw text value
             value = value.toFixed(0);
-            ctx.beginPath();
-            ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + this.plugin.options.text.fontSize + " " + this.plugin.options.text.fontFamily;
-            ctx.fillStyle = this.plugin.options.text.color;
             ctx.textBaseline = "alphabetic";
-            ctx.textAlign = "center";
-            ctx.fillText(value, this._size / 2, this._size / 2 + 0.2 * parseInt(this.plugin.options.label.fontSize));
-            ctx.font = (this.plugin.options.label.font !== null) ? this.plugin.options.label.font : this.plugin.options.label.fontStyle + " " + this.plugin.options.label.fontVariant + " " + this.plugin.options.label.fontWeight + " " + this.plugin.options.label.fontSize + " " + this.plugin.options.label.fontFamily;
-            ctx.fillText(this._data.unit, this._size / 2, this._size / 2 + 0.9 * parseInt(this.plugin.options.label.fontSize));
-            ctx.closePath();
+
+            ctx.font = (this.plugin.options.value.font !== null) ? this.plugin.options.value.font : this.plugin.options.value.fontStyle + " " + this.plugin.options.value.fontVariant + " " + this.plugin.options.value.fontWeight + " " + this.plugin.options.value.fontSize + " " + this.plugin.options.value.fontFamily;
+            ctx.fillStyle = this.plugin.options.value.color;
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = this.plugin.options.value.outline;
+            x = this._size / 2;
+            y = this._size / 2 + 0.2 * parseInt(this.plugin.options.value.fontSize);
+            ctx.strokeText(value, x, y);
+            ctx.fillText(value, x, y);
+
+            ctx.font = (this.plugin.options.unit.font !== null) ? this.plugin.options.unit.font : this.plugin.options.unit.fontStyle + " " + this.plugin.options.unit.fontVariant + " " + this.plugin.options.unit.fontWeight + " " + this.plugin.options.unit.fontSize + " " + this.plugin.options.unit.fontFamily;
+            ctx.fillStyle = this.plugin.options.unit.color;
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = this.plugin.options.unit.outline;
+            x = this._size / 2;
+            y = this._size / 2 + 0.9 * parseInt(this.plugin.options.unit.fontSize) + 4;
+            ctx.strokeText(this._data.unit, x, y);
+            ctx.fillText(this._data.unit, x, y);
         }
         catch (e)
         {
@@ -299,7 +328,7 @@ ForgePlugins.Speedometer.prototype = {
         this._canvas.destroy();
 
         this._canvas = null;
-        this._graduation = null;
+        this._lines = null;
         this._video = null;
         this._data = null;
     }

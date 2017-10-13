@@ -14,7 +14,7 @@ ForgePlugins.Compass = function()
     // Loaded data
     this._data = null;
 
-    // Reference to the size of the plugin
+    // Size of the canvas square
     this._size = 0
 };
 
@@ -25,12 +25,12 @@ ForgePlugins.Compass.prototype = {
      */
     boot: function()
     {
-        this._size = this.plugin.options.size;
+        this._size = Math.min(this.plugin.options.width, this.plugin.options.height);
 
         // Create the canvas
         this._canvas = this.plugin.create.canvas();
-        this._canvas.width = this.plugin.options.size;
-        this._canvas.height = this.plugin.options.size;
+        this._canvas.width = this.plugin.options.width;
+        this._canvas.height = this.plugin.options.height;
         this._canvas.top = this.plugin.options.top;
         this._canvas.left = this.plugin.options.left;
         this._canvas.right = this.plugin.options.right;
@@ -38,7 +38,7 @@ ForgePlugins.Compass.prototype = {
 
         this.plugin.container.addChild(this._canvas);
 
-        if (this.plugin.options.dom === false)
+        if (this.plugin.options.visible === false)
         {
             this.hide();
         }
@@ -58,7 +58,7 @@ ForgePlugins.Compass.prototype = {
      */
     reset: function()
     {
-        if (this.plugin.options.dom === false)
+        if (this.plugin.options.visible === false)
         {
             this.hide();
         }
@@ -148,43 +148,68 @@ ForgePlugins.Compass.prototype = {
 
         try
         {
-            ctx.clearRect(0, 0, this._size, this._size);
+            var x, y;
+
+            ctx.clearRect(0, 0, this.plugin.options.width, this.plugin.options.height);
 
             // draw outside circle
-            var radius = this._size / 2;
+            var radius = this._size / 2 - 10;
             ctx.beginPath();
             ctx.strokeStyle = this.plugin.options.arc.color;
             ctx.lineWidth = this.plugin.options.arc.width;
-            ctx.arc(this._size / 2, this._size / 2, radius - 2, 1.4, 0.3);
+            ctx.arc(this._size / 2, this._size / 2, radius, 1.4, 0.3);
             ctx.stroke();
             ctx.closePath();
 
             // draw NSEW directions
-            ctx.beginPath();
-            ctx.font = (this.plugin.options.label.font !== null) ? this.plugin.options.label.font : this.plugin.options.label.fontStyle + " " + this.plugin.options.label.fontVariant + " " + this.plugin.options.label.fontWeight + " " + this.plugin.options.label.fontSize + " " + this.plugin.options.label.fontFamily;
-            ctx.fillStyle = this.plugin.options.label.color;
+            ctx.font = (this.plugin.options.labels.font !== null) ? this.plugin.options.labels.font : this.plugin.options.labels.fontStyle + " " + this.plugin.options.labels.fontVariant + " " + this.plugin.options.labels.fontWeight + " " + this.plugin.options.labels.fontSize + " " + this.plugin.options.labels.fontFamily;
+            ctx.lineWidth = 4;
+            ctx.fillStyle = this.plugin.options.labels.color;
+            ctx.strokeStyle = this.plugin.options.labels.outline;
+
+            // north
             ctx.textAlign = "center";
-            ctx.fillText(this.plugin.options.label.values.north, this._size / 2, parseInt(this.plugin.options.label.fontSize) + 5);
-            ctx.fillText(this.plugin.options.label.values.south, this._size / 2, this._size - 10);
+            x = this._size / 2;
+            y = parseInt(this.plugin.options.labels.fontSize) + 15;
+            ctx.strokeText(this.plugin.options.labels.values.north, x, y);
+            ctx.fillText(this.plugin.options.labels.values.north, x, y);
+
+            // south
+            ctx.textAlign = "center";
+            x = this._size / 2;
+            y = this._size - 25;
+            ctx.strokeText(this.plugin.options.labels.values.south, x, y);
+            ctx.fillText(this.plugin.options.labels.values.south, x, y);
+
+            // east
             ctx.textAlign = "right";
-            ctx.fillText(this.plugin.options.label.values.east, this._size - 10, this._size / 2 + parseInt(this.plugin.options.label.fontSize) / 2);
+            x = this._size - 25;
+            y = this._size / 2 + parseInt(this.plugin.options.labels.fontSize) / 2;
+            ctx.strokeText(this.plugin.options.labels.values.east, x, y);
+            ctx.fillText(this.plugin.options.labels.values.east, x, y);
+
+            // west
             ctx.textAlign = "left";
-            ctx.fillText(this.plugin.options.label.values.west, 10, this._size / 2 + parseInt(this.plugin.options.label.fontSize) / 2);
-            ctx.closePath();
+            x = 25;
+            y = this._size / 2 + parseInt(this.plugin.options.labels.fontSize) / 2;
+            ctx.strokeText(this.plugin.options.labels.values.west, x, y);
+            ctx.fillText(this.plugin.options.labels.values.west, x, y);
 
             // draw value
             var value = data.toFixed(0);
-            ctx.beginPath();
-            ctx.font = (this.plugin.options.text.font !== null) ? this.plugin.options.text.font : this.plugin.options.text.fontStyle + " " + this.plugin.options.text.fontVariant + " " + this.plugin.options.text.fontWeight + " " + this.plugin.options.text.fontSize + " " + this.plugin.options.text.fontFamily;
-            ctx.fillStyle = this.plugin.options.text.color;
+            ctx.font = (this.plugin.options.value.font !== null) ? this.plugin.options.value.font : this.plugin.options.value.fontStyle + " " + this.plugin.options.value.fontVariant + " " + this.plugin.options.value.fontWeight + " " + this.plugin.options.value.fontSize + " " + this.plugin.options.value.fontFamily;
+            ctx.fillStyle = this.plugin.options.value.color;
+            ctx.strokeStyle = this.plugin.options.value.outline;
             ctx.textAlign = "right";
+            ctx.strokeText(value + "°", this._size - 2, 7 / 8 * this._size);
             ctx.fillText(value + "°", this._size - 2, 7 / 8 * this._size);
-            ctx.closePath();
 
             // arrow
             var c = this._size / 2;
             var v = data * Math.PI / 180 - Math.PI / 2;
             ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = this.plugin.options.arrow.outline;
             ctx.fillStyle = this.plugin.options.arrow.color;
             ctx.lineTo(c * (1 + 0.1 * Math.cos(v + Math.PI)), c * (1 + 0.1 * Math.sin(v + Math.PI)));
             ctx.lineTo(c * (1 + 0.3 * Math.cos(v + 3 * Math.PI / 4)), c * (1 + 0.3 * Math.sin(v + 3 * Math.PI / 4)));
@@ -192,6 +217,7 @@ ForgePlugins.Compass.prototype = {
             ctx.lineTo(c * (1 + 0.3 * Math.cos(v - 3 * Math.PI / 4)), c * (1 + 0.3 * Math.sin(v - 3 * Math.PI / 4)));
             ctx.lineTo(c * (1 + 0.1 * Math.cos(v + Math.PI)), c * (1 + 0.1 * Math.sin(v + Math.PI)));
             ctx.fill();
+            ctx.stroke();
             ctx.closePath();
         }
         catch (e)
