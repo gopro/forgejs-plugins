@@ -27,7 +27,7 @@
         "align": "center",
         "background": "rgba(0, 0, 0, 0.3)",
         "source": "media",
-        "dom": true,
+        "visible": true,
 
         "value":
         {

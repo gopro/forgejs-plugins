@@ -41,7 +41,7 @@ ForgePlugins.Accelerometer.prototype = {
 
         this.plugin.container.addChild(this._canvas);
 
-        if (this.plugin.options.dom === false)
+        if (this.plugin.options.visible === false)
         {
             this.hide();
         }
@@ -61,7 +61,7 @@ ForgePlugins.Accelerometer.prototype = {
      */
     reset: function()
     {
-        if (this.plugin.options.dom === false)
+        if (this.plugin.options.visible === false)
         {
             this.hide();
         }
