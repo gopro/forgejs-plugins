@@ -12,7 +12,13 @@
         "website": "https://forgejs.org"
     },
 
-    "licence": "Apache 2",
+    "licence": "Apache-2.0",
+
+    "viewer":
+    {
+        "min": "0.9.5",
+        "max": "0.9.5"
+    },
 
     "options":
     {
