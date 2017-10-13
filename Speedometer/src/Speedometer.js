@@ -268,15 +268,6 @@ ForgePlugins.Speedometer.prototype = {
                 ctx.closePath();
             }
 
-            // draw end of moving gauge
-            // ctx.fillStyle = this.plugin.options.gauge.color;
-            // ctx.beginPath();
-            // ctx.arc(center + radius * (1 - ((this.plugin.options.gauge.tracker / 2 + 2) / radius)) * Math.cos(angle), center + radius * (1 - ((this.plugin.options.gauge.tracker / 2 + 2) / radius)) * Math.sin(angle), (this.plugin.options.gauge.tracker / 2) + 4, 0, 2 * Math.PI);
-            // ctx.fill();
-            // ctx.lineWidth = 2;
-            // ctx.stroke();
-            // ctx.closePath();
-
             // draw text value
             value = value.toFixed(0);
             ctx.textBaseline = "alphabetic";

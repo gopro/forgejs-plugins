@@ -14,7 +14,7 @@ ForgePlugins.Compass = function()
     // Loaded data
     this._data = null;
 
-    // Reference to the size of the plugin
+    // Size of the canvas square
     this._size = 0
 };
 

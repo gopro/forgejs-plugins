@@ -17,7 +17,7 @@ ForgePlugins.Accelerometer = function()
     // The "history" to draw the trail
     this._trail = [];
 
-    // The half size of the plugin
+    // The size of the square
     this._size = 0;
 };
 
