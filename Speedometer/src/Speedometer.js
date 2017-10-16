@@ -18,7 +18,7 @@ ForgePlugins.Speedometer = function()
     this._size = 0;
 
     // Defined lines on json loading
-    this._lines = [];
+    this._lines = null;
 
     // Multiplicator for the value on the arc
     this._multiplicator = 0;
@@ -145,6 +145,7 @@ ForgePlugins.Speedometer.prototype = {
     _jsonLoadComplete: function(file)
     {
         this._data = file.data;
+        this._lines = [];
 
         var max = 0;
         this._data.data.forEach(function(e)
@@ -186,7 +187,7 @@ ForgePlugins.Speedometer.prototype = {
             this._lines[i] = i * res[0];
         }
 
-        this._multiplicator = (0.21 - 0.01 * (this._lines.length - 1)) / 2;
+        this._multiplicator = (0.21 - 0.01 * (this._lines.length - 1)) / (res[0] / 5);
     },
 
     /**
