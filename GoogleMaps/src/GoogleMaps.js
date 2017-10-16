@@ -57,11 +57,6 @@ ForgePlugins.GoogleMaps.prototype = {
         {
             this._loadGoogleMapScript();
         }
-        else if (typeof google !== "undefined" && "maps" in google)
-        {
-            this._createMap();
-            this._loadGpx();
-        }
     },
 
     /**
@@ -88,8 +83,9 @@ ForgePlugins.GoogleMaps.prototype = {
         this._clearVideo();
         this._setupVideo();
 
-        if (typeof google !== "undefined" && "maps" in google && (this.viewer.cache.has("xml", this.plugin.uid + "_gpx") === false || this.plugin.data.gpx !== this.viewer.cache.get("xml", this.plugin.uid + "_gpx").url))
+        if (typeof google !== "undefined" && "maps" in google)
         {
+            this._createMap();
             this._loadGpx();
         }
     },
