@@ -88,7 +88,7 @@ ForgePlugins.GoogleMaps.prototype = {
         this._clearVideo();
         this._setupVideo();
 
-        if (typeof google !== "undefined" && "maps" in google && (this.viewer.cache.has("xml", "googlemaps_gpx") === false || this.plugin.data.gpx !== this.viewer.cache.get("xml", "googlemaps_gpx").url))
+        if (typeof google !== "undefined" && "maps" in google && (this.viewer.cache.has("xml", this.plugin.uid + "_gpx") === false || this.plugin.data.gpx !== this.viewer.cache.get("xml", this.plugin.uid + "_gpx").url))
         {
             this._loadGpx();
         }
