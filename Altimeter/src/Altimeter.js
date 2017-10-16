@@ -53,6 +53,13 @@ ForgePlugins.Altimeter.prototype = {
      */
     reset: function()
     {
+        this._canvas.width = this.plugin.options.width;
+        this._canvas.height = this.plugin.options.height;
+        this._canvas.top = this.plugin.options.top;
+        this._canvas.left = this.plugin.options.left;
+        this._canvas.right = this.plugin.options.right;
+        this._canvas.bottom = this.plugin.options.bottom;
+
         if (this.plugin.options.visible === false)
         {
             this.hide();
@@ -64,6 +71,14 @@ ForgePlugins.Altimeter.prototype = {
 
         this._video = null;
         this._setupVideo();
+
+
+        var suffix = this.plugin.data.json.split("/");
+        suffix = suffix[suffix.length - 1];
+        if (this.viewer.cache.has("json", this.plugin.uid + "_json") === false || this.plugin.data.json !== this.viewer.cache.get("json", this.plugin.uid + suffix + "_json").url)
+        {
+            this._loadJsonData();
+        }
     },
 
     /**
@@ -102,7 +117,9 @@ ForgePlugins.Altimeter.prototype = {
 
         if (typeof json === "string" && json !== "")
         {
-            this.viewer.load.json(this.plugin.uid + "_json", json, this._jsonLoadComplete.bind(this), this);
+            var suffix = json.split("/");
+            suffix = suffix[suffix.length - 1];
+            this.viewer.load.json(this.plugin.uid + suffix +  "_json", json, this._jsonLoadComplete.bind(this), this);
         }
         else
         {
