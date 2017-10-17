@@ -57,11 +57,6 @@ ForgePlugins.GoogleMaps.prototype = {
         {
             this._loadGoogleMapScript();
         }
-        else if (typeof google !== "undefined" && "maps" in google)
-        {
-            this._createMap();
-            this._loadGpx();
-        }
     },
 
     /**
@@ -90,6 +85,7 @@ ForgePlugins.GoogleMaps.prototype = {
 
         if (typeof google !== "undefined" && "maps" in google)
         {
+            this._createMap();
             this._loadGpx();
         }
     },

@@ -18,7 +18,7 @@ ForgePlugins.Speedometer = function()
     this._size = 0;
 
     // Defined lines on json loading
-    this._lines = [];
+    this._lines = null;
 
     // Multiplicator for the value on the arc
     this._multiplicator = 0;
@@ -64,6 +64,15 @@ ForgePlugins.Speedometer.prototype = {
      */
     reset: function()
     {
+        this._size = Math.min(this.plugin.options.width, this.plugin.options.height);
+
+        this._canvas.width = this.plugin.options.width;
+        this._canvas.height = this.plugin.options.height;
+        this._canvas.top = this.plugin.options.top;
+        this._canvas.left = this.plugin.options.left;
+        this._canvas.right = this.plugin.options.right;
+        this._canvas.bottom = this.plugin.options.bottom;
+
         if (this.plugin.options.visible === false)
         {
             this.hide();
@@ -75,6 +84,13 @@ ForgePlugins.Speedometer.prototype = {
 
         this._video = null;
         this._setupVideo();
+
+        var suffix = this.plugin.data.json.split("/");
+        suffix = suffix[suffix.length - 1];
+        if (this.viewer.cache.has("json", this.plugin.uid + "_json") === false || this.plugin.data.json !== this.viewer.cache.get("json", this.plugin.uid + suffix + "_json").url)
+        {
+            this._loadJsonData();
+        }
     },
 
     /**
@@ -113,7 +129,9 @@ ForgePlugins.Speedometer.prototype = {
 
         if (typeof json === "string" && json !== "")
         {
-            this.viewer.load.json(this.plugin.uid + "_json", json, this._jsonLoadComplete.bind(this), this);
+            var suffix = json.split("/");
+            suffix = suffix[suffix.length - 1];
+            this.viewer.load.json(this.plugin.uid + suffix +  "_json", json, this._jsonLoadComplete.bind(this), this);
         }
         else
         {
@@ -127,6 +145,7 @@ ForgePlugins.Speedometer.prototype = {
     _jsonLoadComplete: function(file)
     {
         this._data = file.data;
+        this._lines = [];
 
         var max = 0;
         this._data.data.forEach(function(e)
@@ -168,7 +187,7 @@ ForgePlugins.Speedometer.prototype = {
             this._lines[i] = i * res[0];
         }
 
-        this._multiplicator = (0.21 - 0.01 * (this._lines.length - 1)) / 2;
+        this._multiplicator = (0.21 - 0.01 * (this._lines.length - 1)) / (res[0] / 5);
     },
 
     /**
