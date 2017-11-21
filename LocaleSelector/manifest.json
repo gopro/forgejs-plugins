@@ -6,6 +6,7 @@
     "versionName": "Locale Selector 1.0.0",
     "description": "Add a locale selector, using flags, to the project.",
     "tags": ["i18n", "locale", "multilingual"],
+    "licence": "Apache-2.0",
 
     "author":
     {
@@ -13,12 +14,10 @@
         "website": "https://forgejs.org"
     },
 
-    "licence": "Apache 2",
-
     "viewer":
     {
-        "min": "0.9.0",
-        "max": "0.9.5"
+        "min": "0.9.6",
+        "max": "0.9.6"
     },
 
     "options":

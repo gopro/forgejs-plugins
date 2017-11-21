@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "versionName": "Accelerometer 1.0.0",
     "description": "Display a simple Accelerometer that can be loaded with the metadata from a GoPro.",
+    "licence": "Apache-2.0",
 
     "author":
     {
@@ -12,12 +13,10 @@
         "website": "https://forgejs.org"
     },
 
-    "licence": "Apache-2.0",
-
     "viewer":
     {
-        "min": "0.9.5",
-        "max": "0.9.5"
+        "min": "0.9.6",
+        "max": "0.9.6"
     },
 
     "options":

@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "versionName": "Gamepad monitor 1.0.0",
     "description": "Displays a gamepad monitor that shows information about connected gamepads",
-    "licence": "Apache 2",
+    "licence": "Apache-2.0",
 
     "author":
     {
@@ -14,8 +14,8 @@
 
     "viewer":
     {
-        "min": "0.9.3",
-        "max": "0.9.5"
+        "min": "0.9.6",
+        "max": "0.9.6"
     },
 
     "device":

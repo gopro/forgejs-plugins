@@ -4,7 +4,7 @@
     "version": "1.1.0",
     "versionName": "Video CORS 1.1.0",
     "description": "Displays an dialog box that will warn the user of the browser CORS issue for video scene",
-    "licence": "Apache 2",
+    "licence": "Apache-2.0",
 
     "author":
     {
@@ -14,8 +14,8 @@
 
     "viewer":
     {
-        "min": "0.9.0",
-        "max": "0.9.5"
+        "min": "0.9.6",
+        "max": "0.9.6"
     },
 
     "device":

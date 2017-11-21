@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "versionName": "Google Maps 1.0.0",
     "description": "Display a simple Google Maps that can be loaded with gpx data.",
+    "licence": "Apache-2.0",
 
     "author":
     {
@@ -12,7 +13,11 @@
         "website": "https://forgejs.org"
     },
 
-    "licence": "Apache 2",
+    "viewer":
+    {
+        "min": "0.9.6",
+        "max": "0.9.6"
+    },
 
     "options":
     {
