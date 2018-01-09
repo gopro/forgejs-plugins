@@ -23,7 +23,15 @@
         "or":
         {
             "ie": true,
-            "safari": true
+            "and":
+            {
+                "safari": true,
+                "os": "ios",
+                "osVersion": {
+                    "operation": "<",
+                    "value": 11
+                }
+            }
         }
     },
 
