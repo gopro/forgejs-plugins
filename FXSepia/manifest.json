@@ -1,0 +1,35 @@
+{
+    "uid": "org.forgejs.fxsepia",
+    "name": "fxsepia",
+    "slug": "fxsepia",
+    "version": "1.0.0",
+    "versionName": "fxsepia 1.0.0",
+    "description": "fxsepia.",
+
+    "author":
+    {
+        "name": "ForgeJS",
+        "website": ""
+    },
+
+    "licence": "Apache 2",
+
+    "viewer":
+    {
+        "min": "0.9.6",
+        "max": "0.9.6"
+    },
+
+    "options":
+    {
+        "amount": 0.7
+    },
+
+    "sources":
+    [
+        "src/FXSepia.js",
+        "src/shaders/SepiaShader.js"
+    ],
+
+    "constructor": "ForgePlugins.FXSepia"
+}
