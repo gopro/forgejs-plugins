@@ -1,0 +1,47 @@
+{
+    "uid": "org.forgejs.fxgodrays",
+    "name": "FX God Rays",
+    "slug": "FX God Rays",
+    "version": "1.0.0",
+    "versionName": "FX God rays painter 1.0.0",
+    "description": "Draw ligh rays.",
+
+    "author":
+    {
+        "name": "Vuillermet Thomas",
+        "website": ""
+    },
+
+    "licence": "Apache 2",
+
+    "viewer":
+    {
+        "min": "0.9.6",
+        "max": "0.9.6"
+    },
+
+    "options":
+    {
+        "mask": "",
+        "yaw": 0.0,
+        "pitch": 0.0,
+        "exposure": 1.0,
+        "decay": 0.93,
+        "density": 0.57,
+        "weight": 0.55,
+        "clamp": 1.0,
+        "coeff": 1.0,
+        "red": 1.0,
+        "green": 1.0,
+        "blue": 1.0
+    },
+
+    "sources":
+    [
+        "src/FXGodRays.js",
+        "src/shaders/fx_godrays_vertex.glsl",
+        "src/shaders/fx_godrays_fragment.glsl"
+    ],
+
+    "constructor": "ForgePlugins.FXGodRays"
+}
