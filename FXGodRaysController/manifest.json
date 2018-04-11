@@ -1,0 +1,36 @@
+{
+    "uid": "org.forgejs.fxgodrayscontroller",
+    "name": "FX GodRays Controller",
+    "slug": "FX God rays",
+    "version": "1.0.0",
+    "versionName": "FX GodRays Controller 1.0.0",
+    "description": "Add a toolbox GUI to control god rays fx shader.",
+
+    "author":
+    {
+        "name": "Vuillermet Thomas",
+        "website": ""
+    },
+
+    "licence": "Apache 2",
+
+    "viewer":
+    {
+        "min": "0.9.6",
+        "max": "0.9.6"
+    },
+
+    "options":
+    {
+        "fx": ""
+    },
+
+    "sources":
+    [
+        "lib/dat.gui/dat.gui.css",
+        "lib/dat.gui/dat.gui.min.js",
+        "src/FXGodRaysController.js"
+    ],
+
+    "constructor": "ForgePlugins.FXGodRaysController"
+}
