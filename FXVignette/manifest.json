@@ -1,0 +1,36 @@
+{
+    "uid": "org.forgejs.fxvignette",
+    "name": "fxvignette",
+    "slug": "fxvignette",
+    "version": "1.0.0",
+    "versionName": "fxvignette 1.0.0",
+    "description": "fxvignette.",
+
+    "author":
+    {
+        "name": "ForgeJS",
+        "website": ""
+    },
+
+    "licence": "Apache 2",
+
+    "viewer":
+    {
+        "min": "0.9.6",
+        "max": "0.9.6"
+    },
+
+    "options":
+    {
+        "offset": 0.20,
+        "darkness": 25
+    },
+
+    "sources":
+    [
+        "src/FXVignette.js",
+        "src/shaders/VignetteShader.js"
+    ],
+
+    "constructor": "ForgePlugins.FXVignette"
+}
