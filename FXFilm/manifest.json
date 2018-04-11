@@ -1,0 +1,38 @@
+{
+    "uid": "org.forgejs.fxfilm",
+    "name": "fxfilm",
+    "slug": "fxfilm",
+    "version": "1.0.0",
+    "versionName": "fxfilm 1.0.0",
+    "description": "fxfilm.",
+
+    "author":
+    {
+        "name": "ForgeJS",
+        "website": ""
+    },
+
+    "licence": "Apache 2",
+
+    "viewer":
+    {
+        "min": "0.9.6",
+        "max": "0.9.6"
+    },
+
+    "options":
+    {
+        "noiseIntensity": 0.5,
+        "scanIntensity": 0.05,
+        "scanCount": 4096,
+        "grayscale": true
+    },
+
+    "sources":
+    [
+        "src/FXFilm.js",
+        "src/shaders/FilmShader.js"
+    ],
+
+    "constructor": "ForgePlugins.FXFilm"
+}
