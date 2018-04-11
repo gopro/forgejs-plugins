@@ -1,0 +1,35 @@
+{
+    "uid": "org.forgejs.fxverticalblur",
+    "name": "fxverticalblur",
+    "slug": "fxverticalblur",
+    "version": "1.0.0",
+    "versionName": "fxverticalblur 1.0.0",
+    "description": "fxverticalblur.",
+
+    "author":
+    {
+        "name": "ForgeJS",
+        "website": ""
+    },
+
+    "licence": "Apache 2",
+
+    "viewer":
+    {
+        "min": "0.9.6",
+        "max": "0.9.6"
+    },
+
+    "options":
+    {
+        "intensity": 0.001
+    },
+
+    "sources":
+    [
+        "src/FXVerticalBlur.js",
+        "src/shaders/VerticalBlurShader.js"
+    ],
+
+    "constructor": "ForgePlugins.FXVerticalBlur"
+}
