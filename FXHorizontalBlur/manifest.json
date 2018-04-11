@@ -1,0 +1,35 @@
+{
+    "uid": "org.forgejs.fxhorizontalblur",
+    "name": "fxhorizontalblur",
+    "slug": "fxhorizontalblur",
+    "version": "1.0.0",
+    "versionName": "fxhorizontalblur 1.0.0",
+    "description": "fxhorizontalblur.",
+
+    "author":
+    {
+        "name": "ForgeJS",
+        "website": ""
+    },
+
+    "licence": "Apache 2",
+
+    "viewer":
+    {
+        "min": "0.9.6",
+        "max": "0.9.6"
+    },
+
+    "options":
+    {
+        "intensity": 0.001
+    },
+
+    "sources":
+    [
+        "src/FXHorizontalBlur.js",
+        "src/shaders/HorizontalBlurShader.js"
+    ],
+
+    "constructor": "ForgePlugins.FXHorizontalBlur"
+}
