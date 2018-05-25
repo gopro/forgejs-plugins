@@ -66,15 +66,19 @@ ForgePlugins.FXGodRays.prototype =
 
         if (sceneUid !== "")
         {
-            var viewport = this.viewer.renderer.scenes.get(sceneUid).viewports.all[0];
+            // var viewport = this.viewer.renderer.scenes.get(sceneUid).viewports.all[0];
 
             this.pass.material.uniforms.tMask.value = this._mask;
 
             this.pass.material.uniforms.light.value = this._getLightVector();
 
-            this.pass.material.uniforms.tViewport.value = viewport.rectangle.vector4;
-            this.pass.material.uniforms.tModelViewMatrixInverse.value = viewport.camera.modelViewInverse;
-            this.pass.material.uniforms.tProjectionScale.value = viewport.view.current.projectionScale;
+            // this.pass.material.uniforms.tViewport.value = viewport.rectangle.vector4;
+            // this.pass.material.uniforms.tModelViewMatrixInverse.value = viewport.camera.modelViewInverse;
+            // this.pass.material.uniforms.tProjectionScale.value = viewport.view.current.projectionScale;
+
+            this.pass.material.uniforms.tViewport.value = this._pass.viewport.rectangle.vector4;
+            this.pass.material.uniforms.tModelViewMatrixInverse.value = this._pass.viewport.camera.modelViewInverse;
+            this.pass.material.uniforms.tProjectionScale.value = this._pass.viewport.view.current.projectionScale;
         }
     },
 
