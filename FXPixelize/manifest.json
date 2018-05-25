@@ -1,0 +1,35 @@
+{
+    "uid": "org.forgejs.fxpixelize",
+    "name": "fxpixelize",
+    "slug": "fxpixelize",
+    "version": "1.0.0",
+    "versionName": "fxpixelize 1.0.0",
+    "description": "fxpixelize.",
+
+    "author":
+    {
+        "name": "ForgeJS",
+        "website": ""
+    },
+
+    "licence": "Apache 2",
+
+    "viewer":
+    {
+        "min": "0.9.6",
+        "max": "0.9.6"
+    },
+
+    "options":
+    {
+        "pixelSize": 10
+    },
+
+    "sources":
+    [
+        "src/FXPixelize.js",
+        "src/shaders/PixelizeShader.js"
+    ],
+
+    "constructor": "ForgePlugins.FXPixelize"
+}
